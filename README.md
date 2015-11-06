@@ -5,12 +5,12 @@ Projecte de partida per al laboratori de GPS de la FIB, curs de primavera de 201
 ## Crear el repositori del vostre grup
 
 1. Seleccioneu l'opció Fork del menú de l'esquerra (de vegades "amagada" dins la icona dels punts suspensius).
-2. Poseu com a nom del repositori: "gps-jj-$nomGrup"
+2. Poseu com a nom del repositori: "gps-jj-2015t-$nomGrup"
 
     - $nomGrup és el nom del vostre grup tal com el vau enviar per correu
     - $nomGrup no ha de tenir espais en blanc
     - Dins $nomGrup feu servir camelCase i no altres_maneres-de-separar_les_parts
-    - Exemple: `gps-jj-agileRocksOhYeah`
+    - Exemple: `gps-jj-2015t-agileRocksOhYeah`
 
 3. Marqueu el repositori com a privat
 4. Marqueu l'opció "Wiki"
