@@ -23,6 +23,10 @@ public class StepDefinitions {
         }
     }
 
+    private void assertLongStringEquals(String expected, String actual){
+        assertEquals(expected.replaceAll("\r\n","\n"),actual.replaceAll("\r\n","\n"));
+    }
+
     @Aleshores("^obtinc un error que diu: \"([^\"]*)\"$")
     public void checkErrorMessage(String msg) throws Throwable {
         assertNotNull(this.exception);
@@ -104,7 +108,7 @@ public class StepDefinitions {
 
     @Aleshores("^la pantalla del client del tpv mostra$")
     public void la_pantalla_del_client_del_tpv_mostra(String msg) throws Throwable {
-        assertEquals(msg, this.posController.getCustomerScreenMessage());
+        assertLongStringEquals(msg, this.posController.getCustomerScreenMessage());
     }
 
     @Quan("^indico que el client ha entregat (\\d+)€ per a pagar en metàlic$")
