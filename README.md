@@ -52,4 +52,4 @@ Projecte de partida per al laboratori de GPS de la FIB, curs de primavera de 201
 
 ## Enllaços
 
-- [Backlog](https://bitbucket.org/shadows7/gps-jj/wiki/Backlog)
+- [Backlog](https://bitbucket.org/shadows7/gps-jj-1/wiki/Backlog)
