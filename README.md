@@ -42,9 +42,14 @@ Projecte de partida per al laboratori de GPS de la FIB, curs de primavera de 201
 
 ## Components del grup
 
-- John Doe Cabrera (43444546D) - johm.doe@est.upc.edu
-- Joe Bar Farré (44454647F) - joe.bar@est.upc.edu
+- David Aleu Moseguí () - david.aleu@est.fib.upc.edu
+- Albert Díaz I Benitez () - albert.diaz.benitez@est.fib.upc.edu
+- Eduard Maura I Puig (23816952S) - eduard.maura.i@est.fib.upc.edu
+- Cèlia Riera Brutau  () - celia.riera.brutau@est.fib.upc.edu
+- Edgar Ripoll Garcia () - edgar.ripoll@est.fib.upc.edu
+- Elena Ruiz Cano () - elena.ruiz@est.fib.upc.edu
+- Jan Teruel Ferran () - jan.teruel@est.fib.upc.edu
 
 ## Enllaços
 
-- [Backlog](https://bitbucket.org/jordipradel/gps-jj/wiki/Backlog)
+- [Backlog](https://bitbucket.org/shadows7/gps-jj/wiki/Backlog)
