@@ -59,6 +59,6 @@ public class PosController {
     }
 
     public int cashPayment(int delivered) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        return delivered - currentSale.getTotal();
     }
 }
