@@ -1,5 +1,6 @@
 package edu.upc.essi.gps.ecommerce;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.ca.Aleshores;
 import cucumber.api.java.ca.Donat;
 import cucumber.api.java.ca.Quan;
@@ -17,6 +18,7 @@ public class StepDefinitions {
     private LiniaVenda ultimaLiniaVenda;
     private Exception exception;
     private int change;
+    private double preuTotal;
 
     public void tryCatch(Runnable r){
         try {
@@ -55,4 +57,19 @@ public class StepDefinitions {
         assertEquals(quantitat,ultimaLiniaVenda.getQuantitat());
     }
 
+    @Quan("^demano el preu total de la ultima linia de venda$")
+    public void demanoElPreuTotalDeLaUltimaLiniaDeVenda() throws Throwable {
+        this.preuTotal = ultimaLiniaVenda.getPreuTotal();
+    }
+
+    @Aleshores("^la ultima linia de venda te preu total (.+)$")
+    public void laUltimaLiniaDeVendaTePreuTotal(double expectedPreuTotal) throws Throwable {
+        assertEquals(expectedPreuTotal, preuTotal, 0.0);
+    }
+
+    @Aleshores("^obtinc un error que diu: \"([^\"]*)\"$")
+    public void obtincUnErrorQueDiu(String missatgeError) throws Throwable {
+        assertNotNull(this.exception);
+        assertEquals(missatgeError, this.exception.getMessage());
+    }
 }
