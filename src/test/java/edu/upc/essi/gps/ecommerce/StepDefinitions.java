@@ -21,15 +21,6 @@ public class StepDefinitions {
     private int change;
     private double preuTotal;
 
-    public void tryCatch(Runnable r){
-        try {
-            r.run();
-            this.exception = null;
-        } catch (Exception e){
-            this.exception = e;
-        }
-    }
-
     @Quan("^inicio una venda nova$")
     public void startVenda() throws Throwable {
         try {
