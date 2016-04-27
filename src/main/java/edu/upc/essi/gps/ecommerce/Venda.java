@@ -36,6 +36,8 @@ class LiniaVenda {
 }
 
 public class Venda {
+    private String message;
+
     private final List<LiniaVenda> liniesVenda = new LinkedList<>();
 
     public void afegirLiniaVenda(LiniaVenda liniaVenda) {
@@ -49,17 +51,24 @@ public class Venda {
     public Venda() {
     }
 
+    public void tancarVenda() {
+        if (liniesVenda.isEmpty()) { message = "Venda anul·lada"; }
+        else { message = "Venda finalitzada"; }
+    }
+
     public List<LiniaVenda> getLiniesVenda() {
         return Collections.unmodifiableList(liniesVenda);
     }
 
-    public int getTotal() {
-        int res = 0;
+    public double getTotal() {
+        double res = 0;
         for(LiniaVenda l : liniesVenda){
             res += l.getPreuTotal();
         }
         return res;
     }
+
+    public String getMessage () {return message; }
 
     public boolean isEmpty() {
         return liniesVenda.isEmpty();

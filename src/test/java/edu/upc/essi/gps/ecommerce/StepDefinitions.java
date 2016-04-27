@@ -2,6 +2,7 @@ package edu.upc.essi.gps.ecommerce;
 
 import cucumber.api.java.ca.Aleshores;
 import cucumber.api.java.ca.Donat;
+import cucumber.api.java.ca.I;
 import cucumber.api.java.ca.Quan;
 
 import static org.junit.Assert.assertEquals;
@@ -43,16 +44,36 @@ public class StepDefinitions {
     }
 
     @Quan("^afegeixo una linia de venda amb nom de producte \"([^\"]*)\", amb preu (.+) i amb quantitat (\\d+)$")
-    public void afegirLiniaVenda(String nomProducte, double preuUnitat, int quantitat){
+    public void afegirLiniaVenda(String nomProducte, double preuUnitat, int quantitat) throws Throwable {
         ultimaLiniaVenda = new LiniaVenda(nomProducte, preuUnitat, quantitat);
         venda.afegirLiniaVenda(ultimaLiniaVenda);
     }
 
     @Aleshores("^la ultima linia de venda te nom de producte \"([^\"]*)\", preu (.+) i quantitat (\\d+)$")
-    public void laUltimaLiniaVendaTe(String nomProducte, double preuUnitat, int quantitat){
+    public void laUltimaLiniaVendaTe(String nomProducte, double preuUnitat, int quantitat) throws Throwable {
         assertEquals(nomProducte,ultimaLiniaVenda.getNomProducte());
         assertEquals(preuUnitat,ultimaLiniaVenda.getPreuUnitat(),0.0);
         assertEquals(quantitat,ultimaLiniaVenda.getQuantitat());
     }
 
+    @Quan ("^finalitzo una venda$")
+    public void endVenda() throws Throwable,Exception {
+        venda.tancarVenda();
+    }
+
+    @Aleshores("^obtinc un missatge que diu \"([^\"]*)\"$")
+    public void missatge(String msg) throws Throwable {
+        assertEquals(msg,venda.getMessage());
+        System.out.println(msg);
+    }
+
+    @Donat ("^que hi ha una linia de venda amb nom de producte \"([^\"]*)\", amb preu (.+) i amb quantitat (\\d+)$")
+    public void hiHaUnaLiniaVendaAmb (String nomProducte, double preuUnitat, int quantitat) throws Throwable {
+        afegirLiniaVenda(nomProducte,preuUnitat,quantitat);
+    }
+
+    @I("^preu total (.+)$")
+    public void preuTotal(double p) throws Throwable{
+        assertEquals(p,venda.getTotal(),0.0);
+    }
 }
