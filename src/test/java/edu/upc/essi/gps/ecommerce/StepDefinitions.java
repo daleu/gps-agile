@@ -55,8 +55,8 @@ public class StepDefinitions {
     }
 
     @Quan ("^finalitzo una venda$")
-    public void endVenda() throws Throwable,Exception {
-        venda.tancarVenda();
+    public void endVenda() throws Throwable {
+        venda.tancarVenda(false);
     }
 
     @Aleshores("^obtinc un missatge que diu \"([^\"]*)\"$")
@@ -89,5 +89,28 @@ public class StepDefinitions {
     public void obtincUnErrorQueDiu(String missatgeError) throws Throwable {
         assertNotNull(this.exception);
         assertEquals(missatgeError, this.exception.getMessage());
+    }
+
+    @I ("^el client paga (.+)")
+    public void faPagament(double c) throws Throwable {
+        assertEquals(true,c >= venda.getTotal());
+        this.venda.setPagament(c);
+    }
+
+    @I ("^canvi (.+)")
+    public void retornCanvi (double canvi) throws Throwable {
+        assertEquals(canvi,this.venda.getCanvi(),0.0);
+    }
+
+    @Quan ("^anul·lo una venda$")
+    public void anularVenda() throws Throwable {
+        venda.tancarVenda(true);
+    }
+
+    @I("^obtinc un ticket que diu \"([^\"]*)\"$")
+    public void ticket (String tck) throws Throwable {
+        String t = this.venda.getTicket();
+        assertEquals(tck,t);
+        System.out.println(t);
     }
 }
