@@ -17,6 +17,7 @@ public class StepDefinitions {
       */
     private Venda venda;
     private LiniaVenda ultimaLiniaVenda;
+    private TerminalVenda terminalVenda;
     private Exception exception;
     private int change;
     private double preuTotal;
@@ -124,5 +125,26 @@ public class StepDefinitions {
         String t = this.venda.getTicket();
         assertEquals(tck,t);
         System.out.println(t);
+    }
+
+    @Donat("^que en \"([^\"]*)\" ha iniciat el torn al \"([^\"]*)\" de \"([^\"]*)\"$")
+    public void queEnHaIniciatElTornAlDe(String nomEmpleat, String nomTerminal, String nomPoblacio) throws Throwable {
+        terminalVenda = new TerminalVenda(nomEmpleat,nomTerminal,nomPoblacio);
+    }
+
+    @I("^afegeixo una linia de venda amb nom de producte \"([^\"]*)\", amb preu (.+), amb quantitat (\\d+) i IVA (\\d+)$")
+    public void afegeixoUnaLiniaDeVendaAmbNomDeProducteAmbPreuAmbQuantitatIIVA(String nomProducte, double preuUnitat, int quantitat, int iva) throws Throwable {
+        ultimaLiniaVenda= new LiniaVenda(nomProducte, preuUnitat, quantitat, iva);
+        venda.afegirLiniaVenda(ultimaLiniaVenda);
+    }
+
+    @Quan("^demano el preu total amb iva de la linia de venda$")
+    public void demanoElPreuTotalAmbIvaDeLaLiniaDeVenda() throws Throwable {
+        this.preuTotal = venda.getTotalIva();
+    }
+
+    @Aleshores("^la linia de venda te preu total (.+)$")
+    public void laLiniaDeVendaTePreuTotal(double expectedPreuTotal) throws Throwable {
+        assertEquals(expectedPreuTotal, preuTotal, 0.0);
     }
 }
