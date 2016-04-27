@@ -32,7 +32,12 @@ public class StepDefinitions {
 
     @Quan("^inicio una venda nova$")
     public void startVenda() throws Throwable {
-        tryCatch(() -> this.venda = new Venda());
+        try {
+            if (venda != null) throw new IllegalStateException("Ja hi ha una venda iniciada");
+            else this.venda = new Venda();
+        } catch (Exception e) {
+            this.exception = e;
+        }
     }
 
     @Aleshores("^no hi ha linies de venda$")

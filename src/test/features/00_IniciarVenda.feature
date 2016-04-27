@@ -7,6 +7,11 @@ Característica: Iniciar venda
     Quan inicio una venda nova
     Aleshores no hi ha linies de venda
 
+  Escenari: No es pot iniciar una venta si ja hi ha una venta iniciada
+    Donat que hi ha una venda iniciada
+    Quan inicio una venda nova
+    Aleshores obtinc un error que diu: "Ja hi ha una venda iniciada"
+
   Escenari: Afegir una linia de venda
      Donat que hi ha una venda iniciada
      Quan afegeixo una linia de venda amb nom de producte "Baldufa", amb preu 5 i amb quantitat 1

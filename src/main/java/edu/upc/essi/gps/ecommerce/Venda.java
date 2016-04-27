@@ -9,9 +9,6 @@ class LiniaVenda {
     private double preuUnitat;
     private int quantitat;
 
-    public LiniaVenda() {
-    }
-
     public LiniaVenda(String nomProducte, double preuUnitat, int quantitat) {
         this.nomProducte = nomProducte;
         this.preuUnitat = preuUnitat;
@@ -42,10 +39,6 @@ public class Venda {
 
     public void afegirLiniaVenda(LiniaVenda liniaVenda) {
         liniesVenda.add(liniaVenda);
-    }
-
-    public void afegirLiniaVenda(String nomProducte, double preuUnitat, int quantitat) {
-        liniesVenda.add(new LiniaVenda(nomProducte, preuUnitat, quantitat));
     }
 
     public Venda() {
