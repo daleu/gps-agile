@@ -45,5 +45,5 @@ Característica: Finalitzar venda
     Quan finalitzo una venda
     I el client paga 50
     Aleshores obtinc un missatge que diu "Venda finalitzada"
-    I obtinc un ticket que diu "2|Baldufa|5,00|10,00 - 3|Cotxe|3,50|10,50 - 1|Pilota|7,25|7,25 - 4|Peluix|2,75|11,00 - Preu total: 38,75 - Pagament: 50,00 - Canvi: 11,25"
+    I obtinc un ticket que diu "2|Baldufa|5.00|10.00 - 3|Cotxe|3.50|10.50 - 1|Pilota|7.25|7.25 - 4|Peluix|2.75|11.00 - Preu total: 38.75 - Pagament: 50.00 - Canvi: 11.25"
 
