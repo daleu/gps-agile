@@ -41,17 +41,29 @@ public class StepDefinitions {
         this.venda = new Venda();
     }
 
-    @Quan("^afegeixo una linia de venda amb nom de producte \"([^\"]*)\", amb preu (.+) i amb quantitat (\\d+)$")
-    public void afegirLiniaVenda(String nomProducte, double preuUnitat, int quantitat) throws Throwable {
+    @I("^hi ha una linia de venda amb nom de producte \"([^\"]*)\", amb preu (.+) i amb quantitat (\\d+)$")
+    public void hiHaLiniaVenda(String nomProducte, double preuUnitat, int quantitat) throws Throwable {
         ultimaLiniaVenda = new LiniaVenda(nomProducte, preuUnitat, quantitat);
         venda.afegirLiniaVenda(ultimaLiniaVenda);
     }
 
+    @Quan("^afegeixo una linia de venda amb nom de producte \"([^\"]*)\", amb preu (.+) i amb quantitat (\\d+)$")
+    public void afegirLiniaVenda(String nomProducte, double preuUnitat, int quantitat) throws Throwable {
+        ultimaLiniaVenda= new LiniaVenda(nomProducte, preuUnitat, quantitat);
+        venda.afegirLiniaVenda(ultimaLiniaVenda);
+    }
+
+    @Quan("^afegeixo una altra linia de venda amb nom de producte \"([^\"]*)\", amb preu (.+) i amb quantitat (\\d+)$")
+    public void afegirAltraLiniaVenda(String nomProducte, double preuUnitat, int quantitat) throws Throwable {
+        LiniaVenda auxLiniaVenda = new LiniaVenda(nomProducte, preuUnitat, quantitat);
+        venda.afegirLiniaVenda(auxLiniaVenda);
+    }
+
     @Aleshores("^la ultima linia de venda te nom de producte \"([^\"]*)\", preu (.+) i quantitat (\\d+)$")
     public void laUltimaLiniaVendaTe(String nomProducte, double preuUnitat, int quantitat) throws Throwable {
-        assertEquals(nomProducte,ultimaLiniaVenda.getNomProducte());
-        assertEquals(preuUnitat,ultimaLiniaVenda.getPreuUnitat(),0.0);
-        assertEquals(quantitat,ultimaLiniaVenda.getQuantitat());
+        assertEquals(nomProducte, ultimaLiniaVenda.getNomProducte());
+        assertEquals(preuUnitat, ultimaLiniaVenda.getPreuTotal(), 0.0);
+        assertEquals(quantitat, ultimaLiniaVenda.getQuantitat());
     }
 
     @Quan ("^finalitzo una venda$")

@@ -6,6 +6,7 @@ Característica: Iniciar venda
   Escenari: Crear venda
     Quan inicio una venda nova
     Aleshores no hi ha linies de venda
+    I preu total 0
 
   Escenari: No es pot iniciar una venta si ja hi ha una venta iniciada
     Donat que hi ha una venda iniciada
@@ -21,7 +22,13 @@ Característica: Iniciar venda
     Donat que hi ha una venda iniciada
     Quan afegeixo una linia de venda amb nom de producte "Cotxe", amb preu 3,50 i amb quantitat 1
     Aleshores la ultima linia de venda te nom de producte "Cotxe", preu 3,50 i quantitat 1
-  
+
+  Escenari: Afegir una linia de venda 3
+    Donat que hi ha una venda iniciada
+    I hi ha una linia de venda amb nom de producte "Cotxe", amb preu 3,50 i amb quantitat 1
+    Quan afegeixo una altra linia de venda amb nom de producte "Cotxe", amb preu 3,50 i amb quantitat 1
+    Aleshores la ultima linia de venda te nom de producte "Cotxe", preu 7 i quantitat 2
+
   Escenari: Demanar el total d'una linia
     Donat que hi ha una venda iniciada
     I afegeixo una linia de venda amb nom de producte "Baldufa", amb preu 5 i amb quantitat 3
