@@ -31,6 +31,8 @@ class LiniaVenda {
     public double getPreuTotal() {
         return preuUnitat * quantitat;
     }
+
+    public void sumQuantitat(int quantitat) { this.quantitat += quantitat; }
 }
 
 public class Venda {
@@ -40,6 +42,12 @@ public class Venda {
     private final List<LiniaVenda> liniesVenda = new LinkedList<>();
 
     public void afegirLiniaVenda(LiniaVenda liniaVenda) {
+        for (LiniaVenda lv : liniesVenda) {
+            if (liniaVenda.getNomProducte() == lv.getNomProducte()) {
+                lv.sumQuantitat(liniaVenda.getQuantitat());
+                return;
+            }
+        }
         liniesVenda.add(liniaVenda);
     }
 
