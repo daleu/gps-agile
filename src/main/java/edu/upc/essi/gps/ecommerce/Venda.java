@@ -38,6 +38,7 @@ class LiniaVenda {
 public class Venda {
     private String message;
     private double pagament;
+    private double[] iva = {0.1, 0.21}; //0.1 llaminadures, 0.21 joguines
 
     private final List<LiniaVenda> liniesVenda = new LinkedList<>();
 
