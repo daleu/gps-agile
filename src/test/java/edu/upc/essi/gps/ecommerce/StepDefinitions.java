@@ -37,7 +37,7 @@ public class StepDefinitions {
         assertEquals(true, venda.isEmpty());
     }
 
-    @Donat("^que hi ha una venda$")
+    @Donat("^que hi ha una venda iniciada$")
     public void vendaIniciada() throws Throwable {
         this.venda = new Venda();
     }
