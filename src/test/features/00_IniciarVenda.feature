@@ -7,58 +7,9 @@ Característica: Iniciar venda
     Quan inicio una venda nova
     Aleshores no hi ha linies de venda
     I preu total 0
+    I no hi ha linies de venda
 
   Escenari: No es pot iniciar una venta si ja hi ha una venta iniciada
     Donat que hi ha una venda iniciada
     Quan inicio una venda nova
     Aleshores obtinc un error que diu: "Ja hi ha una venda iniciada"
-
-  Escenari: Afegir una linia de venda
-     Donat que hi ha una venda iniciada
-     Quan afegeixo una linia de venda amb nom de producte "Baldufa", amb preu 5 i amb quantitat 1
-     Aleshores la ultima linia de venda te nom de producte "Baldufa", preu 5 i quantitat 1
-
-  Escenari: Afegir una linia de venda amb decimals al preu
-    Donat que hi ha una venda iniciada
-    Quan afegeixo una linia de venda amb nom de producte "Cotxe", amb preu 3,50 i amb quantitat 1
-    Aleshores la ultima linia de venda te nom de producte "Cotxe", preu 3,50 i quantitat 1
-
-  Escenari: Afegir una linia de venda 3
-    Donat que hi ha una venda iniciada
-    I hi ha una linia de venda amb nom de producte "Cotxe", amb preu 3,50 i amb quantitat 1
-    Quan afegeixo una altra linia de venda amb nom de producte "Cotxe", amb preu 3,50 i amb quantitat 1
-    Aleshores la ultima linia de venda te nom de producte "Cotxe", preu 7 i quantitat 2
-
-  Escenari: Demanar el total d'una linia
-    Donat que hi ha una venda iniciada
-    I afegeixo una linia de venda amb nom de producte "Baldufa", amb preu 5 i amb quantitat 3
-    Quan demano el preu total de la ultima linia de venda
-    Aleshores la ultima linia de venda te preu total 15
-
-  Escenari: Demanar el total d'una linia 2
-    Donat que hi ha una venda iniciada
-    I afegeixo una linia de venda amb nom de producte "Cotxe", amb preu 3,50 i amb quantitat 3
-    Quan demano el preu total de la ultima linia de venda
-    Aleshores la ultima linia de venda te preu total 10,5
-
-  Escenari: Incloure IVA del 21% a producte
-    Donat que en "Joan" ha iniciat el torn al "tv1" de "Girona"
-    I que hi ha una venda iniciada
-    I afegeixo una linia de venda amb nom de producte "Baldufa guai", amb preu 5, amb quantitat 3 i IVA 21
-    Quan demano el preu total amb iva de la linia de venda
-    Aleshores la linia de venda te preu total 18,15
-
-  Escenari: Incloure IVA del 4% a producte
-    Donat que en "Joan" ha iniciat el torn al "tv1" de "Girona"
-    I que hi ha una venda iniciada
-    I afegeixo una linia de venda amb nom de producte "Llaminadura", amb preu 1, amb quantitat 2 i IVA 4
-    Quan demano el preu total amb iva de la linia de venda
-    Aleshores la linia de venda te preu total 2,08
-
-  Escenari: Incloure IVA de diferents productes amb IVA diferents
-    Donat que en "Joan" ha iniciat el torn al "tv1" de "Girona"
-    I que hi ha una venda iniciada
-    I afegeixo una linia de venda amb nom de producte "Llaminadura", amb preu 1, amb quantitat 2 i IVA 4
-    I afegeixo una linia de venda amb nom de producte "Baldufa guai", amb preu 5, amb quantitat 3 i IVA 21
-    Quan demano el preu total amb iva de la linia de venda
-    Aleshores la linia de venda te preu total 20,23
