@@ -5,7 +5,7 @@ import java.text.DecimalFormat;
 /**
  * Created by edu on 28/04/16.
  */
-class LiniaVenda {
+public class LiniaVenda {
     private String nomProducte;
     private double preuUnitat;
     private double preuUnitatMesIva;
