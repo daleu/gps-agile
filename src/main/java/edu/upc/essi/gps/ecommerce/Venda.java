@@ -6,11 +6,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Venda {
+    private int numVenda;
     private String message;
     private double pagament;
+    private String ticket;
     private double[] iva = {0.1, 0.21}; //0.1 llaminadures, 0.21 joguines
 
     private final List<LiniaVenda> liniesVenda = new LinkedList<>();
+
+    public Venda(int numVenda) {
+        this.numVenda = numVenda;
+        ticket = "";
+    }
 
     public void afegirLiniaVenda(LiniaVenda liniaVenda) {
         for (LiniaVenda lv : liniesVenda) {
@@ -20,9 +27,6 @@ public class Venda {
             }
         }
         liniesVenda.add(liniaVenda);
-    }
-
-    public Venda() {
     }
 
     public void tancarVenda(boolean anulacio) {
@@ -56,21 +60,21 @@ public class Venda {
 
     public double getCanvi () { return pagament - getTotal(); }
 
-    public String getTicket() {
-        String ticket = "";
-        DecimalFormat df = new DecimalFormat("####0.00");
+    public void crearTicket () {
         for(LiniaVenda l : liniesVenda){
             ticket = ticket.concat(Integer.toString(l.getQuantitat())); ticket = ticket.concat("|");
             ticket = ticket.concat(l.getNomProducte()); ticket = ticket.concat("|");
-            ticket = ticket.concat(df.format(l.getPreuUnitat())); ticket = ticket.concat("|");
-            ticket = ticket.concat(df.format(l.getPreuTotal()));
+            ticket = ticket.concat(Double.toString(Math.round(l.getPreuUnitat()*100.0)/100.0)); ticket = ticket.concat("|");
+            ticket = ticket.concat(Double.toString(Math.round(l.getPreuTotal()*100.0)/100.0));
             ticket = ticket.concat(" - ");
         }
-        ticket = ticket.concat("Preu total: "); ticket = ticket.concat((df.format(getTotal())));
+        ticket = ticket.concat("Preu total: "); ticket = ticket.concat(Double.toString(Math.round(getTotal()*100.0)/100.0));
         ticket = ticket.concat(" - ");
-        ticket = ticket.concat("Pagament: ");ticket = ticket.concat(df.format(pagament));
+        ticket = ticket.concat("Pagament: ");ticket = ticket.concat(Double.toString(Math.round(pagament*100.0)/100.0));
         ticket = ticket.concat(" - ");
-        ticket = ticket.concat("Canvi: ");ticket = ticket.concat(df.format(getCanvi()));
+        ticket = ticket.concat("Canvi: ");ticket = ticket.concat(Double.toString(Math.round(getCanvi()*100.0)/100.0));
+    }
+    public String getTicket() {
         return ticket;
     }
 
