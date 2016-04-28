@@ -85,7 +85,7 @@ public class StepDefinitions {
 
     @I("^preu total (.+)$")
     public void preuTotal(double p) throws Throwable {
-        assertEquals(p, venda.getTotal(), 0.0);
+        assertEquals(p, venda.getTotal(), 0.001);
     }
 
     @Quan("^demano el preu total de la ultima linia de venda$")

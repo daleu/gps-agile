@@ -18,7 +18,7 @@ Característica: Iniciar venda
      Quan afegeixo una linia de venda amb nom de producte "Baldufa", amb preu 5 i amb quantitat 1
      Aleshores la ultima linia de venda te nom de producte "Baldufa", preu 5 i quantitat 1
 
-  Escenari: Afegir una linia de venda 2
+  Escenari: Afegir una linia de venda amb decimals al preu
     Donat que hi ha una venda iniciada
     Quan afegeixo una linia de venda amb nom de producte "Cotxe", amb preu 3,50 i amb quantitat 1
     Aleshores la ultima linia de venda te nom de producte "Cotxe", preu 3,50 i quantitat 1
