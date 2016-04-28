@@ -5,63 +5,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-class TerminalVenda {
-    private String nomEmpleat;
-    private String nomTerminal;
-    private String nomPoblacio;
-
-    public TerminalVenda(String nomEmpleat, String nomTerminal, String nomPoblacio) {
-        this.nomEmpleat = nomEmpleat;
-        this.nomTerminal = nomTerminal;
-        this.nomPoblacio = nomPoblacio;
-    }
-}
-
-class LiniaVenda {
-    private String nomProducte;
-    private double preuUnitat;
-    private double preuUnitatMesIva;
-    private int quantitat;
-
-    public LiniaVenda(String nomProducte, double preuUnitat, int quantitat) {
-        this.nomProducte = nomProducte;
-        this.preuUnitat = preuUnitat;
-        this.quantitat = quantitat;
-    }
-
-    public LiniaVenda(String nomProducte, double preuUnitat, int quantitat, int iva) {
-        DecimalFormat df = new DecimalFormat("0.00");
-        this.nomProducte = nomProducte;
-        this.preuUnitat = preuUnitat;
-        this.quantitat = quantitat;
-        if (iva == 21) this.preuUnitatMesIva = preuUnitat + preuUnitat*0.21;
-        else this.preuUnitatMesIva = preuUnitat + preuUnitat*0.04;
-        this.preuUnitatMesIva = Math.round(preuUnitatMesIva*100.0)/100.0;
-    }
-
-    public String getNomProducte() {
-        return nomProducte;
-    }
-
-    public double getPreuUnitat() {
-        return preuUnitat;
-    }
-
-    public int getQuantitat() {
-        return quantitat;
-    }
-
-    public double getPreuTotal() {
-        return preuUnitat * quantitat;
-    }
-
-    public double getPreuTotalAmbIva() {
-        return preuUnitatMesIva * quantitat;
-    }
-
-    public void sumQuantitat(int quantitat) { this.quantitat += quantitat; }
-}
-
 public class Venda {
     private String message;
     private double pagament;
