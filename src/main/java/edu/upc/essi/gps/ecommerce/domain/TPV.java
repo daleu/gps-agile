@@ -1,5 +1,6 @@
 package edu.upc.essi.gps.ecommerce.domain;
 
+import edu.upc.essi.gps.ecommerce.exceptions.ProducteNoExisteixException;
 import edu.upc.essi.gps.ecommerce.exceptions.VendaJaIniciadaException;
 import edu.upc.essi.gps.ecommerce.exceptions.VendaNoIniciadaException;
 
@@ -39,5 +40,10 @@ public class TPV {
 
     public void setVendaActual(Venda vendaActual) {
         this.vendaActual = vendaActual;
+    }
+
+    public void passarCodi(String codiBarres) throws ProducteNoExisteixException {
+        Producte producteIdentificat = Cataleg.getInstance().getProductePerCodi(codiBarres);
+        vendaActual.afegeixLinia(producteIdentificat);
     }
 }

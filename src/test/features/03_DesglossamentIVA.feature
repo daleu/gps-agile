@@ -1,4 +1,4 @@
 # language: ca
 
 #noinspection SpellCheckingInspection
-Característica: Afegir una línia de venda
+Característica: Desglossament del IVA

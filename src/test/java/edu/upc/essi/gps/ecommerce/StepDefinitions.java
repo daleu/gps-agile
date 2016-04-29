@@ -5,7 +5,6 @@ import cucumber.api.java.ca.Aleshores;
 import cucumber.api.java.ca.Donat;
 import cucumber.api.java.ca.I;
 import cucumber.api.java.ca.Quan;
-import cucumber.api.java.cs.A;
 import edu.upc.essi.gps.ecommerce.domain.*;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
 
@@ -20,16 +19,6 @@ public class StepDefinitions {
       */
 
     private Exception exception;
-
-    public void tryCatch(Runnable r){
-        try {
-            r.run();
-            this.exception = null;
-        } catch (Exception e){
-            this.exception = e;
-        }
-    }
-
     @Quan("^inicio una venda$")
     public void iniciarVenda() {
         try {
@@ -48,7 +37,7 @@ public class StepDefinitions {
     @Aleshores("^el preu total de la venda es (.+)$")
     public void el_preu_total_de_la_venda_es_(double totalExpected) throws Throwable {
         Venda venda = TPV.getInstance().getVendaActual();
-        assertEquals(totalExpected, venda.getTotal(),0.0);
+        assertEquals(totalExpected, venda.getTotal(),0.001);
     }
 
     @Aleshores("^la venda te per identificador (\\d+)$")
@@ -94,5 +83,36 @@ public class StepDefinitions {
     @Donat("^que no hi ha cap venda iniciada$")
     public void que_no_hi_ha_cap_venda_iniciada() throws Throwable {
         TPV.getInstance().setVendaActual(null);
+    }
+
+    @I("^existeix el producte \"([^\"]*)\" amb codi de barres \"([^\"]*)\" i preu per unitat (.+)$")
+    public void existeix_el_producte_amb_codi_de_barres_i_preu_per_unitat_(String nomProducte, String codiBarres, int preuUnitat) throws Throwable {
+        Producte p = new Producte(nomProducte, codiBarres, preuUnitat);
+        Cataleg.getInstance().afegeixProducte(p);
+    }
+
+    @Quan("^passo pel tpv el codi de barres \"([^\"]*)\"$")
+    public void passo_pel_tpv_el_codi_de_barres(String codiBarres) throws Throwable {
+        TPV.getInstance().passarCodi(codiBarres);
+    }
+
+    @Aleshores("^la venda te una linia de venda$")
+    public void la_venda_te_una_linia_de_venda() throws Throwable {
+        assertEquals(1, TPV.getInstance().getVendaActual().getNombreLiniesVenda());
+    }
+
+    @I("^la linia de venda (\\d+) te per producte \"([^\"]*)\"$")
+    public void la_linia_de_venda_te_per_producte(int i, String expectedNom) throws Throwable {
+        assertEquals(expectedNom, TPV.getInstance().getVendaActual().getLiniaVenda(i).getNomProducte());
+    }
+
+    @I("^la linia de venda (\\d+) te per preu unitat (.+)$")
+    public void la_linia_de_venda_te_per_preu_unitat_(int i, int expectedPreu) throws Throwable {
+        assertEquals(expectedPreu, TPV.getInstance().getVendaActual().getLiniaVenda(i).getTotal(),0.001);
+    }
+
+    @I("^la linia de venda (\\d+) te per quantitat (\\d+)$")
+    public void la_linia_de_venda_te_per_quantitat(int i, int expectedQuantitat) throws Throwable {
+        assertEquals(expectedQuantitat, TPV.getInstance().getVendaActual().getLiniaVenda(i).getQuantitat());
     }
 }

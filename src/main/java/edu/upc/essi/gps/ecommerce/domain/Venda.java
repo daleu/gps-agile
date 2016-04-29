@@ -35,4 +35,16 @@ public class Venda {
         if (liniesVenda.isEmpty()) informacioTancar = "Venda anul·lada";
         else informacioTancar = "Venda finalitzada";
     }
+
+    public void afegeixLinia(Producte p) {
+        liniesVenda.add(new LiniaVenda(p));
+    }
+
+    public int getNombreLiniesVenda() {
+        return liniesVenda.size();
+    }
+
+    public LiniaVenda getLiniaVenda(int i) {
+        return liniesVenda.get(i);
+    }
 }

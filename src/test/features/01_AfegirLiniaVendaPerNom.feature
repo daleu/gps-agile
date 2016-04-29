@@ -1,4 +1,4 @@
 # language: ca
 
 #noinspection SpellCheckingInspection
-Característica: Calcular IVA
+Característica: Afegir una linia de venda per nom
