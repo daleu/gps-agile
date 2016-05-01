@@ -9,6 +9,9 @@ public class Producte {
     private String nom;
 
     public Producte(String nomProducte, String codiBarres, double preuUnitat) {
+        this.nom = nomProducte;
+        this.codiBarres = codiBarres;
+        this.preuUnitat = preuUnitat;
     }
 
     public double getPreuUnitat() {
