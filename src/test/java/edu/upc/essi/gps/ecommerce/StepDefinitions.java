@@ -92,7 +92,7 @@ public class StepDefinitions {
     }
 
     @I("^existeix el producte \"([^\"]*)\" amb codi de barres \"([^\"]*)\" i preu per unitat (.+)$")
-    public void existeix_el_producte_amb_codi_de_barres_i_preu_per_unitat_(String nomProducte, String codiBarres, int preuUnitat) throws Throwable {
+    public void existeix_el_producte_amb_codi_de_barres_i_preu_per_unitat_(String nomProducte, String codiBarres, double preuUnitat) throws Throwable {
         Producte p = new Producte(nomProducte, codiBarres, preuUnitat);
         Cataleg.getInstance().afegeixProducte(p);
     }
@@ -118,7 +118,7 @@ public class StepDefinitions {
     }
 
     @I("^la linia de venda (\\d+) te per preu unitat (.+)$")
-    public void la_linia_de_venda_te_per_preu_unitat_(int i, int expectedPreu) throws Throwable {
+    public void la_linia_de_venda_te_per_preu_unitat_(int i, double expectedPreu) throws Throwable {
         assertEquals(expectedPreu, TPV.getInstance().getVendaActual().getLiniaVenda(i).getTotal(),0.001);
     }
 

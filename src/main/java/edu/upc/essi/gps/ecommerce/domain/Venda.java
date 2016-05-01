@@ -47,7 +47,7 @@ public class Venda implements Entity {
     }
 
     public LiniaVenda getLiniaVenda(int i) {
-        return liniesVenda.get(i);
+        return liniesVenda.get(i - 1);
     }
 
 
