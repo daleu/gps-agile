@@ -16,7 +16,7 @@ public class TPV {
     private TPV(){}
 
     public static TPV getInstance() {
-       if (instance == null) instance = new TPV();
+        if (instance == null) instance = new TPV();
         return instance;
     }
 
@@ -44,6 +44,11 @@ public class TPV {
 
     public void passarCodi(String codiBarres) throws ProducteNoExisteixException {
         Producte producteIdentificat = Cataleg.getInstance().getProductePerCodi(codiBarres);
+        vendaActual.afegeixLinia(producteIdentificat);
+    }
+
+    public void introduirNomProducte(String nomProducte) throws ProducteNoExisteixException {
+        Producte producteIdentificat = Cataleg.getInstance().getProductePerNom(nomProducte);
         vendaActual.afegeixLinia(producteIdentificat);
     }
 }
