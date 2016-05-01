@@ -10,12 +10,10 @@ import java.util.List;
 public abstract class Repository<T extends Entity> {
 
     private List<T> entities = new LinkedList<T>();
-    private int nextId = 1;
+    private int nextId = 0;
 
     public int  newId() {
-        if(nextId > 0) {
             ++nextId;
-        }
         return nextId;
     }
 

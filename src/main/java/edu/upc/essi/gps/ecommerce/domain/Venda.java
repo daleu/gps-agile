@@ -39,7 +39,8 @@ public class Venda implements Entity {
     }
 
     public void afegeixLinia(Producte p, Integer unitats) {
-        liniesVenda.add(new LiniaVenda(p,unitats));
+        LiniaVenda liniaVenda = new LiniaVenda(p,unitats);
+        liniesVenda.add(liniaVenda);
     }
 
     public int getNombreLiniesVenda() {
@@ -51,4 +52,15 @@ public class Venda implements Entity {
     }
 
 
+    public boolean conteLiniaVenda(String codiBarres, int unitatsProd) {
+
+        for(int i = 0; i < liniesVenda.size(); ++i) {
+            if(liniesVenda.get(i).getCodiProducte() ==codiBarres) {
+                if(liniesVenda.get(i).getQuantitat() >= unitatsProd) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

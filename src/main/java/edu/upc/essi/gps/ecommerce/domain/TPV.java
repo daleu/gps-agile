@@ -14,7 +14,6 @@ public class TPV {
     private static TPV instance;
 
     private Venda vendaActual;
-
     private final VendesRepositori vendesRepositori = new VendesRepositori();
     private final VendesServei vendesServei = new VendesServei(vendesRepositori);
 
@@ -25,6 +24,9 @@ public class TPV {
         return instance;
     }
 
+    //---------------------------
+    // Estats de venda
+    //---------------------------
 
     public void iniciarVenda() throws VendaJaIniciadaException {
        if (this.vendaActual == null) {
@@ -42,11 +44,6 @@ public class TPV {
         }
     }
 
-
-    public Venda getVendaActual() {
-        return vendaActual;
-    }
-
     public void tancarVendaActual() throws VendaNoIniciadaException {
         if (vendaActual != null)  {
             vendesServei.guardarVenda(vendaActual);
@@ -56,9 +53,18 @@ public class TPV {
         else throw new VendaNoIniciadaException();
     }
 
+    public Venda getVendaActual() {
+        return vendaActual;
+    }
+
     public void setVendaActual(Venda vendaActual) {
         this.vendaActual = vendaActual;
     }
+
+
+    //------------------------------
+    //INTRODUIR PRODUCTES A UNA VENDA
+    //------------------------------
 
     public void passarCodi(String codiBarres) throws ProducteNoExisteixException {
         Producte producteIdentificat = Cataleg.getInstance().getProductePerCodi(codiBarres);
@@ -68,5 +74,19 @@ public class TPV {
     public void introduirNomProducte(String nomProducte) throws ProducteNoExisteixException {
         Producte producteIdentificat = Cataleg.getInstance().getProductePerNom(nomProducte);
         vendaActual.afegeixLinia(producteIdentificat,1);
+    }
+
+    public void afegirProducteLiniaVenda(String codiBarres, int unitats) throws ProducteNoExisteixException {
+        Producte producteIdentificat = Cataleg.getInstance().getProductePerCodi(codiBarres);
+        if(producteIdentificat == null) throw new ProducteNoExisteixException();
+        vendaActual.afegeixLinia(producteIdentificat,unitats);
+    }
+
+    public boolean possibilitatDeRetorn(int idVenda, String codiBarres, int unitatsProd) {
+        Venda ven_anterior = vendesServei.trobaPerCodi(idVenda);
+        if(ven_anterior != null) {
+            ven_anterior.conteLiniaVenda(codiBarres,unitatsProd);
+        }
+        return false;
     }
 }

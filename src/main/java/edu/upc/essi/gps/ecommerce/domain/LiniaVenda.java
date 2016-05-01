@@ -25,4 +25,8 @@ public class LiniaVenda {
     public int getQuantitat() {
         return quantitat;
     }
+
+    public String getCodiProducte() {
+        return producte.getCodiBarres();
+    }
 }

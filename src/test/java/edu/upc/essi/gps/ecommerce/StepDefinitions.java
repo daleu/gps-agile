@@ -21,6 +21,7 @@ public class StepDefinitions {
       */
 
     private Exception exception;
+
     @Quan("^inicio una venda$")
     public void iniciarVenda() {
         try {
@@ -39,7 +40,7 @@ public class StepDefinitions {
     @Aleshores("^el preu total de la venda es (.+)$")
     public void el_preu_total_de_la_venda_es_(double totalExpected) throws Throwable {
         Venda venda = TPV.getInstance().getVendaActual();
-        assertEquals(totalExpected, venda.getTotal(),0.001);
+        assertEquals(totalExpected, venda.getTotal(), 0.001);
     }
 
     @Aleshores("^la venda te per identificador (\\d+)$")
@@ -115,7 +116,7 @@ public class StepDefinitions {
 
     @I("^la linia de venda (\\d+) te per preu unitat (.+)$")
     public void la_linia_de_venda_te_per_preu_unitat_(int i, double expectedPreu) throws Throwable {
-        assertEquals(expectedPreu, TPV.getInstance().getVendaActual().getLiniaVenda(i).getTotal(),0.001);
+        assertEquals(expectedPreu, TPV.getInstance().getVendaActual().getLiniaVenda(i).getTotal(), 0.001);
     }
 
     @I("^la linia de venda (\\d+) te per quantitat (\\d+)$")
@@ -123,4 +124,34 @@ public class StepDefinitions {
         assertEquals(expectedQuantitat, TPV.getInstance().getVendaActual().getLiniaVenda(i).getQuantitat());
     }
 
+    @I("^es finalitza la venda$")
+    public void esFinalitzaLaVenda() throws Throwable {
+        TPV.getInstance().tancarVendaActual();
+        throw new PendingException();
+    }
+
+    @I("^es va fer una venda amb el codi (\\d+) amb (\\d+) productes amb codi \"([^\"]*)\" i (\\d+) producte amb codi \"([^\"]*)\"$")
+    public void esVaFerUnaVendaAmbElCodiAmbProductesAmbCodiIProducteAmbCodi(int codiVenda, int unitatsProd1, String codiProd1, int unitatsProd2, String codiProd2) throws Throwable {
+        TPV.getInstance().iniciarVendaAmbID(codiVenda);
+        TPV.getInstance().afegirProducteLiniaVenda(codiProd1,unitatsProd1);
+        TPV.getInstance().afegirProducteLiniaVenda(codiProd1,unitatsProd1);
+        TPV.getInstance().tancarVendaActual();
+    }
+
+
+    @I("^s'afegeix a la linia de venda (\\d+) unitats del producte amb codi de barres \"([^\"]*)\"$")
+    public void sAfegeixALaLiniaDeVendaUnitatsDelProducteAmbCodiDeBarres(int unitatsProd, String codiBarres) throws Throwable {
+
+        TPV.getInstance().afegirProducteLiniaVenda(codiBarres,unitatsProd);
+    }
+
+    @Quan("^vull retornar (\\d+) unitat del producte amb codi \"([^\"]*)\" de la venda (\\d+)$")
+    public void vullRetornarUnitatDelProducteAmbCodiDeLaVenda(int unitatsProd, String codiBarres, int idVenda) throws Throwable {
+        if(TPV.getInstance().possibilitatDeRetorn(idVenda,codiBarres,unitatsProd)) {
+        }
+        else {
+
+        }
+        throw new PendingException();
+    }
 }
