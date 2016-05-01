@@ -1,9 +1,11 @@
 package edu.upc.essi.gps.ecommerce.domain;
 
+import edu.upc.essi.gps.domain.Entity;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Venda {
+public class Venda implements Entity {
     private int id;
     private List<LiniaVenda> liniesVenda;
     private String informacioTancar;
@@ -36,8 +38,8 @@ public class Venda {
         else informacioTancar = "Venda finalitzada";
     }
 
-    public void afegeixLinia(Producte p) {
-        liniesVenda.add(new LiniaVenda(p));
+    public void afegeixLinia(Producte p, Integer unitats) {
+        liniesVenda.add(new LiniaVenda(p,unitats));
     }
 
     public int getNombreLiniesVenda() {
@@ -47,4 +49,6 @@ public class Venda {
     public LiniaVenda getLiniaVenda(int i) {
         return liniesVenda.get(i);
     }
+
+
 }

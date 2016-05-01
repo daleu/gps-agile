@@ -9,9 +9,9 @@ public class LiniaVenda {
     private Producte producte;
     private int quantitat;
 
-    public LiniaVenda(Producte p){
+    public LiniaVenda(Producte p,Integer q){
         this.producte = p;
-        quantitat = 1;
+        quantitat = q;
     }
 
     public double getTotal() {

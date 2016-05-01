@@ -40,4 +40,9 @@ public class Cataleg {
         if (p == null) throw new ProducteNoExisteixException();
         return p;
     }
+
+    public boolean existeixProducte(String codiProducte) throws ProducteNoExisteixException {
+        if (this.getProductePerCodi(codiProducte) == null) return false;
+        return true;
+    }
 }

@@ -7,6 +7,8 @@ import cucumber.api.java.ca.I;
 import cucumber.api.java.ca.Quan;
 import edu.upc.essi.gps.ecommerce.domain.*;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
+import edu.upc.essi.gps.ecommerce.repositoris.VendesRepositori;
+import edu.upc.essi.gps.ecommerce.repositoris.VendesServei;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -17,6 +19,10 @@ public class StepDefinitions {
      Double (.+)
      String \"([^\"]*)\"
       */
+
+    VendesRepositori vendesRepositori = new VendesRepositori();
+    VendesServei vendesServei = new VendesServei(vendesRepositori);
+    CtrlLlocActual ctrlLlocActual = new CtrlLlocActual(vendesServei);
 
     private Exception exception;
     @Quan("^inicio una venda$")
@@ -120,4 +126,56 @@ public class StepDefinitions {
     public void la_linia_de_venda_te_per_quantitat(int i, int expectedQuantitat) throws Throwable {
         assertEquals(expectedQuantitat, TPV.getInstance().getVendaActual().getLiniaVenda(i).getQuantitat());
     }
+
+    @I("^es va fer una venda amb el codi \"([^\"]*)\" amb (\\d+) productes amb codi \"([^\"]*)\" i (\\d+) producte amb codi \"([^\"]*)\"$")
+    public void esVaFerUnaVendaAmbElCodiAmbProductesAmbCodiIProducteAmbCodi(String codiVenda, int unitatsProd1, String codiProd1, int unitatsProd2, String codiProd2) throws Throwable {
+        ctrlLlocActual.iniciarVenda();
+        ctrlLlocActual.afegirLiniaVenda(codiProd1,unitatsProd1);
+        ctrlLlocActual.afegirLiniaVenda(codiProd2,unitatsProd2);
+        ctrlLlocActual.tancarVendaActual();
+        throw new PendingException();
+    }
+
+    @I("^que hi ha una venda començada$")
+    public void queHiHaUnaVendaComençada() throws Throwable {
+        ctrlLlocActual.iniciarVenda();
+        throw new PendingException();
+    }
+
+    @I("^s'afegeix a la linia de venda (\\d+) unitats del producte amb codi de barres \"([^\"]*)\"$")
+    public void sAfegeixALaLiniaDeVendaUnitatsDelProducteAmbCodiDeBarres(int unitatsProd, String codiProd) throws Throwable {
+       ctrlLlocActual.afegirLiniaVenda(codiProd,unitatsProd);
+        throw new PendingException();
+    }
+
+    @Quan("^vull retornar (\\d+) unitat del producte amb codi \"([^\"]*)\" de la venda \"([^\"]*)\"$")
+    public void vullRetornarUnitatDelProducteAmbCodiDeLaVenda(int arg0, String arg1, String arg2) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Aleshores("^comprobo que la venda existeix$")
+    public void comproboQueLaVendaExisteix() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @I("^el producte es va vendre en aquella venda$")
+    public void elProducteEsVaVendreEnAquellaVenda() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @I("^indico la devolucio del producte \"([^\"]*)\" pel motiu \"([^\"]*)\"$")
+    public void indicoLaDevolucioDelProductePelMotiu(String arg0, String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @I("^la linia venda inserta el producte en devolució en negatiu$")
+    public void laLiniaVendaInsertaElProducteEnDevolucióEnNegatiu() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
 }
