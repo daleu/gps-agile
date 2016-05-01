@@ -12,13 +12,13 @@ public class VendesServei {
         this.vendesRepositori = vendesRepositori;
     }
 
-    public Venda novaVendaID(){ //ID auto
+    public Venda novaVenda(){ //ID auto
         int id = vendesRepositori.newId();
         Venda result = new Venda(id);
         return result;
     }
 
-    public Venda novaVendaID(int id){ //ID manual
+    public Venda novaVendaAmbID(int id){ //ID manual
         Venda result = new Venda(id);
         vendesRepositori.checkInsert(result);
         return result;
