@@ -96,6 +96,11 @@ public class StepDefinitions {
         TPV.getInstance().passarCodi(codiBarres);
     }
 
+    @Quan("^introdueixo al tpv el producte per nom \"([^\"]*)\"$")
+    public void introdueixoAlTpvElProductePerNom(String nomProducte) throws Throwable {
+        TPV.getInstance().introduirNomProducte(nomProducte);
+    }
+
     @Aleshores("^la venda te una linia de venda$")
     public void la_venda_te_una_linia_de_venda() throws Throwable {
         assertEquals(1, TPV.getInstance().getVendaActual().getNombreLiniesVenda());
