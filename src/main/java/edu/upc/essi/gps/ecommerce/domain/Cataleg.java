@@ -12,6 +12,7 @@ public class Cataleg {
     //Classe singleton
     private static Cataleg instance;
     private Map<String, Producte> productesPerCodi;
+    private Map<String, Producte> productesPerNom;
 
     public static Cataleg getInstance() {
         if (instance == null) instance = new Cataleg();
@@ -19,10 +20,12 @@ public class Cataleg {
     }
 
     private Cataleg() {
+        this.productesPerNom = new HashMap<String,Producte>();
         this.productesPerCodi = new HashMap<String,Producte>();
     }
 
     public void afegeixProducte(Producte p) {
+        productesPerNom.put(p.getNom(), p);
         productesPerCodi.put(p.getCodiBarres(), p);
     }
 
@@ -30,5 +33,16 @@ public class Cataleg {
         Producte p = productesPerCodi.get(codiBarres);
         if (p == null) throw new ProducteNoExisteixException();
         return p;
+    }
+
+    public Producte getProductePerNom(String nomProducte) throws ProducteNoExisteixException {
+        Producte p = productesPerNom.get(nomProducte);
+        if (p == null) throw new ProducteNoExisteixException();
+        return p;
+    }
+
+    public boolean existeixProducte(String codiProducte) throws ProducteNoExisteixException {
+        if (this.getProductePerCodi(codiProducte) == null) return false;
+        return true;
     }
 }

@@ -7,6 +7,8 @@ import cucumber.api.java.ca.I;
 import cucumber.api.java.ca.Quan;
 import edu.upc.essi.gps.ecommerce.domain.*;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
+import edu.upc.essi.gps.ecommerce.repositoris.VendesRepositori;
+import edu.upc.essi.gps.ecommerce.repositoris.VendesServei;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -19,6 +21,7 @@ public class StepDefinitions {
       */
 
     private Exception exception;
+
     @Quan("^inicio una venda$")
     public void iniciarVenda() {
         try {
@@ -37,7 +40,7 @@ public class StepDefinitions {
     @Aleshores("^el preu total de la venda es (.+)$")
     public void el_preu_total_de_la_venda_es_(double totalExpected) throws Throwable {
         Venda venda = TPV.getInstance().getVendaActual();
-        assertEquals(totalExpected, venda.getTotal(),0.001);
+        assertEquals(totalExpected, venda.getTotal(), 0.001);
     }
 
     @Aleshores("^la venda te per identificador (\\d+)$")
@@ -86,7 +89,7 @@ public class StepDefinitions {
     }
 
     @I("^existeix el producte \"([^\"]*)\" amb codi de barres \"([^\"]*)\" i preu per unitat (.+)$")
-    public void existeix_el_producte_amb_codi_de_barres_i_preu_per_unitat_(String nomProducte, String codiBarres, int preuUnitat) throws Throwable {
+    public void existeix_el_producte_amb_codi_de_barres_i_preu_per_unitat_(String nomProducte, String codiBarres, double preuUnitat) throws Throwable {
         Producte p = new Producte(nomProducte, codiBarres, preuUnitat);
         Cataleg.getInstance().afegeixProducte(p);
     }
@@ -94,6 +97,11 @@ public class StepDefinitions {
     @Quan("^passo pel tpv el codi de barres \"([^\"]*)\"$")
     public void passo_pel_tpv_el_codi_de_barres(String codiBarres) throws Throwable {
         TPV.getInstance().passarCodi(codiBarres);
+    }
+
+    @Quan("^introdueixo al tpv el producte per nom \"([^\"]*)\"$")
+    public void introdueixoAlTpvElProductePerNom(String nomProducte) throws Throwable {
+        TPV.getInstance().introduirNomProducte(nomProducte);
     }
 
     @Aleshores("^la venda te una linia de venda$")
@@ -107,12 +115,42 @@ public class StepDefinitions {
     }
 
     @I("^la linia de venda (\\d+) te per preu unitat (.+)$")
-    public void la_linia_de_venda_te_per_preu_unitat_(int i, int expectedPreu) throws Throwable {
-        assertEquals(expectedPreu, TPV.getInstance().getVendaActual().getLiniaVenda(i).getTotal(),0.001);
+    public void la_linia_de_venda_te_per_preu_unitat_(int i, double expectedPreu) throws Throwable {
+        assertEquals(expectedPreu, TPV.getInstance().getVendaActual().getLiniaVenda(i).getTotal(), 0.001);
     }
 
     @I("^la linia de venda (\\d+) te per quantitat (\\d+)$")
     public void la_linia_de_venda_te_per_quantitat(int i, int expectedQuantitat) throws Throwable {
         assertEquals(expectedQuantitat, TPV.getInstance().getVendaActual().getLiniaVenda(i).getQuantitat());
+    }
+
+    @I("^es finalitza la venda$")
+    public void esFinalitzaLaVenda() throws Throwable {
+        TPV.getInstance().tancarVendaActual();
+    }
+
+    @I("^es va fer una venda amb el codi (\\d+) amb (\\d+) productes amb codi \"([^\"]*)\" i (\\d+) producte amb codi \"([^\"]*)\"$")
+    public void esVaFerUnaVendaAmbElCodiAmbProductesAmbCodiIProducteAmbCodi(int codiVenda, int unitatsProd1, String codiProd1, int unitatsProd2, String codiProd2) throws Throwable {
+        TPV.getInstance().iniciarVendaAmbID(codiVenda);
+        TPV.getInstance().afegirProducteLiniaVenda(codiProd1,unitatsProd1);
+        TPV.getInstance().afegirProducteLiniaVenda(codiProd1,unitatsProd1);
+        TPV.getInstance().tancarVendaActual();
+    }
+
+
+    @I("^s'afegeix a la linia de venda (\\d+) unitats del producte amb codi de barres \"([^\"]*)\"$")
+    public void sAfegeixALaLiniaDeVendaUnitatsDelProducteAmbCodiDeBarres(int unitatsProd, String codiBarres) throws Throwable {
+
+        TPV.getInstance().afegirProducteLiniaVenda(codiBarres,unitatsProd);
+    }
+
+    @Quan("^vull retornar (\\d+) unitat del producte amb codi \"([^\"]*)\" de la venda (\\d+)$")
+    public void vullRetornarUnitatDelProducteAmbCodiDeLaVenda(int unitatsProd, String codiBarres, int idVenda) throws Throwable {
+        if(TPV.getInstance().possibilitatDeRetorn(idVenda,codiBarres,unitatsProd)) {
+        }
+        else {
+
+        }
+        throw new PendingException();
     }
 }
