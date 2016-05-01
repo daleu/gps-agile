@@ -45,6 +45,6 @@ public class Venda {
     }
 
     public LiniaVenda getLiniaVenda(int i) {
-        return liniesVenda.get(i);
+        return liniesVenda.get(i - 1);
     }
 }

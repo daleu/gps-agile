@@ -24,8 +24,9 @@ public class TPV {
        if (this.vendaActual == null) {
            ++numVendesDiaries;
            vendaActual = new Venda(numVendesDiaries);
+       } else {
+           throw new VendaJaIniciadaException();
        }
-        else throw new VendaJaIniciadaException();
     }
 
 
