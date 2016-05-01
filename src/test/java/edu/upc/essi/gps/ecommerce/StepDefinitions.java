@@ -127,7 +127,6 @@ public class StepDefinitions {
     @I("^es finalitza la venda$")
     public void esFinalitzaLaVenda() throws Throwable {
         TPV.getInstance().tancarVendaActual();
-        throw new PendingException();
     }
 
     @I("^es va fer una venda amb el codi (\\d+) amb (\\d+) productes amb codi \"([^\"]*)\" i (\\d+) producte amb codi \"([^\"]*)\"$")
