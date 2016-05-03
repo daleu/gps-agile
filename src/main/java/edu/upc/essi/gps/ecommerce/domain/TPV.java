@@ -119,10 +119,13 @@ public class TPV {
     // Càlcul del quadrament
     //--------------------------------
 
-    public String quadrament() {
+    public boolean quadrament() {
         double diferencia = dinersEnCaixa - efectiuFi;
-        if (diferencia < 0) diferencia *= -1;
-        if (diferencia <= 5) return "Quadrament correcte";
-        else return "Quadrament incorrecte";
+        return (Math.abs(diferencia) <= 5);
+    }
+
+    public String obteMissatge() {
+        if (quadrament()) { return "Quadrament correcte"; }
+        return "Quadrament incorrecte";
     }
 }
