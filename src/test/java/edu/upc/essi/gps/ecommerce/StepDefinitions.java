@@ -153,4 +153,24 @@ public class StepDefinitions {
         }
         throw new PendingException();
     }
+
+    @Quan("^introdueixo al tpv (.+) inicials$")
+    public void introduirEfectiuInicial(int efectiu) throws Throwable {
+        TPV. getInstance().setEfectiuInicial(efectiu);
+    }
+
+    @Aleshores("^el tpv té (.+) inicials$")
+    public void elTpvTeInicials(int inicial) {
+        assertEquals(inicial,TPV.getInstance().getEfectiuInicial());
+    }
+
+    @Quan("^introdueixo al tpv (.+) finals$")
+    public void introduirEfectiuFinal(int efectiu) throws Throwable {
+        TPV. getInstance().setEfectiuFinal(efectiu);
+    }
+
+    @Aleshores("^el tpv té (.+) finals$")
+    public void elTpvTeFinals(int fin) {
+        assertEquals(fin,TPV.getInstance().getEfectiuFinal());
+    }
 }

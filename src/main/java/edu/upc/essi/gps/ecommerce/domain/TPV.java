@@ -14,6 +14,8 @@ public class TPV {
     private static TPV instance;
 
     private Venda vendaActual;
+    private int efectiuInici;
+    private int efectiuFi;
     private final VendesRepositori vendesRepositori = new VendesRepositori();
     private final VendesServei vendesServei = new VendesServei(vendesRepositori);
 
@@ -88,5 +90,25 @@ public class TPV {
             ven_anterior.conteLiniaVenda(codiBarres,unitatsProd);
         }
         return false;
+    }
+
+    //------------------------------
+    // Afegir efectiu pel quadrament del torn
+    //------------------------------
+
+    public void setEfectiuInicial(int efectiu) {
+        this.efectiuInici = efectiu;
+    }
+
+    public int getEfectiuInicial() {
+        return this.efectiuInici;
+    }
+
+    public void setEfectiuFinal(int efectiu) {
+        this.efectiuFi = efectiu;
+    }
+
+    public int getEfectiuFinal() {
+        return this.efectiuFi;
     }
 }
