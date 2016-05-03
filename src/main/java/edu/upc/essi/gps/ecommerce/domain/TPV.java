@@ -22,12 +22,13 @@ public class TPV {
     private final DevolucionsServei devolucionsServei = new DevolucionsServei();
     private final VendesServei vendesServei = new VendesServei();
 
-    private TPV(){}
-
+    public TPV(){}
+    /*
     public static TPV getInstance() {
         if (instance == null) instance = new TPV();
         return instance;
     }
+    */
 
     //---------------------------
     // Estats de venda
