@@ -192,4 +192,13 @@ public class StepDefinitions {
         assertEquals(expectedIdVenda,dev.getIdVenda());
         assertEquals(expectedMotiu,dev.getMotiu());
     }
+
+    @Quan("^inicio una nova venda$")
+    public void inicio_una_nova_venda() throws Throwable {
+        try {
+            TPV.getInstance().iniciarVenda();
+        } catch (VendaJaIniciadaException e) {
+            this.exception = e;
+        }
+    }
 }

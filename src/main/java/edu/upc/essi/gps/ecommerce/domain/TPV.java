@@ -15,12 +15,12 @@ public class TPV {
     private static TPV instance;
 
     private Venda vendaActual;
-    private int efectiuInici;
-    private int efectiuFi;
+    private double efectiuInici;
+    private double efectiuFi;
     private double dinersEnCaixa;
     private Devolucio devolucioActual;
     private final DevolucionsServei devolucionsServei = new DevolucionsServei();
-    private final VendesServei vendesServei = new VendesServei(vendesRepositori);
+    private final VendesServei vendesServei = new VendesServei();
 
     private TPV(){}
 
@@ -91,27 +91,62 @@ public class TPV {
         Venda ven_anterior = vendesServei.trobaPerCodi(idVenda);
         if(ven_anterior != null) {
             ven_anterior.conteLiniaVenda(codiBarres,unitatsProd);
+            return true;
         }
         return false;
+    }
+
+   //----------------------------------
+    // SOBRE DEVOLUCIONS
+    //----------------------------------
+
+    public void iniciarDevolucio(){
+        devolucioActual = devolucionsServei.novaDevolucio();
+    }
+    public void acabarDevolucio(){
+        devolucioActual = devolucionsServei.novaDevolucio();
+    }
+
+
+    public void afegirDevolucioLiniaVenda(int idVenda, String codiBarres, int unitatsProd,String motiu) throws ProducteNoExisteixException, Exception {
+       Producte pRetorn = Cataleg.getInstance().getProductePerCodi(codiBarres);
+       //1. Introduit a linia de venda en negatiu
+        vendaActual.afegeixDevolucio(pRetorn,unitatsProd);
+        //2. Deixar constancia en la devolucio
+        devolucioActual.setIdVenda(idVenda);
+        devolucioActual.setCodiBarres(codiBarres);
+        devolucioActual.setUnitatsProducte(unitatsProd);
+        devolucioActual.setMotiu(motiu);
+       //2. Actualitzar repositoris per evitar repetir
+        devolucionsServei.guardarDevolucio(devolucioActual);
+       vendesServei.indicarDevolucio(idVenda,codiBarres,unitatsProd);
     }
 
     //------------------------------
     // Afegir efectiu pel quadrament del torn
     //------------------------------
 
-    public void setEfectiuInicial(int efectiu) {
+    public void setEfectiuInicial(double efectiu) {
         this.efectiuInici = efectiu;
     }
 
-    public int getEfectiuInicial() {
+    public double getEfectiuInicial() {
         return this.efectiuInici;
     }
 
-    public void setEfectiuFinal(int efectiu) {
+    public void setEfectiuFinal(double efectiu) {
         this.efectiuFi = efectiu;
     }
 
-    public int getEfectiuFinal() {
+    public double getEfectiuFinal() {
         return this.efectiuFi;
+    }
+
+    public DevolucionsServei getdevolucionsServei() {
+        return devolucionsServei;
+    }
+
+    public String obteMissatge() {
+        return vendaActual.getInformacioTancar();
     }
 }
