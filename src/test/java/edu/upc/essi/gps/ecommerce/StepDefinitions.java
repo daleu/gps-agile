@@ -60,14 +60,6 @@ public class StepDefinitions {
         }
     }
 
-    @Quan("^inicio una nova venda$")
-    public void inicio_una_nova_venda() throws Throwable {
-        try {
-            TPV.getInstance().iniciarVenda();
-        } catch (VendaJaIniciadaException e) {
-            this.exception = e;
-        }
-    }
 
     @Aleshores("^obtinc un error que diu \"([^\"]*)\"$")
     public void obtinc_un_error_que_diu(String expectedMessage) throws Throwable {
@@ -146,23 +138,28 @@ public class StepDefinitions {
     }
 
     @Quan("^introdueixo al tpv (.+) inicials$")
-    public void introduirEfectiuInicial(int efectiu) throws Throwable {
-        TPV. getInstance().setEfectiuInicial(efectiu);
+    public void introduirEfectiuInicial(double efectiu) throws Throwable {
+        TPV.getInstance().setEfectiuInicial(efectiu);
     }
 
     @Aleshores("^el tpv té (.+) inicials$")
-    public void elTpvTeInicials(int inicial) {
-        assertEquals(inicial,TPV.getInstance().getEfectiuInicial());
+    public void elTpvTeInicials(double inicial) {
+        assertEquals(inicial,TPV.getInstance().getEfectiuInicial(),0.0);
     }
 
     @Quan("^introdueixo al tpv (.+) finals$")
-    public void introduirEfectiuFinal(int efectiu) throws Throwable {
-        TPV. getInstance().setEfectiuFinal(efectiu);
+    public void introduirEfectiuFinal(double efectiu) throws Throwable {
+        TPV.getInstance().setEfectiuFinal(efectiu);
     }
 
     @Aleshores("^el tpv té (.+) finals$")
-    public void elTpvTeFinals(int fin) {
-        assertEquals(fin,TPV.getInstance().getEfectiuFinal());
+    public void elTpvTeFinals(double fin) {
+        assertEquals(fin,TPV.getInstance().getEfectiuFinal(),0.0);
+    }
+
+    @Aleshores("^obtinc un missatge que diu \"([^\"]*)\"$")
+    public void obtenirMissatge(String msg) {
+        assertEquals(msg,TPV.getInstance().obteMissatge());
     }
 
 
