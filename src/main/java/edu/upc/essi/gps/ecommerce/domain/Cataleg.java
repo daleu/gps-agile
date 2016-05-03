@@ -10,16 +10,11 @@ import java.util.Map;
  */
 public class Cataleg {
     //Classe singleton
-    private static Cataleg instance;
     private Map<String, Producte> productesPerCodi;
     private Map<String, Producte> productesPerNom;
 
-    public static Cataleg getInstance() {
-        if (instance == null) instance = new Cataleg();
-        return instance;
-    }
 
-    private Cataleg() {
+    public Cataleg() {
         this.productesPerNom = new HashMap<String,Producte>();
         this.productesPerCodi = new HashMap<String,Producte>();
     }

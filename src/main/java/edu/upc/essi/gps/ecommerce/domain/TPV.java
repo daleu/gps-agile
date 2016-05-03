@@ -12,8 +12,6 @@ import edu.upc.essi.gps.ecommerce.repositoris.DevolucionsServei;
  */
 public class TPV {
     //Classe singleton
-    private static TPV instance;
-
     private Venda vendaActual;
     private double efectiuInici;
     private double efectiuFi;
@@ -22,13 +20,9 @@ public class TPV {
     private final DevolucionsServei devolucionsServei = new DevolucionsServei();
     private final VendesServei vendesServei = new VendesServei();
 
+    private Cataleg cataleg = new Cataleg();
+
     public TPV(){}
-    /*
-    public static TPV getInstance() {
-        if (instance == null) instance = new TPV();
-        return instance;
-    }
-    */
 
     //---------------------------
     // Estats de venda
@@ -74,17 +68,17 @@ public class TPV {
     //------------------------------
 
     public void passarCodi(String codiBarres) throws ProducteNoExisteixException {
-        Producte producteIdentificat = Cataleg.getInstance().getProductePerCodi(codiBarres);
+        Producte producteIdentificat = cataleg.getProductePerCodi(codiBarres);
         vendaActual.afegeixLinia(producteIdentificat,1);
     }
 
     public void introduirNomProducte(String nomProducte) throws ProducteNoExisteixException {
-        Producte producteIdentificat = Cataleg.getInstance().getProductePerNom(nomProducte);
+        Producte producteIdentificat = cataleg.getProductePerNom(nomProducte);
         vendaActual.afegeixLinia(producteIdentificat,1);
     }
 
     public void afegirProducteLiniaVenda(String codiBarres, int unitats) throws ProducteNoExisteixException {
-        Producte producteIdentificat = Cataleg.getInstance().getProductePerCodi(codiBarres);
+        Producte producteIdentificat = cataleg.getProductePerCodi(codiBarres);
         if(producteIdentificat == null) throw new ProducteNoExisteixException();
         vendaActual.afegeixLinia(producteIdentificat,unitats);
     }
@@ -111,7 +105,7 @@ public class TPV {
 
 
     public void afegirDevolucioLiniaVenda(int idVenda, String codiBarres, int unitatsProd,String motiu) throws ProducteNoExisteixException, Exception {
-       Producte pRetorn = Cataleg.getInstance().getProductePerCodi(codiBarres);
+       Producte pRetorn = cataleg.getProductePerCodi(codiBarres);
        //1. Introduit a linia de venda en negatiu
         vendaActual.afegeixDevolucio(pRetorn,unitatsProd);
         //2. Deixar constancia en la devolucio
@@ -166,5 +160,41 @@ public class TPV {
         if (quadrament()) { return "Quadrament correcte"; }
         return "Quadrament incorrecte";
 
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////FUNCIONS CONTROLADOR/////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public boolean VendaActualisEmpty() {
+        return vendaActual.isEmpty();
+    }
+
+    public double getTotalVenda() {
+        return vendaActual.getTotal();
+    }
+
+    public int getIdVenda() {
+        return vendaActual.getId();
+    }
+
+    public void afegeixProducteACataleg(String nomProducte, String codiBarres, double preuUnitat) {
+        Producte producte = new Producte(nomProducte,codiBarres,preuUnitat);
+        cataleg.afegeixProducte(producte);
+    }
+
+    public String getCodiBarresDevolucio(int expectedIdVenda, String expectedCodiBarres, int i) {
+        Devolucio dev = devolucionsServei.trobarPerParametres(expectedIdVenda,expectedCodiBarres,1);
+        return dev.getCodiBarres();
+    }
+
+    public int getIdVendaDevolucio(int expectedIdVenda, String expectedCodiBarres, int i) {
+        Devolucio dev = devolucionsServei.trobarPerParametres(expectedIdVenda,expectedCodiBarres,1);
+        return dev.getIdVenda();
+    }
+
+    public String getMotiuDevolucio(int expectedIdVenda, String expectedCodiBarres, int i) {
+        Devolucio dev = devolucionsServei.trobarPerParametres(expectedIdVenda,expectedCodiBarres,1);
+        return dev.getMotiu();
     }
 }
