@@ -159,7 +159,7 @@ public class StepDefinitions {
 
     @Aleshores("^obtinc un missatge que diu \"([^\"]*)\"$")
     public void obtenirMissatge(String msg) {
-        assertEquals(msg,TPV.getInstance().obteMissatge());
+        assertEquals(msg,TPV.getInstance().obtenirMissatge());
     }
 
 

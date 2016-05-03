@@ -52,6 +52,7 @@ public class TPV {
     public void tancarVendaActual() throws VendaNoIniciadaException {
         if (vendaActual != null)  {
             vendesServei.guardarVenda(vendaActual);
+            dinersEnCaixa += vendaActual.getTotal();
             vendaActual.tancar();
             vendaActual = null;
         }
@@ -119,7 +120,7 @@ public class TPV {
         devolucioActual.setMotiu(motiu);
        //2. Actualitzar repositoris per evitar repetir
         devolucionsServei.guardarDevolucio(devolucioActual);
-       vendesServei.indicarDevolucio(idVenda,codiBarres,unitatsProd);
+        vendesServei.indicarDevolucio(idVenda,codiBarres,unitatsProd);
     }
 
     //------------------------------
@@ -128,6 +129,7 @@ public class TPV {
 
     public void setEfectiuInicial(double efectiu) {
         this.efectiuInici = efectiu;
+        this.dinersEnCaixa = efectiu;
     }
 
     public double getEfectiuInicial() {
@@ -148,5 +150,20 @@ public class TPV {
 
     public String obteMissatge() {
         return vendaActual.getInformacioTancar();
+    }
+
+    //------------------------------
+    // Càlcul del quadrament
+    //------------------------------
+
+    public boolean quadrament() {
+        double diferencia = dinersEnCaixa - efectiuFi;
+        return (Math.abs(diferencia) <= 5);
+    }
+
+    public String obtenirMissatge() {
+        if (quadrament()) { return "Quadrament correcte"; }
+        return "Quadrament incorrecte";
+
     }
 }
