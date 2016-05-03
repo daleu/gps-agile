@@ -11,7 +11,7 @@ Característica: Iniciar venda
 
   Escenari: Iniciar una venda quan ja n'hi ha una iniciada
     Donat que hi ha una venda iniciada
-    Quan inicio una nova venda
+    Quan inicio una venda
     Aleshores obtinc un error que diu "Error: Ja hi ha una venda iniciada"
 
   Escenari: Tancar una venda sense tenir una venda iniciada

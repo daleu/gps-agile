@@ -14,8 +14,9 @@ public class TPV {
     private static TPV instance;
 
     private Venda vendaActual;
-    private int efectiuInici;
-    private int efectiuFi;
+    private double efectiuInici;
+    private double efectiuFi;
+    private double dinersEnCaixa;
     private final VendesRepositori vendesRepositori = new VendesRepositori();
     private final VendesServei vendesServei = new VendesServei(vendesRepositori);
 
@@ -49,6 +50,7 @@ public class TPV {
     public void tancarVendaActual() throws VendaNoIniciadaException {
         if (vendaActual != null)  {
             vendesServei.guardarVenda(vendaActual);
+            dinersEnCaixa += vendaActual.getTotal();
             vendaActual.tancar();
             vendaActual = null;
         }
@@ -96,19 +98,31 @@ public class TPV {
     // Afegir efectiu pel quadrament del torn
     //------------------------------
 
-    public void setEfectiuInicial(int efectiu) {
+    public void setEfectiuInicial(double efectiu) {
         this.efectiuInici = efectiu;
+        this.dinersEnCaixa = efectiu;
     }
 
-    public int getEfectiuInicial() {
+    public double getEfectiuInicial() {
         return this.efectiuInici;
     }
 
-    public void setEfectiuFinal(int efectiu) {
+    public void setEfectiuFinal(double efectiu) {
         this.efectiuFi = efectiu;
     }
 
-    public int getEfectiuFinal() {
+    public double getEfectiuFinal() {
         return this.efectiuFi;
+    }
+
+    //--------------------------------
+    // Càlcul del quadrament
+    //--------------------------------
+
+    public String quadrament() {
+        double diferencia = dinersEnCaixa - efectiuFi;
+        if (diferencia < 0) diferencia *= -1;
+        if (diferencia <= 5) return "Quadrament correcte";
+        else return "Quadrament incorrecte";
     }
 }
