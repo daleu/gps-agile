@@ -7,6 +7,7 @@ import cucumber.api.java.ca.I;
 import cucumber.api.java.ca.Quan;
 import edu.upc.essi.gps.ecommerce.domain.*;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
+import edu.upc.essi.gps.ecommerce.repositoris.DevolucionsServei;
 import edu.upc.essi.gps.ecommerce.repositoris.VendesRepositori;
 import edu.upc.essi.gps.ecommerce.repositoris.VendesServei;
 
@@ -144,16 +145,6 @@ public class StepDefinitions {
         TPV.getInstance().afegirProducteLiniaVenda(codiBarres,unitatsProd);
     }
 
-    @Quan("^vull retornar (\\d+) unitat del producte amb codi \"([^\"]*)\" de la venda (\\d+)$")
-    public void vullRetornarUnitatDelProducteAmbCodiDeLaVenda(int unitatsProd, String codiBarres, int idVenda) throws Throwable {
-        if(TPV.getInstance().possibilitatDeRetorn(idVenda,codiBarres,unitatsProd)) {
-        }
-        else {
-
-        }
-        throw new PendingException();
-    }
-
     @Quan("^introdueixo al tpv (.+) inicials$")
     public void introduirEfectiuInicial(int efectiu) throws Throwable {
         TPV. getInstance().setEfectiuInicial(efectiu);
@@ -172,5 +163,36 @@ public class StepDefinitions {
     @Aleshores("^el tpv té (.+) finals$")
     public void elTpvTeFinals(int fin) {
         assertEquals(fin,TPV.getInstance().getEfectiuFinal());
+    }
+
+
+    @I("^El preu final de la venda ha de ser la suma dels productes meny la suma de les devolucions$")
+    public void elPreuFinalDeLaVendaHaDeSerLaSumaDelsProductesMenyLaSumaDeLesDevolucions() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Quan("^vull fer una devolucio$")
+    public void vullFerUnaDevolucio(){
+        TPV.getInstance().iniciarDevolucio();
+    }
+
+    @I("^es vol retornar (\\d+) unitat del producte amb codi \"([^\"]*)\" de la venda (\\d+) pel motiu \"([^\"]*)\"$")
+    public void esVolRetornarUnitatDelProducteAmbCodiDeLaVendaPelMotiu(int unitatsProd, String codiBarres, int idVenda,String motiu) throws Throwable {
+        if(TPV.getInstance().possibilitatDeRetorn(idVenda,codiBarres,unitatsProd)) {
+            TPV.getInstance().afegirDevolucioLiniaVenda(idVenda,codiBarres,unitatsProd,motiu);
+        }
+        else {
+            throw new Exception("No es possible crear aquesta devolucio");
+        }
+    }
+
+    @Aleshores("^existeix una devolucio del producte \"([^\"]*)\" de la venda (\\d+) pel motiu \"([^\"]*)\"$")
+    public void existeixUnaDevolucioDelProducteDeLaVendaPelMotiu(String expectedCodiBarres, int expectedIdVenda, String expectedMotiu) throws Throwable {
+        DevolucionsServei devolucionsServei = TPV.getInstance().getdevolucionsServei();
+        Devolucio dev = devolucionsServei.trobarPerParametres(expectedIdVenda,expectedCodiBarres,1);
+        assertEquals(expectedCodiBarres,dev.getCodiBarres());
+        assertEquals(expectedIdVenda,dev.getIdVenda());
+        assertEquals(expectedMotiu,dev.getMotiu());
     }
 }

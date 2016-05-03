@@ -12,10 +12,8 @@ Característica: Retornar un producte
     I s'afegeix a la linia de venda 3 unitats del producte amb codi de barres "333"
     I s'afegeix a la linia de venda 1 unitats del producte amb codi de barres "222"
 
-#  Escenari: Retornar un sol producte amb saldo positiu
- #   Quan vull retornar 1 unitat del producte amb codi "777" de la venda 111
-  #  Aleshores comprobo que la venda existeix
-   # I el producte es va vendre en aquella venda
-    #I indico la devolucio del producte "777" pel motiu "Producte defectuós"
-    #I la linia venda inserta el producte en devolució en negatiu
-    #I El preu final de la venda ha de ser la suma dels productes meny la suma de les devolucions.
+Escenari: Retornar un sol producte amb saldo positiu
+   Quan vull fer una devolucio
+   I es vol retornar 1 unitat del producte amb codi "777" de la venda 111 pel motiu "Defectuos"
+   I es finalitza la venda
+   Aleshores existeix una devolucio del producte "777" de la venda 111 pel motiu "Defectuos"

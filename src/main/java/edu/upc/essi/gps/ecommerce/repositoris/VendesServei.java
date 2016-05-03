@@ -8,8 +8,8 @@ public class VendesServei {
 
     private VendesRepositori vendesRepositori;
 
-    public VendesServei(VendesRepositori vendesRepositori) {
-        this.vendesRepositori = vendesRepositori;
+    public VendesServei() {
+        this.vendesRepositori = new VendesRepositori();
     }
 
     public Venda novaVenda(){ //ID auto
@@ -37,4 +37,11 @@ public class VendesServei {
         return vendesRepositori.trobarVenda(id);
     }
 
+    public void indicarDevolucio(int idVenda, String codiBarres, int unitatsProd) throws Exception {
+            Venda v = trobaPerCodi(idVenda);
+            vendesRepositori.delete(v);
+            v.modificarLinia(codiBarres,unitatsProd);
+            vendesRepositori.checkInsert(v);
+            vendesRepositori.insert(v);
+    }
 }

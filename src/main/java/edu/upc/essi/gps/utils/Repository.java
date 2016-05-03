@@ -52,4 +52,9 @@ public abstract class Repository<T extends Entity> {
         return null;
     }
 
+    public void delete(T entity) {
+        entities.remove(entity);
+    }
+
+
 }

@@ -3,6 +3,7 @@ package edu.upc.essi.gps.ecommerce.domain;
 import edu.upc.essi.gps.ecommerce.exceptions.ProducteNoExisteixException;
 import edu.upc.essi.gps.ecommerce.exceptions.VendaJaIniciadaException;
 import edu.upc.essi.gps.ecommerce.exceptions.VendaNoIniciadaException;
+import edu.upc.essi.gps.ecommerce.repositoris.DevolucionsServei;
 import edu.upc.essi.gps.ecommerce.repositoris.VendesRepositori;
 import edu.upc.essi.gps.ecommerce.repositoris.VendesServei;
 
@@ -14,12 +15,11 @@ public class TPV {
     private static TPV instance;
 
     private Venda vendaActual;
+    private Devolucio devolucioActual;
     private int efectiuInici;
     private int efectiuFi;
-    private final VendesRepositori vendesRepositori = new VendesRepositori();
-    private final VendesServei vendesServei = new VendesServei(vendesRepositori);
-
-    private TPV(){}
+    private final DevolucionsServei devolucionsServei = new DevolucionsServei();
+    private final VendesServei vendesServei = new VendesServei();
 
     public static TPV getInstance() {
         if (instance == null) instance = new TPV();
@@ -88,8 +88,35 @@ public class TPV {
         Venda ven_anterior = vendesServei.trobaPerCodi(idVenda);
         if(ven_anterior != null) {
             ven_anterior.conteLiniaVenda(codiBarres,unitatsProd);
+            return true;
         }
         return false;
+    }
+
+    //----------------------------------
+    // SOBRE DEVOLUCIONS
+    //----------------------------------
+
+    public void iniciarDevolucio(){
+        devolucioActual = devolucionsServei.novaDevolucio();
+    }
+    public void acabarDevolucio(){
+        devolucioActual = devolucionsServei.novaDevolucio();
+    }
+
+
+    public void afegirDevolucioLiniaVenda(int idVenda, String codiBarres, int unitatsProd,String motiu) throws ProducteNoExisteixException, Exception {
+        Producte pRetorn = Cataleg.getInstance().getProductePerCodi(codiBarres);
+        //1. Introduit a linia de venda en negatiu
+        vendaActual.afegeixDevolucio(pRetorn,unitatsProd);
+        //2. Deixar constancia en la devolucio
+        devolucioActual.setIdVenda(idVenda);
+        devolucioActual.setCodiBarres(codiBarres);
+        devolucioActual.setUnitatsProducte(unitatsProd);
+        devolucioActual.setMotiu(motiu);
+        //2. Actualitzar repositoris per evitar repetir
+        devolucionsServei.guardarDevolucio(devolucioActual);
+        vendesServei.indicarDevolucio(idVenda,codiBarres,unitatsProd);
     }
 
     //------------------------------
@@ -110,5 +137,10 @@ public class TPV {
 
     public int getEfectiuFinal() {
         return this.efectiuFi;
+    }
+
+
+    public DevolucionsServei getdevolucionsServei() {
+        return devolucionsServei;
     }
 }

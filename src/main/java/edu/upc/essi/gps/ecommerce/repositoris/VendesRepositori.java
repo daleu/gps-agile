@@ -14,4 +14,5 @@ public class VendesRepositori extends Repository<Venda>{
         if(trobarVenda(entity.getId())!=null)
             throw new IllegalArgumentException("Ja existeix una venda amb aquest nom");
     }
+
 }

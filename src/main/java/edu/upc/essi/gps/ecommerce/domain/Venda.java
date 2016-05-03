@@ -63,4 +63,27 @@ public class Venda implements Entity {
         }
         return false;
     }
+
+    public void afegeixDevolucio(Producte pRetorn, int unitatsProd) {
+        Producte retorn = new Producte(pRetorn.getNom(),pRetorn.getCodiBarres(),(-pRetorn.getPreuUnitat()));
+        afegeixLinia(retorn,unitatsProd);
+    }
+
+    public void modificarLinia(String codiBarres, int unitatsProd) throws Exception {
+        for (LiniaVenda lv: liniesVenda) {
+            if(lv.getCodiProducte() == codiBarres) {
+                int dif = lv.getQuantitat() - unitatsProd;
+                if (dif < 0) {
+                    String s = "No es pot modificar la línia de venda";
+                    throw new Exception(s);
+                }
+                else if(dif == 0) {
+                    liniesVenda.remove(lv);
+                }
+                else {
+                    lv.setQuantitat(lv.getQuantitat() - unitatsProd);
+                }
+            }
+        }
+    }
 }
