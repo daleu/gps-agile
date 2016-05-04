@@ -59,21 +59,6 @@ public class TPVController {
         else throw new VendaNoIniciadaException();
     }
 
-    public void tancamentVenda(double valor) throws VendaNoIniciadaException,PagamentInsuficientException {
-        if (vendaActual != null)  {
-            if(vendaActual.getPreuTotal()>valor) throw new PagamentInsuficientException();
-            else {
-                vendaActual.setPreuPagament(valor);
-                canvi = vendaActual.getCanvi();
-            }
-            vendesServei.guardarVenda(vendaActual);
-            dinersEnCaixa += vendaActual.getPreuTotal();
-            vendaActual.tancar();
-            vendaActual = null;
-        }
-        else throw new VendaNoIniciadaException();
-    }
-
     public void anularVendaActual () {
         vendaActual.anular();
         vendaActual = null;
@@ -241,7 +226,6 @@ public class TPVController {
     }
 
     public void afegeixProducteACatalegAmbIva(String nomProducte, String codiBarres, double preuBase, double iva) {
-        System.out.println(iva);
         Producte producte = new Producte(nomProducte,codiBarres,preuBase,iva);
         cataleg.afegeixProducte(producte);
     }

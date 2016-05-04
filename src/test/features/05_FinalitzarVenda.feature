@@ -26,11 +26,12 @@ Característica: Finalitzar venda
     I introdueixo al tpv el producte per nom "Baldufa"
     I introdueixo al tpv el producte per nom "Baldufa"
     I introdueixo al tpv el producte per nom "GirafaRock"
-    Quan es finalitza la venda
-    I el client paga 10 euros en efectiu
+    Quan el client paga 10,0 euros en efectiu
+    I es finalitza la venda
+    I el client paga 10,0 euros en efectiu
     Aleshores el valor a retornar al client és de 0,50
-    I la linia 1 del tiquet sera " | Num. Venda: \n"
-    I la linia 2 del tiquet sera " | 2 | Baldufa | P.u. 2,5 | P.l 5,0 | "
-    I la linia 3 del tiquet sera " | 1 | GirafaRock | P.u. 4,5 | P.l 4,5 | "
-    I la linia 4 del tiquet sera " | Total: 9,50 | Canvi: 0,50 | "
+    I la linia 1 del tiquet sera " | Num. Venda: 1 | "
+    I la linia 2 del tiquet sera " | 2 | Baldufa | P.u. 2.5 | P.l. 5.0 | "
+    I la linia 3 del tiquet sera " | 1 | GirafaRock | P.u. 4.5 | P.l. 4.5 | "
+    I la linia 4 del tiquet sera " | Total: 9.5 | Canvi: 0.5 | "
 

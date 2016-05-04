@@ -42,7 +42,7 @@ public class Venda implements Entity {
         return total;
     }
     public double getCanvi() {
-        return preuPagament- getPreuTotal();
+        return preuPagament-getPreuTotal();
     }
 
     public void tancar() {
@@ -54,7 +54,10 @@ public class Venda implements Entity {
         informacioTancar = "Venda anul·lada";
     }
 
-    public void finalitzar() {finalitzada = true;}
+    public void finalitzar() {
+        finalitzada = true;
+        calculaTiquet();
+    }
 
     public void afegeixLinia(Producte p, Integer unitats) {
         boolean jahies = false;
@@ -118,10 +121,10 @@ public class Venda implements Entity {
         String sep = " | "; //Separacio
         tiquet = new ArrayList<>();
         tiquet.add(sep + "Tiquet" + sep); //El tiquet comenca a la posició 1 no a la 0
-        tiquet.add(sep + "Num. Venda" + id);
+        tiquet.add(sep + "Num. Venda: " + id + sep);
         for (LiniaVenda lv : liniesVenda) {
-            tiquet.add(sep + lv.getQuantitat() + sep + lv.getNomProducte() + sep + "P.u" + lv.getPreuUnitat() + sep
-                    + "P.l" + lv.getPreuTotal() + sep);
+            tiquet.add(sep + lv.getQuantitat() + sep + lv.getNomProducte() + sep + "P.u. " + lv.getPreuUnitat() + sep
+                    + "P.l. " + lv.getPreuTotal() + sep);
         }
         tiquet.add(sep + "Total: " + getPreuTotal() + sep + "Canvi: "+ getCanvi() + sep);
     }
