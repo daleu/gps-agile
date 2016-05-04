@@ -15,4 +15,5 @@ public class VendesRepositori extends Repository<Venda>{
             throw new IllegalArgumentException("Ja existeix una venda amb aquest nom");
     }
 
+
 }

@@ -9,6 +9,7 @@ public class Venda implements Entity {
     private int id;
     private List<LiniaVenda> liniesVenda;
     private String informacioTancar;
+    private double preuPagament;
 
     public Venda(int numVenda) {
         this.id = numVenda;
@@ -19,6 +20,7 @@ public class Venda implements Entity {
         return id;
     }
 
+    public void setPreuPagament(double valor) {preuPagament=valor;}
     public String getInformacioTancar() { return informacioTancar; }
 
     public boolean isEmpty() {
@@ -32,10 +34,17 @@ public class Venda implements Entity {
         }
         return total;
     }
+    public double getCanvi() {
+        return preuPagament-getTotal();
+    }
 
     public void tancar() {
         if (liniesVenda.isEmpty()) informacioTancar = "Venda anul·lada";
         else informacioTancar = "Venda finalitzada";
+    }
+
+    public void anular() {
+        informacioTancar = "Venda anul·lada";
     }
 
     public void afegeixLinia(Producte p, Integer unitats) {

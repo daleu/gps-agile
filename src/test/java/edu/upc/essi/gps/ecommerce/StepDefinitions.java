@@ -7,9 +7,6 @@ import cucumber.api.java.ca.I;
 import cucumber.api.java.ca.Quan;
 import edu.upc.essi.gps.ecommerce.domain.*;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
-import edu.upc.essi.gps.ecommerce.repositoris.DevolucionsServei;
-import edu.upc.essi.gps.ecommerce.repositoris.VendesRepositori;
-import edu.upc.essi.gps.ecommerce.repositoris.VendesServei;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -35,7 +32,7 @@ public class StepDefinitions {
 
     @Aleshores("^la venda no te linies de venda$")
     public void la_venda_no_te_linies_de_venda() throws Throwable {
-        assertEquals(true, tpv.VendaActualisEmpty());
+        assertEquals(true, tpv.vendaActualIsEmpty());
     }
 
     @Aleshores("^el preu total de la venda es (.+)$")
@@ -64,15 +61,6 @@ public class StepDefinitions {
         assertEquals(expectedMessage, this.exception.getMessage());
     }
 
-    @Quan("^tanco una venda sense tenir una venda iniciada$")
-    public void tanco_una_venda_sense_tenir_una_venda_iniciada() throws Throwable {
-        try {
-            tpv.tancarVendaActual();
-        } catch (VendaNoIniciadaException e) {
-            this.exception = e;
-        }
-    }
-
     //TODO Decidir si fa falta aquesta funcio, ja que si la venda no es crea no cal ficarla a null
     @Donat("^que no hi ha cap venda iniciada$")
     public void que_no_hi_ha_cap_venda_iniciada() throws Throwable {
@@ -94,10 +82,16 @@ public class StepDefinitions {
         tpv.introduirNomProducte(nomProducte);
     }
 
+    //TODO: Es podria modificar per la venda te (int) linies de venda. FUNCIO A SOTA
     @Aleshores("^la venda te una linia de venda$")
     public void la_venda_te_una_linia_de_venda() throws Throwable {
         assertEquals(1, tpv.getVendaActual().getNombreLiniesVenda());
     }
+    @Aleshores("^la venda te (\\d+) linia de venda$")
+    public void laVendaTeLiniaDeVenda(int num) throws Throwable {
+        assertEquals(num, tpv.getVendaActual().getNombreLiniesVenda());
+    }
+
 
     @I("^la linia de venda (\\d+) te per producte \"([^\"]*)\"$")
     public void la_linia_de_venda_te_per_producte(int i, String expectedNom) throws Throwable {
@@ -116,8 +110,23 @@ public class StepDefinitions {
 
     @I("^es finalitza la venda$")
     public void esFinalitzaLaVenda() throws Throwable {
-        tpv.tancarVendaActual();
+        tpv.tancamentVenda();
     }
+
+    @Quan("^s'anula la venda$")
+    public void sAnulaLaVenda() throws Throwable {
+        tpv.anularVendaActual();
+    }
+
+    @I("^es finalitza la venda i el client paga (.+) euros en efectiu$")
+    public void esFinalitzaLaVendaIElClientPagaAmbEurosEnEfectiu(double valor) throws Throwable {
+        try {
+            tpv.tancamentVenda(valor);
+        } catch (PagamentInsuficientException | VendaNoIniciadaException e) {
+            this.exception = e;
+        }
+    }
+
 
     //TODO s'ha de mirar si es pot fer així
     @I("^es va fer una venda amb el codi (\\d+) amb (\\d+) productes amb codi \"([^\"]*)\" i (\\d+) producte amb codi \"([^\"]*)\"$")
@@ -125,7 +134,7 @@ public class StepDefinitions {
         tpv.iniciarVendaAmbID(codiVenda);
         tpv.afegirProducteLiniaVenda(codiProd1,unitatsProd1);
         tpv.afegirProducteLiniaVenda(codiProd1,unitatsProd1);
-        tpv.tancarVendaActual();
+        tpv.tancamentVenda();
     }
 
 
@@ -172,7 +181,8 @@ public class StepDefinitions {
         tpv.iniciarDevolucio();
     }
 
-    //TODO: Diferenciar casos
+    //TODO: Diferenciar casos. Possibilitat de retorn es un Donat i AfegirDevolucioLiniaVenda és un Quan
+    //No es pot fer un throw aqui, ho ha de fer el TPV en aquest cas (és lògica)
     @I("^es vol retornar (\\d+) unitat del producte amb codi \"([^\"]*)\" de la venda (\\d+) pel motiu \"([^\"]*)\"$")
     public void esVolRetornarUnitatDelProducteAmbCodiDeLaVendaPelMotiu(int unitatsProd, String codiBarres, int idVenda,String motiu) throws Throwable {
         if(tpv.possibilitatDeRetorn(idVenda,codiBarres,unitatsProd)) {
@@ -197,5 +207,18 @@ public class StepDefinitions {
         } catch (VendaJaIniciadaException e) {
             this.exception = e;
         }
+    }
+
+
+    @Aleshores("^no hi ha cap venda iniciada$")
+    public void noHiHaCapVendaIniciada() throws Throwable {
+        tpv.vendaActualIsNull();
+    }
+
+
+    @Aleshores("^el valor a retornar al client és de (.+)$")
+    public void elValorARetornarAlClientÉsDe(double valor) throws Throwable {
+        assertEquals(valor,tpv.getCanviUltimaVenda(),0.001);
+
     }
 }

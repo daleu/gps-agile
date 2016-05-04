@@ -1,9 +1,9 @@
 package edu.upc.essi.gps.ecommerce.domain;
 
+import edu.upc.essi.gps.ecommerce.exceptions.PagamentInsuficientException;
 import edu.upc.essi.gps.ecommerce.exceptions.ProducteNoExisteixException;
 import edu.upc.essi.gps.ecommerce.exceptions.VendaJaIniciadaException;
 import edu.upc.essi.gps.ecommerce.exceptions.VendaNoIniciadaException;
-import edu.upc.essi.gps.ecommerce.repositoris.VendesRepositori;
 import edu.upc.essi.gps.ecommerce.repositoris.VendesServei;
 import edu.upc.essi.gps.ecommerce.repositoris.DevolucionsServei;
 
@@ -19,6 +19,8 @@ public class TPV {
     private Devolucio devolucioActual;
     private final DevolucionsServei devolucionsServei = new DevolucionsServei();
     private final VendesServei vendesServei = new VendesServei();
+
+    private double canvi;
 
     private Cataleg cataleg = new Cataleg();
 
@@ -44,7 +46,7 @@ public class TPV {
         }
     }
 
-    public void tancarVendaActual() throws VendaNoIniciadaException {
+    public void tancamentVenda() throws VendaNoIniciadaException {
         if (vendaActual != null)  {
             vendesServei.guardarVenda(vendaActual);
             dinersEnCaixa += vendaActual.getTotal();
@@ -52,6 +54,26 @@ public class TPV {
             vendaActual = null;
         }
         else throw new VendaNoIniciadaException();
+    }
+
+    public void tancamentVenda(double valor) throws VendaNoIniciadaException,PagamentInsuficientException {
+        if (vendaActual != null)  {
+            if(vendaActual.getTotal()>valor) throw new PagamentInsuficientException();
+            else {
+                vendaActual.setPreuPagament(valor);
+                canvi = vendaActual.getCanvi();
+            }
+            vendesServei.guardarVenda(vendaActual);
+            dinersEnCaixa += vendaActual.getTotal();
+            vendaActual.tancar();
+            vendaActual = null;
+        }
+        else throw new VendaNoIniciadaException();
+    }
+
+    public void anularVendaActual () {
+        vendaActual.anular();
+        vendaActual = null;
     }
 
     public Venda getVendaActual() {
@@ -162,12 +184,24 @@ public class TPV {
 
     }
 
+    //------------------------------
+    // Tancament Venda
+    //------------------------------
+
+    public double getCanviUltimaVenda() {
+        return canvi;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////FUNCIONS CONTROLADOR/////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public boolean VendaActualisEmpty() {
+    public boolean vendaActualIsEmpty() {
         return vendaActual.isEmpty();
+    }
+
+    public boolean vendaActualIsNull() {
+        return vendaActual == null;
     }
 
     public double getTotalVenda() {
