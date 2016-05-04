@@ -16,6 +16,7 @@ public class TPVController {
     private double efectiuInici;
     private double efectiuFi;
     private double dinersEnCaixa;
+    private String estatQuadrament;
     private Devolucio devolucioActual;
     private final DevolucionsServei devolucionsServei = new DevolucionsServei();
     private final VendesServei vendesServei = new VendesServei();
@@ -173,15 +174,14 @@ public class TPVController {
     // Càlcul del quadrament
     //------------------------------
 
-    public boolean quadrament() {
+    public void quadrament() {
         double diferencia = dinersEnCaixa - efectiuFi;
-        return (Math.abs(diferencia) <= 5);
+        if (Math.abs(diferencia) <= 5) { estatQuadrament = "Quadrament correcte"; }
+        else { estatQuadrament = "Quadrament incorrecte"; }
     }
 
-    public String obtenirMissatge() {
-        if (quadrament()) { return "Quadrament correcte"; }
-        return "Quadrament incorrecte";
-
+    public String getEstatQuadrament() {
+        return estatQuadrament;
     }
 
     //------------------------------

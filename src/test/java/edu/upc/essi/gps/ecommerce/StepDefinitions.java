@@ -137,7 +137,6 @@ public class StepDefinitions {
         tpvController.tancamentVenda();
     }
 
-
     @I("^s'afegeix a la linia de venda (\\d+) unitats del producte amb codi de barres \"([^\"]*)\"$")
     public void sAfegeixALaLiniaDeVendaUnitatsDelProducteAmbCodiDeBarres(int unitatsProd, String codiBarres) throws Throwable {
         tpvController.afegirProducteLiniaVenda(codiBarres,unitatsProd);
@@ -149,7 +148,7 @@ public class StepDefinitions {
     }
 
     @Aleshores("^el tpv té (.+) inicials$")
-    public void elTpvTeInicials(double inicial) {
+    public void elTpvTeInicials(double inicial)throws Throwable {
         assertEquals(inicial, tpvController.getEfectiuInicial(),0.0);
     }
 
@@ -159,18 +158,31 @@ public class StepDefinitions {
     }
 
     @Aleshores("^el tpv té (.+) finals$")
-    public void elTpvTeFinals(double fin) {
+    public void elTpvTeFinals(double fin)throws Throwable {
         assertEquals(fin, tpvController.getEfectiuFinal(),0.0);
     }
 
     @Aleshores("^obtinc un missatge que diu \"([^\"]*)\"$")
     public void obtenirMissatge(String msg) {
-        assertEquals(msg, tpvController.obtenirMissatge());
+        assertEquals(msg, tpvController.getEstatQuadrament());
     }
+
+    @Donat("^que hi ha al tpv (.+) inicials")
+    public void elTpvHiHaInicials(double efectiu) throws Throwable { tpvController.setEfectiuInicial(efectiu);}
+
+    @I("^que hi ha una linia de venda amb (\\d+) unitats del producte amb codi de barres \"([^\"]*)\"$")
+    public void HiHaUnaLiniaDeVenda(int unitats, String codi) throws Throwable {
+        tpvController.afegirProducteLiniaVenda(codi,unitats);
+    }
+
+    @I("^demano el quadrament")
+    public void demanoQuadrament() { tpvController.quadrament(); }
+
+
 
 
     //TODO Falta implementar
-    @I("^El preu final de la venda ha de ser la suma dels productes meny la suma de les devolucions$")
+    @I("^El preu final de la venda ha de ser la suma dels productes menys la suma de les devolucions$")
     public void elPreuFinalDeLaVendaHaDeSerLaSumaDelsProductesMenyLaSumaDeLesDevolucions() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
