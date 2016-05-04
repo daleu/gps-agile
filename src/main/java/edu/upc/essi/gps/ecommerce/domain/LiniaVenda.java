@@ -14,7 +14,7 @@ public class LiniaVenda {
         quantitat = q;
     }
 
-    public double getTotal() {
+    public double getPreuTotal() {
         return producte.getPreuUnitat()*quantitat;
     }
 
@@ -33,4 +33,6 @@ public class LiniaVenda {
     public void setQuantitat(int quantitat) {
         this.quantitat = quantitat;
     }
+
+    public double getPreuUnitat() {return this.producte.getPreuUnitat();}
 }

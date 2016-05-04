@@ -1,6 +1,7 @@
 package edu.upc.essi.gps.ecommerce.domain;
 
 import edu.upc.essi.gps.domain.Entity;
+import edu.upc.essi.gps.ecommerce.exceptions.NoHiHaTiquetException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +12,13 @@ public class Venda implements Entity {
     private String informacioTancar;
     private double preuPagament;
     private boolean finalitzada;
+    private List<String> tiquet;
 
     public Venda(int numVenda) {
         this.id = numVenda;
         liniesVenda = new ArrayList<>();
         finalitzada = false;
+        tiquet = null;
     }
 
     public int getId() {
@@ -31,15 +34,15 @@ public class Venda implements Entity {
 
     public boolean isFinalitzada() {return finalitzada;}
 
-    public double getTotal() {
+    public double getPreuTotal() {
         double total = 0.0;
         for (LiniaVenda lv : liniesVenda) {
-            total += lv.getTotal();
+            total += lv.getPreuTotal();
         }
         return total;
     }
     public double getCanvi() {
-        return preuPagament-getTotal();
+        return preuPagament- getPreuTotal();
     }
 
     public void tancar() {
@@ -100,5 +103,24 @@ public class Venda implements Entity {
                 }
             }
         }
+    }
+
+    public void calculaTiquet() {
+        String sep = " | "; //Separacio
+        tiquet = new ArrayList<>();
+        tiquet.add(sep + "Tiquet" + sep); //El tiquet comenca a la posició 1 no a la 0
+        tiquet.add(sep + "Num. Venda" + id);
+        for (LiniaVenda lv : liniesVenda) {
+            tiquet.add(sep + lv.getQuantitat() + sep + lv.getNomProducte() + sep + "P.u" + lv.getPreuUnitat() + sep
+                    + "P.l" + lv.getPreuTotal() + sep);
+        }
+        tiquet.add(sep + "Total: " + getPreuTotal() + sep + "Canvi: "+ getCanvi() + sep);
+    }
+
+    public String getLiniaTiquet(int num) throws NoHiHaTiquetException {
+        if(tiquet != null) {
+            return tiquet.get(num);
+        }
+        else throw new NoHiHaTiquetException();
     }
 }

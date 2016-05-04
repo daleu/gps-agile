@@ -100,7 +100,7 @@ public class StepDefinitions {
 
     @I("^la linia de venda (\\d+) te per preu unitat (.+)$")
     public void laLiniaDeVendaTePerPreuUnitat(int i, double expectedPreu) throws Throwable {
-        assertEquals(expectedPreu, tpvController.getVendaActual().getLiniaVenda(i).getTotal(), 0.001);
+        assertEquals(expectedPreu, tpvController.getVendaActual().getLiniaVenda(i).getPreuTotal(), 0.001);
     }
 
     @I("^la linia de venda (\\d+) te per quantitat (\\d+)$")
@@ -231,5 +231,14 @@ public class StepDefinitions {
     public void elValorARetornarAlClientÉsDe(double valor) throws Throwable {
         assertEquals(valor, tpvController.getCanviUltimaVenda(),0.001);
 
+    }
+
+    @I("^la linia (\\d+) del tiquet sera \"([^\"]*)\"$")
+    public void laLiniaDelTiquetSera(int num, String linia) {
+        try {
+            assertEquals(linia,tpvController.getLiniaTiquetVendaActual(num));
+        } catch (NoHiHaTiquetException e) {
+            this.exception = e;
+        }
     }
 }
