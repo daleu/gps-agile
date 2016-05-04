@@ -7,7 +7,7 @@ Característica: Quadrament al finalitzar un torn
     Donat existeix el producte "Baldufa" amb codi de barres "1" i preu per unitat 3.50
     Donat existeix el producte "Cotxe" amb codi de barres "2" i preu per unitat 22.50
     Donat existeix el producte "Pilota" amb codi de barres "3" i preu per unitat 1.50
-
+ #TODO: QUAN INICIEM TPV PODEM DEFINIR UN VALOR INICIAL DE CAIXA (NOMÉS UN)
   Escenari: Finalitzar un quadrament correctament
     Quan introdueixo al tpv 0.00 inicials
     I inicio una venda

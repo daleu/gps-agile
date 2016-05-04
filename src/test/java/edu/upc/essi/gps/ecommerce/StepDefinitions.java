@@ -18,110 +18,110 @@ public class StepDefinitions {
      String \"([^\"]*)\"
       */
 
-    private TPV tpv = new TPV();
+    private TPVController tpvController = new TPVController();
     private Exception exception;
 
     @Quan("^inicio una venda$")
     public void iniciarVenda() {
         try {
-            tpv.iniciarVenda();
+            tpvController.iniciarVenda();
         } catch (VendaJaIniciadaException e) {
             this.exception = e;
         }
     }
 
     @Aleshores("^la venda no te linies de venda$")
-    public void la_venda_no_te_linies_de_venda() throws Throwable {
-        assertEquals(true, tpv.vendaActualIsEmpty());
+    public void laVendaNoTeLiniesDeVenda() throws Throwable {
+        assertEquals(true, tpvController.vendaActualIsEmpty());
     }
 
     @Aleshores("^el preu total de la venda es (.+)$")
-    public void el_preu_total_de_la_venda_es_(double totalExpected) throws Throwable {
-        assertEquals(totalExpected, tpv.getTotalVenda(), 0.001);
+    public void elPreuTotalDeLaVendaEs(double totalExpected) throws Throwable {
+        assertEquals(totalExpected, tpvController.getTotalVenda(), 0.001);
     }
 
     @Aleshores("^la venda te per identificador (\\d+)$")
-    public void la_venda_te_per_identificador(int expectedId) throws Throwable {
-        assertNotNull(tpv.getVendaActual());
-        assertEquals(expectedId, tpv.getIdVenda());
+    public void laVendaTePerIdentificador(int expectedId) throws Throwable {
+        assertNotNull(tpvController.getVendaActual());
+        assertEquals(expectedId, tpvController.getIdVenda());
     }
 
     @Donat("^que hi ha una venda iniciada$")
-    public void que_hi_ha_una_venda_iniciada() throws Throwable {
+    public void queHiHaUnaVendaIniciada() throws Throwable {
         try {
-            tpv.iniciarVenda();
+            tpvController.iniciarVenda();
         } catch (VendaJaIniciadaException e) {
             this.exception = e;
         }
     }
 
     @Aleshores("^obtinc un error que diu \"([^\"]*)\"$")
-    public void obtinc_un_error_que_diu(String expectedMessage) throws Throwable {
+    public void obtincUnErrorQueDiu(String expectedMessage) throws Throwable {
         assertNotNull(this.exception);
         assertEquals(expectedMessage, this.exception.getMessage());
     }
 
     //TODO Decidir si fa falta aquesta funcio, ja que si la venda no es crea no cal ficarla a null
     @Donat("^que no hi ha cap venda iniciada$")
-    public void que_no_hi_ha_cap_venda_iniciada() throws Throwable {
-        tpv.setVendaActual(null);
+    public void queNoHiHaCapVendaIniciada() throws Throwable {
+        tpvController.setVendaActual(null);
     }
 
     @I("^existeix el producte \"([^\"]*)\" amb codi de barres \"([^\"]*)\" i preu per unitat (.+)$")
-    public void existeix_el_producte_amb_codi_de_barres_i_preu_per_unitat_(String nomProducte, String codiBarres, double preuUnitat) throws Throwable {
-        tpv.afegeixProducteACataleg(nomProducte,codiBarres,preuUnitat);
+    public void existeixElProducteAmbCodiDeBarresIPreuPerUnitat(String nomProducte, String codiBarres, double preuUnitat) throws Throwable {
+        tpvController.afegeixProducteACataleg(nomProducte,codiBarres,preuUnitat);
     }
 
     @Quan("^passo pel tpv el codi de barres \"([^\"]*)\"$")
-    public void passo_pel_tpv_el_codi_de_barres(String codiBarres) throws Throwable {
-        tpv.passarCodi(codiBarres);
+    public void passoPelTpvElCodiDeBarres(String codiBarres) throws Throwable {
+        tpvController.passarCodi(codiBarres);
     }
 
     @Quan("^introdueixo al tpv el producte per nom \"([^\"]*)\"$")
     public void introdueixoAlTpvElProductePerNom(String nomProducte) throws Throwable {
-        tpv.introduirNomProducte(nomProducte);
+        tpvController.introduirNomProducte(nomProducte);
     }
 
     //TODO: Es podria modificar per la venda te (int) linies de venda. FUNCIO A SOTA
     @Aleshores("^la venda te una linia de venda$")
-    public void la_venda_te_una_linia_de_venda() throws Throwable {
-        assertEquals(1, tpv.getVendaActual().getNombreLiniesVenda());
+    public void laVendaTeUnaLiniaDeVenda() throws Throwable {
+        assertEquals(1, tpvController.getVendaActual().getNombreLiniesVenda());
     }
     @Aleshores("^la venda te (\\d+) linia de venda$")
     public void laVendaTeLiniaDeVenda(int num) throws Throwable {
-        assertEquals(num, tpv.getVendaActual().getNombreLiniesVenda());
+        assertEquals(num, tpvController.getVendaActual().getNombreLiniesVenda());
     }
 
 
     @I("^la linia de venda (\\d+) te per producte \"([^\"]*)\"$")
-    public void la_linia_de_venda_te_per_producte(int i, String expectedNom) throws Throwable {
-        assertEquals(expectedNom, tpv.getVendaActual().getLiniaVenda(i).getNomProducte());
+    public void laLiniaDeVendaTePerProducte(int i, String expectedNom) throws Throwable {
+        assertEquals(expectedNom, tpvController.getVendaActual().getLiniaVenda(i).getNomProducte());
     }
 
     @I("^la linia de venda (\\d+) te per preu unitat (.+)$")
-    public void la_linia_de_venda_te_per_preu_unitat_(int i, double expectedPreu) throws Throwable {
-        assertEquals(expectedPreu, tpv.getVendaActual().getLiniaVenda(i).getTotal(), 0.001);
+    public void laLiniaDeVendaTePerPreuUnitat(int i, double expectedPreu) throws Throwable {
+        assertEquals(expectedPreu, tpvController.getVendaActual().getLiniaVenda(i).getTotal(), 0.001);
     }
 
     @I("^la linia de venda (\\d+) te per quantitat (\\d+)$")
-    public void la_linia_de_venda_te_per_quantitat(int i, int expectedQuantitat) throws Throwable {
-        assertEquals(expectedQuantitat, tpv.getVendaActual().getLiniaVenda(i).getQuantitat());
+    public void laLiniaDeVendaTePerQuantitat(int i, int expectedQuantitat) throws Throwable {
+        assertEquals(expectedQuantitat, tpvController.getVendaActual().getLiniaVenda(i).getQuantitat());
     }
 
     @I("^es finalitza la venda$")
     public void esFinalitzaLaVenda() throws Throwable {
-        tpv.tancamentVenda();
+        tpvController.tancamentVenda();
     }
 
     @Quan("^s'anula la venda$")
     public void sAnulaLaVenda() throws Throwable {
-        tpv.anularVendaActual();
+        tpvController.anularVendaActual();
     }
 
     @I("^es finalitza la venda i el client paga (.+) euros en efectiu$")
     public void esFinalitzaLaVendaIElClientPagaAmbEurosEnEfectiu(double valor) throws Throwable {
         try {
-            tpv.tancamentVenda(valor);
+            tpvController.tancamentVenda(valor);
         } catch (PagamentInsuficientException | VendaNoIniciadaException e) {
             this.exception = e;
         }
@@ -131,41 +131,41 @@ public class StepDefinitions {
     //TODO s'ha de mirar si es pot fer així
     @I("^es va fer una venda amb el codi (\\d+) amb (\\d+) productes amb codi \"([^\"]*)\" i (\\d+) producte amb codi \"([^\"]*)\"$")
     public void esVaFerUnaVendaAmbElCodiAmbProductesAmbCodiIProducteAmbCodi(int codiVenda, int unitatsProd1, String codiProd1, int unitatsProd2, String codiProd2) throws Throwable {
-        tpv.iniciarVendaAmbID(codiVenda);
-        tpv.afegirProducteLiniaVenda(codiProd1,unitatsProd1);
-        tpv.afegirProducteLiniaVenda(codiProd1,unitatsProd1);
-        tpv.tancamentVenda();
+        tpvController.iniciarVendaAmbID(codiVenda);
+        tpvController.afegirProducteLiniaVenda(codiProd1,unitatsProd1);
+        tpvController.afegirProducteLiniaVenda(codiProd1,unitatsProd1);
+        tpvController.tancamentVenda();
     }
 
 
     @I("^s'afegeix a la linia de venda (\\d+) unitats del producte amb codi de barres \"([^\"]*)\"$")
     public void sAfegeixALaLiniaDeVendaUnitatsDelProducteAmbCodiDeBarres(int unitatsProd, String codiBarres) throws Throwable {
-        tpv.afegirProducteLiniaVenda(codiBarres,unitatsProd);
+        tpvController.afegirProducteLiniaVenda(codiBarres,unitatsProd);
     }
 
     @Quan("^introdueixo al tpv (.+) inicials$")
     public void introduirEfectiuInicial(double efectiu) throws Throwable {
-        tpv.setEfectiuInicial(efectiu);
+        tpvController.setEfectiuInicial(efectiu);
     }
 
     @Aleshores("^el tpv té (.+) inicials$")
     public void elTpvTeInicials(double inicial) {
-        assertEquals(inicial,tpv.getEfectiuInicial(),0.0);
+        assertEquals(inicial, tpvController.getEfectiuInicial(),0.0);
     }
 
     @Quan("^introdueixo al tpv (.+) finals$")
     public void introduirEfectiuFinal(double efectiu) throws Throwable {
-        tpv.setEfectiuFinal(efectiu);
+        tpvController.setEfectiuFinal(efectiu);
     }
 
     @Aleshores("^el tpv té (.+) finals$")
     public void elTpvTeFinals(double fin) {
-        assertEquals(fin,tpv.getEfectiuFinal(),0.0);
+        assertEquals(fin, tpvController.getEfectiuFinal(),0.0);
     }
 
     @Aleshores("^obtinc un missatge que diu \"([^\"]*)\"$")
     public void obtenirMissatge(String msg) {
-        assertEquals(msg,tpv.obtenirMissatge());
+        assertEquals(msg, tpvController.obtenirMissatge());
     }
 
 
@@ -178,15 +178,15 @@ public class StepDefinitions {
 
     @Quan("^vull fer una devolucio$")
     public void vullFerUnaDevolucio(){
-        tpv.iniciarDevolucio();
+        tpvController.iniciarDevolucio();
     }
 
     //TODO: Diferenciar casos. Possibilitat de retorn es un Donat i AfegirDevolucioLiniaVenda és un Quan
-    //No es pot fer un throw aqui, ho ha de fer el TPV en aquest cas (és lògica)
+    //No es pot fer un throw aqui, ho ha de fer el TPVController en aquest cas (és lògica)
     @I("^es vol retornar (\\d+) unitat del producte amb codi \"([^\"]*)\" de la venda (\\d+) pel motiu \"([^\"]*)\"$")
     public void esVolRetornarUnitatDelProducteAmbCodiDeLaVendaPelMotiu(int unitatsProd, String codiBarres, int idVenda,String motiu) throws Throwable {
-        if(tpv.possibilitatDeRetorn(idVenda,codiBarres,unitatsProd)) {
-            tpv.afegirDevolucioLiniaVenda(idVenda,codiBarres,unitatsProd,motiu);
+        if(tpvController.possibilitatDeRetorn(idVenda,codiBarres,unitatsProd)) {
+            tpvController.afegirDevolucioLiniaVenda(idVenda,codiBarres,unitatsProd,motiu);
         }
         else {
             throw new Exception("No es possible crear aquesta devolucio");
@@ -195,15 +195,15 @@ public class StepDefinitions {
 
     @Aleshores("^existeix una devolucio del producte \"([^\"]*)\" de la venda (\\d+) pel motiu \"([^\"]*)\"$")
     public void existeixUnaDevolucioDelProducteDeLaVendaPelMotiu(String expectedCodiBarres, int expectedIdVenda, String expectedMotiu) throws Throwable {
-        assertEquals(expectedCodiBarres,tpv.getCodiBarresDevolucio(expectedIdVenda,expectedCodiBarres,1));
-        assertEquals(expectedIdVenda,tpv.getIdVendaDevolucio(expectedIdVenda,expectedCodiBarres,1));
-        assertEquals(expectedMotiu,tpv.getMotiuDevolucio(expectedIdVenda,expectedCodiBarres,1));
+        assertEquals(expectedCodiBarres, tpvController.getCodiBarresDevolucio(expectedIdVenda,expectedCodiBarres,1));
+        assertEquals(expectedIdVenda, tpvController.getIdVendaDevolucio(expectedIdVenda,expectedCodiBarres,1));
+        assertEquals(expectedMotiu, tpvController.getMotiuDevolucio(expectedIdVenda,expectedCodiBarres,1));
     }
 
     @Quan("^inicio una nova venda$")
     public void inicio_una_nova_venda() throws Throwable {
         try {
-            tpv.iniciarVenda();
+            tpvController.iniciarVenda();
         } catch (VendaJaIniciadaException e) {
             this.exception = e;
         }
@@ -212,13 +212,13 @@ public class StepDefinitions {
 
     @Aleshores("^no hi ha cap venda iniciada$")
     public void noHiHaCapVendaIniciada() throws Throwable {
-        tpv.vendaActualIsNull();
+        tpvController.vendaActualIsNull();
     }
 
 
     @Aleshores("^el valor a retornar al client és de (.+)$")
     public void elValorARetornarAlClientÉsDe(double valor) throws Throwable {
-        assertEquals(valor,tpv.getCanviUltimaVenda(),0.001);
+        assertEquals(valor, tpvController.getCanviUltimaVenda(),0.001);
 
     }
 }

@@ -10,7 +10,7 @@ import edu.upc.essi.gps.ecommerce.repositoris.DevolucionsServei;
 /**
  * Created by edu on 28/04/16.
  */
-public class TPV {
+public class TPVController {
     //Classe singleton
     private Venda vendaActual;
     private double efectiuInici;
@@ -24,7 +24,7 @@ public class TPV {
 
     private Cataleg cataleg = new Cataleg();
 
-    public TPV(){}
+    public TPVController(){}
 
     //---------------------------
     // Estats de venda
