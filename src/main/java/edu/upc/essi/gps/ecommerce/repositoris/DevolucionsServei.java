@@ -21,7 +21,6 @@ public class DevolucionsServei {
     public Devolucio  novaDevolucioAmbID(int id){ //ID manual
         Devolucio result = new Devolucio();
         result.setID(id);
-        devolucionsRepositori.checkInsert(result);
         return result;
     }
 
