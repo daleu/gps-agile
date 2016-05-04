@@ -15,8 +15,8 @@ Característica: Retornar un producte
 
     #TODO en aquest escenari potser no se li hauria de dir finalització de la venda sino de la devolucio
     #crea confusió més endavant
-Escenari: Retornar un sol producte amb saldo positiu
-   Quan vull fer una devolucio
-   I es vol retornar 1 unitat del producte amb codi "777" de la venda 111 pel motiu "Defectuos"
-   I es finalitza la venda
-   Aleshores existeix una devolucio del producte "777" de la venda 111 pel motiu "Defectuos"
+#Escenari: Retornar un sol producte amb saldo positiu
+   #Quan vull fer una devolucio
+   #I es vol retornar 1 unitat del producte amb codi "777" de la venda 111 pel motiu "Defectuos"
+   #I es finalitza la venda
+   #Aleshores existeix una devolucio del producte "777" de la venda 111 pel motiu "Defectuos"

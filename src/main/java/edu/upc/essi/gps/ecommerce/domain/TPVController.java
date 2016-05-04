@@ -1,9 +1,6 @@
 package edu.upc.essi.gps.ecommerce.domain;
 
-import edu.upc.essi.gps.ecommerce.exceptions.PagamentInsuficientException;
-import edu.upc.essi.gps.ecommerce.exceptions.ProducteNoExisteixException;
-import edu.upc.essi.gps.ecommerce.exceptions.VendaJaIniciadaException;
-import edu.upc.essi.gps.ecommerce.exceptions.VendaNoIniciadaException;
+import edu.upc.essi.gps.ecommerce.exceptions.*;
 import edu.upc.essi.gps.ecommerce.repositoris.VendesServei;
 import edu.upc.essi.gps.ecommerce.repositoris.DevolucionsServei;
 
@@ -35,7 +32,8 @@ public class TPVController {
        if (this.vendaActual == null) {
            vendaActual = vendesServei.novaVenda();
        } else {
-           throw new VendaJaIniciadaException();
+           if(this.vendaActual.isFinalitzada() ) vendaActual = vendesServei.novaVenda();
+           else throw new VendaJaIniciadaException();
        }
     }
 
@@ -47,12 +45,14 @@ public class TPVController {
         }
     }
 
-    public void tancamentVenda() throws VendaNoIniciadaException {
+    public void tancamentVenda() throws VendaNoIniciadaException, VendaJaFinalitzadaException {
         if (vendaActual != null)  {
-            vendesServei.guardarVenda(vendaActual);
-            dinersEnCaixa += vendaActual.getTotal();
-            vendaActual.tancar();
-            vendaActual = null;
+            if(!vendaActual.isFinalitzada()) {
+                vendesServei.guardarVenda(vendaActual);
+                dinersEnCaixa += vendaActual.getTotal();
+                vendaActual.finalitzar();
+            }
+            else throw new VendaJaFinalitzadaException();
         }
         else throw new VendaNoIniciadaException();
     }
@@ -187,9 +187,9 @@ public class TPVController {
     //------------------------------
     // Tancament Venda
     //------------------------------
-
+    public void setPreuPagament(double valor) {vendaActual.setPreuPagament(valor);}
     public double getCanviUltimaVenda() {
-        return canvi;
+        return vendaActual.getCanvi();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

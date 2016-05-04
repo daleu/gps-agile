@@ -25,5 +25,6 @@ Característica: Finalitzar venda
     I existeix el producte "GirafaRock" amb codi de barres "122156659" i preu per unitat 4,50
     I introdueixo al tpv el producte per nom "Baldufa"
     I introdueixo al tpv el producte per nom "GirafaRock"
-    Quan es finalitza la venda i el client paga 10 euros en efectiu
+    Quan es marca la venda com a finalitzada
+    I el client paga 10 euros en efectiu
     Aleshores el valor a retornar al client és de 0,50

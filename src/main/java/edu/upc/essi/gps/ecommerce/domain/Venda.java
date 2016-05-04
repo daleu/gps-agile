@@ -10,10 +10,12 @@ public class Venda implements Entity {
     private List<LiniaVenda> liniesVenda;
     private String informacioTancar;
     private double preuPagament;
+    private boolean finalitzada;
 
     public Venda(int numVenda) {
         this.id = numVenda;
         liniesVenda = new ArrayList<>();
+        finalitzada = false;
     }
 
     public int getId() {
@@ -26,6 +28,8 @@ public class Venda implements Entity {
     public boolean isEmpty() {
         return liniesVenda.isEmpty();
     }
+
+    public boolean isFinalitzada() {return finalitzada;}
 
     public double getTotal() {
         double total = 0.0;
@@ -46,6 +50,8 @@ public class Venda implements Entity {
     public void anular() {
         informacioTancar = "Venda anul·lada";
     }
+
+    public void finalitzar() {finalitzada = true;}
 
     public void afegeixLinia(Producte p, Integer unitats) {
         LiniaVenda liniaVenda = new LiniaVenda(p,unitats);

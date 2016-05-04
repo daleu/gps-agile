@@ -127,6 +127,20 @@ public class StepDefinitions {
         }
     }
 
+    @I("^el client paga (.+) euros en efectiu$")
+    public void elClientPagaEurosEnEfectiu(double valor) throws Throwable {
+        tpvController.setPreuPagament(valor);
+    }
+
+    @Quan("^es marca la venda com a finalitzada$")
+    public void esMarcaLaVendaComAFinalitzada() {
+        try {
+            tpvController.tancamentVenda();
+        } catch (VendaNoIniciadaException | VendaJaFinalitzadaException e) {
+            this.exception = e;
+        }
+    }
+
 
     //TODO s'ha de mirar si es pot fer així
     @I("^es va fer una venda amb el codi (\\d+) amb (\\d+) productes amb codi \"([^\"]*)\" i (\\d+) producte amb codi \"([^\"]*)\"$")
@@ -134,7 +148,7 @@ public class StepDefinitions {
         tpvController.iniciarVendaAmbID(codiVenda);
         tpvController.afegirProducteLiniaVenda(codiProd1,unitatsProd1);
         tpvController.afegirProducteLiniaVenda(codiProd1,unitatsProd1);
-        tpvController.tancamentVenda();
+        //El tancament de venda s'ha de fer bé //tpvController.tancamentVenda();
     }
 
     @I("^s'afegeix a la linia de venda (\\d+) unitats del producte amb codi de barres \"([^\"]*)\"$")
