@@ -101,7 +101,7 @@ public class StepDefinitions {
 
     @I("^la linia de venda (\\d+) te per preu unitat (.+)$")
     public void laLiniaDeVendaTePerPreuUnitat(int i, double expectedPreu) throws Throwable {
-        assertEquals(expectedPreu, tpvController.getVendaActual().getLiniaVenda(i).getTotal(), 0.001);
+        assertEquals(expectedPreu, tpvController.getVendaActual().getLiniaVenda(i).getPreuUnitat(), 0.001);
     }
 
     @I("^la linia de venda (\\d+) te per quantitat (\\d+)$")

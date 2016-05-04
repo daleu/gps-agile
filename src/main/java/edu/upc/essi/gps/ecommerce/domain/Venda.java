@@ -54,8 +54,17 @@ public class Venda implements Entity {
     public void finalitzar() {finalitzada = true;}
 
     public void afegeixLinia(Producte p, Integer unitats) {
-        LiniaVenda liniaVenda = new LiniaVenda(p,unitats);
-        liniesVenda.add(liniaVenda);
+        boolean jahies = false;
+        int i = 0;
+        while (i<liniesVenda.size() && !jahies) {
+            if (liniesVenda.get(i).getNomProducte().equals(p.getNom())) jahies = true;
+            else ++i;
+        }
+        if (jahies) liniesVenda.get(i).incrementaQuantitat(unitats);
+        else {
+            LiniaVenda liniaVenda = new LiniaVenda(p,unitats);
+            liniesVenda.add(liniaVenda);
+        }
     }
 
     public int getNombreLiniesVenda() {

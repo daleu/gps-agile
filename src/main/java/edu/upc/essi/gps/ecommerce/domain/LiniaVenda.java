@@ -33,4 +33,12 @@ public class LiniaVenda {
     public void setQuantitat(int quantitat) {
         this.quantitat = quantitat;
     }
+
+    public void incrementaQuantitat(Integer unitats) {
+        this.quantitat += unitats;
+    }
+
+    public double getPreuUnitat() {
+        return producte.getPreuUnitat();
+    }
 }
