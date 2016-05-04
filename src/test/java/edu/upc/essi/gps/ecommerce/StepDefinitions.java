@@ -106,7 +106,7 @@ public class StepDefinitions {
 
     @I("^la linia de venda (\\d+) te per preu unitat (.+)$")
     public void laLiniaDeVendaTePerPreuUnitat(int i, double expectedPreu) throws Throwable {
-        assertEquals(expectedPreu, tpvController.getVendaActual().getLiniaVenda(i).getTotal(), 0.001);
+        assertEquals(expectedPreu, tpvController.getVendaActual().getLiniaVenda(i).getPreuUnitat(), 0.001);
     }
 
     @I("^la linia de venda (\\d+) te per quantitat (\\d+)$")
@@ -263,7 +263,7 @@ public class StepDefinitions {
 
     @I("^el preu total es la suma dels productes a vendre menys el de la devolució, es a dir, (.+)$")
     public void elPreuTotalEsLaSumaDelsProductesAVendreMenysElDeLaDevolucióEsADir(double expectedpreu) {
-        assertEquals(expectedpreu, tpvController.getVendaActual().getTotal(), 0.001);
+        assertEquals(expectedpreu, tpvController.getVendaActual().getPreuTotal(), 0.001);
     }
 
 }

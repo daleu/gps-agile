@@ -4,6 +4,9 @@ import edu.upc.essi.gps.ecommerce.exceptions.*;
 import edu.upc.essi.gps.ecommerce.repositoris.VendesServei;
 import edu.upc.essi.gps.ecommerce.repositoris.DevolucionsServei;
 
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Created by edu on 28/04/16.
  */
@@ -17,10 +20,6 @@ public class TPVController {
     private Devolucio devolucioActual;
     private final DevolucionsServei devolucionsServei = new DevolucionsServei();
     private final VendesServei vendesServei = new VendesServei();
-    import java.util.Iterator;
-    import java.util.List;
-    import java.util.Map;
-    import java.util.Set;
     private double canvi;
 
     private Cataleg cataleg = new Cataleg();
@@ -52,7 +51,7 @@ public class TPVController {
         if (vendaActual != null)  {
             if(!vendaActual.isFinalitzada()) {
                 vendesServei.guardarVenda(vendaActual);
-                dinersEnCaixa += vendaActual.getTotal();
+                dinersEnCaixa += vendaActual.getPreuTotal();
                 vendaActual.finalitzar();
             }
             else throw new VendaJaFinalitzadaException();
@@ -62,13 +61,13 @@ public class TPVController {
 
     public void tancamentVenda(double valor) throws VendaNoIniciadaException,PagamentInsuficientException {
         if (vendaActual != null)  {
-            if(vendaActual.getTotal()>valor) throw new PagamentInsuficientException();
+            if(vendaActual.getPreuTotal()>valor) throw new PagamentInsuficientException();
             else {
                 vendaActual.setPreuPagament(valor);
                 canvi = vendaActual.getCanvi();
             }
             vendesServei.guardarVenda(vendaActual);
-            dinersEnCaixa += vendaActual.getTotal();
+            dinersEnCaixa += vendaActual.getPreuTotal();
             vendaActual.tancar();
             vendaActual = null;
         }
