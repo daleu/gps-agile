@@ -249,4 +249,14 @@ public class StepDefinitions {
     public void elPreuUnitatDelProducteSerà(String nomProducte, double preuIva) throws Throwable {
         assertEquals(preuIva, tpvController.getPreuUnitatProducte(nomProducte), 0.001);
     }
+
+    @Aleshores("^els preusBase dels productes amb iva (.+) es (.+)$")
+    public void elsPreusBaseDelsProductesAmbIvaEs(double iva, double preuEsperat) throws Throwable {
+        assertEquals(preuEsperat, tpvController.getSumaPreuBaseVendaPerIva(iva), 0.001);
+    }
+
+    @I("^el preuTotal dels productes amb iva (.+) es (.+)$")
+    public void elPreuTotalDelsProductesAmbIvaEs(double iva, double preuEsperat) throws Throwable {
+        assertEquals(preuEsperat, tpvController.getSumaPreuUnitatVendaPerIva(iva), 0.001);
+    }
 }

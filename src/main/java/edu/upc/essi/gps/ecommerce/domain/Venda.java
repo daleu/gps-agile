@@ -101,4 +101,20 @@ public class Venda implements Entity {
             }
         }
     }
+
+    public double getSumaPreuBaseVendaPerIva(double iva) {
+        double total = 0.0;
+        for (LiniaVenda lv : liniesVenda) {
+            total += lv.getTotalPreuBase(iva);
+        }
+        return total;
+    }
+
+    public double getSumaPreuUnitatVendaPerIva(double iva) {
+        double total = 0.0;
+        for (LiniaVenda lv : liniesVenda) {
+            total += lv.getTotalUnitatBase(iva);
+        }
+        return total;
+    }
 }
