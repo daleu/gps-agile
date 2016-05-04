@@ -110,30 +110,6 @@ public class StepDefinitions {
 
     @I("^es finalitza la venda$")
     public void esFinalitzaLaVenda() throws Throwable {
-        tpvController.tancamentVenda();
-    }
-
-    @Quan("^s'anula la venda$")
-    public void sAnulaLaVenda() throws Throwable {
-        tpvController.anularVendaActual();
-    }
-
-    @I("^es finalitza la venda i el client paga (.+) euros en efectiu$")
-    public void esFinalitzaLaVendaIElClientPagaAmbEurosEnEfectiu(double valor) throws Throwable {
-        try {
-            tpvController.tancamentVenda(valor);
-        } catch (PagamentInsuficientException | VendaNoIniciadaException e) {
-            this.exception = e;
-        }
-    }
-
-    @I("^el client paga (.+) euros en efectiu$")
-    public void elClientPagaEurosEnEfectiu(double valor) throws Throwable {
-        tpvController.setPreuPagament(valor);
-    }
-
-    @Quan("^es marca la venda com a finalitzada$")
-    public void esMarcaLaVendaComAFinalitzada() {
         try {
             tpvController.tancamentVenda();
         } catch (VendaNoIniciadaException | VendaJaFinalitzadaException e) {
@@ -141,6 +117,15 @@ public class StepDefinitions {
         }
     }
 
+    @Quan("^s'anula la venda$")
+    public void sAnulaLaVenda() throws Throwable {
+        tpvController.anularVendaActual();
+    }
+
+    @I("^el client paga (.+) euros en efectiu$")
+    public void elClientPagaEurosEnEfectiu(double valor) throws Throwable {
+        tpvController.setPreuPagament(valor);
+    }
 
     //TODO s'ha de mirar si es pot fer així
     @I("^es va fer una venda amb el codi (\\d+) amb (\\d+) productes amb codi \"([^\"]*)\" i (\\d+) producte amb codi \"([^\"]*)\"$")
