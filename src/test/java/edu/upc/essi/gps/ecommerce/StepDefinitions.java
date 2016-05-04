@@ -1,5 +1,7 @@
 package edu.upc.essi.gps.ecommerce;
 
+import com.sun.javafx.collections.MappingChange;
+import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import cucumber.api.java.ca.Aleshores;
 import cucumber.api.java.ca.Donat;
@@ -7,6 +9,12 @@ import cucumber.api.java.ca.I;
 import cucumber.api.java.ca.Quan;
 import edu.upc.essi.gps.ecommerce.domain.*;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
+import javafx.util.Pair;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -128,15 +136,6 @@ public class StepDefinitions {
         tpvController.setPreuPagament(valor);
     }
 
-    //TODO s'ha de mirar si es pot fer així
-    @I("^es va fer una venda amb el codi (\\d+) amb (\\d+) productes amb codi \"([^\"]*)\" i (\\d+) producte amb codi \"([^\"]*)\"$")
-    public void esVaFerUnaVendaAmbElCodiAmbProductesAmbCodiIProducteAmbCodi(int codiVenda, int unitatsProd1, String codiProd1, int unitatsProd2, String codiProd2) throws Throwable {
-        tpvController.iniciarVendaAmbID(codiVenda);
-        tpvController.afegirProducteLiniaVenda(codiProd1, unitatsProd1);
-        tpvController.afegirProducteLiniaVenda(codiProd1, unitatsProd1);
-        //El tancament de venda s'ha de fer bé //tpvController.tancamentVenda();
-    }
-
     @I("^s'afegeix a la linia de venda (\\d+) unitats del producte amb codi de barres \"([^\"]*)\"$")
     public void sAfegeixALaLiniaDeVendaUnitatsDelProducteAmbCodiDeBarres(int unitatsProd, String codiBarres) throws Throwable {
         tpvController.afegirProducteLiniaVenda(codiBarres, unitatsProd);
@@ -183,28 +182,11 @@ public class StepDefinitions {
     }
 
 
-    //TODO Falta implementar
-    @I("^El preu final de la venda ha de ser la suma dels productes menys la suma de les devolucions$")
-    public void elPreuFinalDeLaVendaHaDeSerLaSumaDelsProductesMenyLaSumaDeLesDevolucions() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
     @Quan("^vull fer una devolucio$")
     public void vullFerUnaDevolucio() {
         tpvController.iniciarDevolucio();
     }
 
-    //TODO: Diferenciar casos. Possibilitat de retorn es un Donat i AfegirDevolucioLiniaVenda és un Quan
-    //No es pot fer un throw aqui, ho ha de fer el TPVController en aquest cas (és lògica)
-    @I("^es vol retornar (\\d+) unitat del producte amb codi \"([^\"]*)\" de la venda (\\d+) pel motiu \"([^\"]*)\"$")
-    public void esVolRetornarUnitatDelProducteAmbCodiDeLaVendaPelMotiu(int unitatsProd, String codiBarres, int idVenda, String motiu) throws Throwable {
-        if (tpvController.possibilitatDeRetorn(idVenda, codiBarres, unitatsProd)) {
-            tpvController.afegirDevolucioLiniaVenda(idVenda, codiBarres, unitatsProd, motiu);
-        } else {
-            throw new Exception("No es possible crear aquesta devolucio");
-        }
-    }
 
     @Aleshores("^existeix una devolucio del producte \"([^\"]*)\" de la venda (\\d+) pel motiu \"([^\"]*)\"$")
     public void existeixUnaDevolucioDelProducteDeLaVendaPelMotiu(String expectedCodiBarres, int expectedIdVenda, String expectedMotiu) throws Throwable {
@@ -248,5 +230,23 @@ public class StepDefinitions {
     @Aleshores("^el preu Unitat del producte \"([^\"]*)\" serà (.+)$")
     public void elPreuUnitatDelProducteSerà(String nomProducte, double preuIva) throws Throwable {
         assertEquals(preuIva, tpvController.getPreuUnitatProducte(nomProducte), 0.001);
+    }
+
+    @I("^es va fer una venda amb id (\\d+) dels següens productes i seguents unitats$")
+    public void esVaFerUnaVendaAmbIdDelsSegüensProductesISeguentsUnitats(int idVenda, Map<String,Integer> productesVenda) throws VendaJaIniciadaException, ProducteNoExisteixException {
+
+        tpvController.introduirVendaJaAcabada(idVenda,productesVenda);
+    }
+
+    @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+) pel motiu \"([^\"]*)\"$")
+    public void esVolIndicarUnaDevolucioDeUnitatSDelProducteDeLaVendaPelMotiu(int unitats, String codiProd, int idVenda, String motiu) throws ProducteNoExisteixException, Exception {
+            tpvController.introduirDevolucio(idVenda,codiProd,unitats,motiu);
+
+
+    }
+
+    @I("^el preu total es la suma dels productes a vendre menys el de la devolució, es a dir, (.+)$")
+    public void elPreuTotalEsLaSumaDelsProductesAVendreMenysElDeLaDevolucióEsADir(double expectedpreu) {
+        assertEquals(expectedpreu, tpvController.getVendaActual().getTotal(), 0.001);
     }
 }

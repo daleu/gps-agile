@@ -86,7 +86,7 @@ public class Venda implements Entity {
 
     public void modificarLinia(String codiBarres, int unitatsProd) throws Exception {
         for (LiniaVenda lv: liniesVenda) {
-            if(lv.getCodiProducte() == codiBarres) {
+            if(lv.getCodiProducte().equals(codiBarres)) {
                 int dif = lv.getQuantitat() - unitatsProd;
                 if (dif < 0) {
                     String s = "No es pot modificar la línia de venda";
