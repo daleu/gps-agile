@@ -40,4 +40,14 @@ public class Cataleg {
         if (this.getProductePerCodi(codiProducte) == null) return false;
         return true;
     }
+
+    public double getPreuBaseProducte(String nomProducte) {
+        Producte p = productesPerNom.get(nomProducte);
+        return p.getPreuBase();
+    }
+
+    public double getPreuUnitatProducte(String nomProducte) {
+        Producte p = productesPerNom.get(nomProducte);
+        return p.getPreuUnitat();
+    }
 }
