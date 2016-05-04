@@ -238,4 +238,27 @@ public class TPVController {
         Devolucio dev = devolucionsServei.trobarPerParametres(expectedIdVenda,expectedCodiBarres,1);
         return dev.getMotiu();
     }
+
+    public void afegeixProducteACatalegAmbIva(String nomProducte, String codiBarres, double preuBase, double iva) {
+        Producte producte = new Producte(nomProducte,codiBarres,preuBase,iva);
+        cataleg.afegeixProducte(producte);
+    }
+
+    public double getPreuBaseProducte(String nomProducte) {
+        return cataleg.getPreuBaseProducte(nomProducte);
+    }
+
+    public double getPreuUnitatProducte(String nomProducte) {
+        return cataleg.getPreuUnitatProducte(nomProducte);
+    }
+
+    public double getSumaPreuBaseVendaPerIva(double iva) {
+        double aux =  vendaActual.getSumaPreuBaseVendaPerIva(iva);
+        return aux;
+    }
+
+    public double getSumaPreuUnitatVendaPerIva(double iva) {
+        double aux =  vendaActual.getSumaPreuUnitatVendaPerIva(iva);
+        return aux;
+    }
 }

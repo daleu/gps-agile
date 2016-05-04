@@ -118,9 +118,24 @@ public class Venda implements Entity {
     }
 
     public String getLiniaTiquet(int num) throws NoHiHaTiquetException {
-        if(tiquet != null) {
+        if (tiquet != null) {
             return tiquet.get(num);
+        } else throw new NoHiHaTiquetException();
+    }
+
+    public double getSumaPreuBaseVendaPerIva(double iva) {
+        double total = 0.0;
+        for (LiniaVenda lv : liniesVenda) {
+            total += lv.getTotalPreuBase(iva);
         }
-        else throw new NoHiHaTiquetException();
+        return total;
+    }
+
+    public double getSumaPreuUnitatVendaPerIva(double iva) {
+        double total = 0.0;
+        for (LiniaVenda lv : liniesVenda) {
+            total += lv.getTotalUnitatBase(iva);
+        }
+        return total;
     }
 }
