@@ -40,7 +40,7 @@ public class VendesServei {
     public void indicarDevolucio(int idVenda, String codiBarres, int unitatsProd) throws Exception {
             Venda v = trobaPerCodi(idVenda);
             vendesRepositori.delete(v);
-            v.modificarLinia(codiBarres,unitatsProd);
+           v.modificarLinia(codiBarres,unitatsProd);
             vendesRepositori.checkInsert(v);
             vendesRepositori.insert(v);
     }

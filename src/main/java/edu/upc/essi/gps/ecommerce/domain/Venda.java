@@ -1,6 +1,7 @@
 package edu.upc.essi.gps.ecommerce.domain;
 
 import edu.upc.essi.gps.domain.Entity;
+import edu.upc.essi.gps.ecommerce.exceptions.DevolucioNoPossibleException;
 import edu.upc.essi.gps.ecommerce.exceptions.NoHiHaTiquetException;
 
 import java.util.ArrayList;
@@ -96,13 +97,12 @@ public class Venda implements Entity {
         afegeixLinia(retorn,unitatsProd);
     }
 
-    public void modificarLinia(String codiBarres, int unitatsProd) throws Exception {
+    public void modificarLinia(String codiBarres, int unitatsProd) throws DevolucioNoPossibleException {
         for (LiniaVenda lv: liniesVenda) {
             if(lv.getCodiProducte().equals(codiBarres)) {
                 int dif = lv.getQuantitat() - unitatsProd;
                 if (dif < 0) {
-                    String s = "No es pot modificar la línia de venda";
-                    throw new Exception(s);
+                    throw new DevolucioNoPossibleException();
                 }
                 else if(dif == 0) {
                     liniesVenda.remove(lv);
