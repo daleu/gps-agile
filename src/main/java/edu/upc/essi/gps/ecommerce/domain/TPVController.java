@@ -1,21 +1,8 @@
 package edu.upc.essi.gps.ecommerce.domain;
 
-import cucumber.api.DataTable;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
 import edu.upc.essi.gps.ecommerce.repositoris.VendesServei;
 import edu.upc.essi.gps.ecommerce.repositoris.DevolucionsServei;
-import gherkin.formatter.model.DataTableRow;
-import javafx.scene.chart.PieChart;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.util.Pair;
-
-import javax.swing.text.TableView;
-import javax.swing.text.html.HTMLDocument;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by edu on 28/04/16.
@@ -30,10 +17,13 @@ public class TPVController {
     private Devolucio devolucioActual;
     private final DevolucionsServei devolucionsServei = new DevolucionsServei();
     private final VendesServei vendesServei = new VendesServei();
+    import java.util.Iterator;
+    import java.util.List;
+    import java.util.Map;
+    import java.util.Set;
     private double canvi;
 
     private Cataleg cataleg = new Cataleg();
-
 
     public TPVController(){}
 
@@ -54,8 +44,7 @@ public class TPVController {
         if (this.vendaActual == null) {
             vendaActual = vendesServei.novaVendaAmbID(id);
         } else {
-            if(this.vendaActual.isFinalitzada() ) vendaActual = vendesServei.novaVendaAmbID(id);
-            else throw new VendaJaIniciadaException();
+            throw new VendaJaIniciadaException();
         }
     }
 
@@ -120,7 +109,7 @@ public class TPVController {
         vendaActual.afegeixLinia(producteIdentificat,unitats);
     }
 
-    public boolean possibilitatDeRetorn(int idVenda, String codiBarres, int unitatsProd) throws DevolucioNoPossibleException {
+    public boolean possibilitatDeRetorn(int idVenda, String codiBarres, int unitatsProd) {
         Venda ven_anterior = vendesServei.trobaPerCodi(idVenda);
         if(ven_anterior != null) {
             ven_anterior.conteLiniaVenda(codiBarres,unitatsProd);
@@ -134,6 +123,9 @@ public class TPVController {
     //----------------------------------
 
     public void iniciarDevolucio(){
+        devolucioActual = devolucionsServei.novaDevolucio();
+    }
+    public void acabarDevolucio(){
         devolucioActual = devolucionsServei.novaDevolucio();
     }
 
@@ -203,6 +195,12 @@ public class TPVController {
         return vendaActual.getCanvi();
     }
 
+    //------------------------------
+    // Imprimir tiquet
+    //------------------------------
+    public String getLiniaTiquetVendaActual(int num) throws NoHiHaTiquetException {
+        return vendaActual.getLiniaTiquet(num);
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////FUNCIONS CONTROLADOR/////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -216,7 +214,7 @@ public class TPVController {
     }
 
     public double getTotalVenda() {
-        return vendaActual.getTotal();
+        return vendaActual.getPreuTotal();
     }
 
     public int getIdVenda() {
@@ -257,6 +255,17 @@ public class TPVController {
         return cataleg.getPreuUnitatProducte(nomProducte);
     }
 
+
+    public double getSumaPreuBaseVendaPerIva(double iva) {
+        double aux =  vendaActual.getSumaPreuBaseVendaPerIva(iva);
+        return aux;
+    }
+
+    public double getSumaPreuUnitatVendaPerIva(double iva) {
+        double aux =  vendaActual.getSumaPreuUnitatVendaPerIva(iva);
+        return aux;
+    }
+
     public void guardarVendaActual() {
         vendesServei.guardarVenda(vendaActual);
         vendaActual = null;
@@ -278,5 +287,4 @@ public class TPVController {
         }
         guardarVendaActual();
     }
-
 }

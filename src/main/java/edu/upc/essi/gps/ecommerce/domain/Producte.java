@@ -39,4 +39,8 @@ public class Producte {
     public double getPreuBase() {
         return (preuUnitat/(1+iva));
     }
+
+    public boolean mateixIva(double iva) {
+        return this.iva == iva;
+    }
 }

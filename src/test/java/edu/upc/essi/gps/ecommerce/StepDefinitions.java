@@ -1,7 +1,5 @@
 package edu.upc.essi.gps.ecommerce;
 
-import com.sun.javafx.collections.MappingChange;
-import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import cucumber.api.java.ca.Aleshores;
 import cucumber.api.java.ca.Donat;
@@ -9,15 +7,14 @@ import cucumber.api.java.ca.I;
 import cucumber.api.java.ca.Quan;
 import edu.upc.essi.gps.ecommerce.domain.*;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
-import javafx.util.Pair;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import javafx.util.Pair;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class StepDefinitions {
     /*
@@ -232,6 +229,25 @@ public class StepDefinitions {
         assertEquals(preuIva, tpvController.getPreuUnitatProducte(nomProducte), 0.001);
     }
 
+    @Aleshores("^els preusBase dels productes amb iva (.+) es (.+)$")
+    public void elsPreusBaseDelsProductesAmbIvaEs(double iva, double preuEsperat) throws Throwable {
+        assertEquals(preuEsperat, tpvController.getSumaPreuBaseVendaPerIva(iva), 0.001);
+    }
+
+    @I("^el preuTotal dels productes amb iva (.+) es (.+)$")
+    public void elPreuTotalDelsProductesAmbIvaEs(double iva, double preuEsperat) throws Throwable {
+        assertEquals(preuEsperat, tpvController.getSumaPreuUnitatVendaPerIva(iva), 0.001);
+    }
+
+    @I("^la linia (\\d+) del tiquet sera \"([^\"]*)\"$")
+    public void laLiniaDelTiquetSera(int num, String linia) {
+        try {
+            assertEquals(linia,tpvController.getLiniaTiquetVendaActual(num));
+        } catch (NoHiHaTiquetException e) {
+            this.exception = e;
+        }
+    }
+
     @I("^es va fer una venda amb id (\\d+) dels següens productes i seguents unitats$")
     public void esVaFerUnaVendaAmbIdDelsSegüensProductesISeguentsUnitats(int idVenda, Map<String,Integer> productesVenda) throws VendaJaIniciadaException, ProducteNoExisteixException {
 
@@ -240,7 +256,7 @@ public class StepDefinitions {
 
     @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+) pel motiu \"([^\"]*)\"$")
     public void esVolIndicarUnaDevolucioDeUnitatSDelProducteDeLaVendaPelMotiu(int unitats, String codiProd, int idVenda, String motiu) throws ProducteNoExisteixException, Exception {
-            tpvController.introduirDevolucio(idVenda,codiProd,unitats,motiu);
+        tpvController.introduirDevolucio(idVenda,codiProd,unitats,motiu);
 
 
     }
@@ -249,4 +265,5 @@ public class StepDefinitions {
     public void elPreuTotalEsLaSumaDelsProductesAVendreMenysElDeLaDevolucióEsADir(double expectedpreu) {
         assertEquals(expectedpreu, tpvController.getVendaActual().getTotal(), 0.001);
     }
+
 }
