@@ -249,4 +249,23 @@ public class StepDefinitions {
     public void elPreuUnitatDelProducteSerà(String nomProducte, double preuIva) throws Throwable {
         assertEquals(preuIva, tpvController.getPreuUnitatProducte(nomProducte), 0.001);
     }
+
+    @Aleshores("^els preusBase dels productes amb iva (.+) es (.+)$")
+    public void elsPreusBaseDelsProductesAmbIvaEs(double iva, double preuEsperat) throws Throwable {
+        assertEquals(preuEsperat, tpvController.getSumaPreuBaseVendaPerIva(iva), 0.001);
+    }
+
+    @I("^el preuTotal dels productes amb iva (.+) es (.+)$")
+    public void elPreuTotalDelsProductesAmbIvaEs(double iva, double preuEsperat) throws Throwable {
+        assertEquals(preuEsperat, tpvController.getSumaPreuUnitatVendaPerIva(iva), 0.001);
+    }
+
+    @I("^la linia (\\d+) del tiquet sera \"([^\"]*)\"$")
+    public void laLiniaDelTiquetSera(int num, String linia) {
+        try {
+            assertEquals(linia,tpvController.getLiniaTiquetVendaActual(num));
+        } catch (NoHiHaTiquetException e) {
+            this.exception = e;
+        }
+    }
 }

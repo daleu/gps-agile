@@ -14,7 +14,7 @@ public class LiniaVenda {
         quantitat = q;
     }
 
-    public double getTotal() {
+    public double getPreuTotal() {
         return producte.getPreuUnitat()*quantitat;
     }
 
@@ -40,5 +40,16 @@ public class LiniaVenda {
 
     public double getPreuUnitat() {
         return producte.getPreuUnitat();
+    }
+
+
+    public double getTotalPreuBase(double iva) {
+        if(producte.mateixIva(iva)) return producte.getPreuBase()*quantitat;
+        else return 0.0;
+    }
+
+    public double getTotalUnitatBase(double iva) {
+        if(producte.mateixIva(iva)) return producte.getPreuUnitat()*quantitat;
+        else return 0.0;
     }
 }

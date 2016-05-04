@@ -22,4 +22,3 @@ Característica: Afegir una linia de venda per codi de barres
     I la linia de venda 1 te per preu unitat 3.50
     I el preu total de la venda es 7.00
 
-    

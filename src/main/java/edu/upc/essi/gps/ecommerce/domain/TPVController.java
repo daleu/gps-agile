@@ -49,7 +49,7 @@ public class TPVController {
         if (vendaActual != null)  {
             if(!vendaActual.isFinalitzada()) {
                 vendesServei.guardarVenda(vendaActual);
-                dinersEnCaixa += vendaActual.getTotal();
+                dinersEnCaixa += vendaActual.getPreuTotal();
                 vendaActual.finalitzar();
             }
             else throw new VendaJaFinalitzadaException();
@@ -59,13 +59,13 @@ public class TPVController {
 
     public void tancamentVenda(double valor) throws VendaNoIniciadaException,PagamentInsuficientException {
         if (vendaActual != null)  {
-            if(vendaActual.getTotal()>valor) throw new PagamentInsuficientException();
+            if(vendaActual.getPreuTotal()>valor) throw new PagamentInsuficientException();
             else {
                 vendaActual.setPreuPagament(valor);
                 canvi = vendaActual.getCanvi();
             }
             vendesServei.guardarVenda(vendaActual);
-            dinersEnCaixa += vendaActual.getTotal();
+            dinersEnCaixa += vendaActual.getPreuTotal();
             vendaActual.tancar();
             vendaActual = null;
         }
@@ -192,6 +192,13 @@ public class TPVController {
         return vendaActual.getCanvi();
     }
 
+    //------------------------------
+    // Imprimir tiquet
+    //------------------------------
+    public String getLiniaTiquetVendaActual(int num) throws NoHiHaTiquetException {
+        return vendaActual.getLiniaTiquet(num);
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////FUNCIONS CONTROLADOR/////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -205,7 +212,7 @@ public class TPVController {
     }
 
     public double getTotalVenda() {
-        return vendaActual.getTotal();
+        return vendaActual.getPreuTotal();
     }
 
     public int getIdVenda() {
@@ -233,7 +240,6 @@ public class TPVController {
     }
 
     public void afegeixProducteACatalegAmbIva(String nomProducte, String codiBarres, double preuBase, double iva) {
-        System.out.println(iva);
         Producte producte = new Producte(nomProducte,codiBarres,preuBase,iva);
         cataleg.afegeixProducte(producte);
     }
@@ -244,5 +250,15 @@ public class TPVController {
 
     public double getPreuUnitatProducte(String nomProducte) {
         return cataleg.getPreuUnitatProducte(nomProducte);
+    }
+
+    public double getSumaPreuBaseVendaPerIva(double iva) {
+        double aux =  vendaActual.getSumaPreuBaseVendaPerIva(iva);
+        return aux;
+    }
+
+    public double getSumaPreuUnitatVendaPerIva(double iva) {
+        double aux =  vendaActual.getSumaPreuUnitatVendaPerIva(iva);
+        return aux;
     }
 }
