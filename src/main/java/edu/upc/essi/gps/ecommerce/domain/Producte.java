@@ -5,7 +5,7 @@ package edu.upc.essi.gps.ecommerce.domain;
  */
 public class Producte {
     private double preuUnitat; //Preu Amb IVA
-    private double iva;        //iva (eL PREU bASE S'HA DE CALCULAR)
+    private double iva;        //iva (eL PREU BASE S'HA DE CALCULAR)
     private String codiBarres;
     private String nom;
 
@@ -13,6 +13,7 @@ public class Producte {
         this.nom = nomProducte;
         this.codiBarres = codiBarres;
         this.preuUnitat = preuUnitat;
+        this.iva=0.21; //Predefinit
     }
 
     public Producte(String nomProducte, String codiBarres, double preuBase, double iva) {

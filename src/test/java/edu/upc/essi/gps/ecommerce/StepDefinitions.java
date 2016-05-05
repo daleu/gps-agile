@@ -1,6 +1,5 @@
 package edu.upc.essi.gps.ecommerce;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.ca.Aleshores;
 import cucumber.api.java.ca.Donat;
 import cucumber.api.java.ca.I;
@@ -209,7 +208,12 @@ public class StepDefinitions {
 
     @Donat("^existeix el producte \"([^\"]*)\", amb codi de barres \"([^\"]*)\", preu Base (.+) i iva (.+)$")
     public void existeixElProducteAmbCodiDeBarresPreuBaseIIva(String nomProducte, String codiBarres, double preuBase, double iva) throws Throwable {
-        tpvController.afegeixProducteACatalegAmbIva(nomProducte,codiBarres,preuBase,iva);
+        tpvController.afegeixProducteACatalegAmbPreuBase(nomProducte,codiBarres,preuBase,iva);
+    }
+
+    @Donat("^existeix el producte \"([^\"]*)\", amb codi de barres \"([^\"]*)\", preu Unitat (.+) i iva (.+)$")
+    public void existeixElProducteAmbCodiDeBarresPreuUnitatIIva(String nomProducte, String codiBarres, double preuUnitat, double iva) throws Throwable {
+        tpvController.afegeixProducteACatalegAmbPreuUnitat(nomProducte,codiBarres,preuUnitat,iva);
     }
 
     @Aleshores("^el preu Base del producte \"([^\"]*)\" serà (.+)$")
