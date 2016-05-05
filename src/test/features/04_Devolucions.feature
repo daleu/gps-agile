@@ -9,7 +9,7 @@ Característica: Retornar un producte
     I existeix el producte "Cotxe telefirigit" amb codi de barres "222" i preu per unitat 25
     I es va fer una venda amb id 111 dels següens productes i seguents unitats
     |777|2|
-    |333|1|
+    |222|1|
 
   Escenari: Retornar un sol producte amb saldo positu
   Quan inicio una nova venda
@@ -24,5 +24,6 @@ Característica: Retornar un producte
     I s'afegeix a la linia de venda 3 unitats del producte amb codi de barres "333"
     I es vol indicar una devolucio de 1 unitats del producte "777" de la venda 111 pel motiu "Defectuos"
     I es vol indicar una devolucio de 1 unitats del producte "222" de la venda 111 pel motiu "No interesant"
-    Aleshores existeix una devolucio del producte "777" de la venda 111 pel motiu "Defectuos"
+    Aleshores existeix una devolucio del producte "222" de la venda 111 pel motiu "No interesant"
     I el preu total es la suma dels productes a vendre menys el de la devolució, es a dir, -30,25
+

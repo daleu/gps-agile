@@ -96,8 +96,7 @@ public class TPVController {
     public boolean possibilitatDeRetorn(int idVenda, String codiBarres, int unitatsProd) {
         Venda ven_anterior = vendesServei.trobaPerCodi(idVenda);
         if(ven_anterior != null) {
-            ven_anterior.conteLiniaVenda(codiBarres,unitatsProd);
-            return true;
+            if(ven_anterior.conteLiniaVenda(codiBarres,unitatsProd)) return true;
         }
         return false;
     }
@@ -125,7 +124,7 @@ public class TPVController {
         devolucioActual.setMotiu(motiu);
        //2. Actualitzar repositoris per evitar repetir
         devolucionsServei.guardarDevolucio(devolucioActual);
-        vendesServei.indicarDevolucio(idVenda,codiBarres,unitatsProd);
+        //vendesServei.indicarDevolucio(idVenda,codiBarres,unitatsProd);
     }
 
     //------------------------------
