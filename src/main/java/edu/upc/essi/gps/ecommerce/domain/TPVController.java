@@ -224,12 +224,8 @@ public class TPVController {
         return dev.getMotiu();
     }
 
-    public void afegeixProducteACatalegAmbPreuBase(String nomProducte, String codiBarres, double preuBase, double iva) {
-        Producte producte = new Producte(nomProducte,codiBarres,preuBase,iva);
-        cataleg.afegeixProducte(producte);
-    }
     public void afegeixProducteACatalegAmbPreuUnitat(String nomProducte, String codiBarres, double preuUnitat, double iva) {
-        Producte producte = new Producte(nomProducte,codiBarres,(preuUnitat/(1+iva)),iva); //Preu Base calculat
+        Producte producte = new Producte(nomProducte,codiBarres,preuUnitat,iva); //Preu Base calculat
         cataleg.afegeixProducte(producte);
     }
 

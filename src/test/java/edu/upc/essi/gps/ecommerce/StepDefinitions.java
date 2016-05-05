@@ -206,11 +206,6 @@ public class StepDefinitions {
 
     }
 
-    @Donat("^existeix el producte \"([^\"]*)\", amb codi de barres \"([^\"]*)\", preu Base (.+) i iva (.+)$")
-    public void existeixElProducteAmbCodiDeBarresPreuBaseIIva(String nomProducte, String codiBarres, double preuBase, double iva) throws Throwable {
-        tpvController.afegeixProducteACatalegAmbPreuBase(nomProducte,codiBarres,preuBase,iva);
-    }
-
     @Donat("^existeix el producte \"([^\"]*)\", amb codi de barres \"([^\"]*)\", preu Unitat (.+) i iva (.+)$")
     public void existeixElProducteAmbCodiDeBarresPreuUnitatIIva(String nomProducte, String codiBarres, double preuUnitat, double iva) throws Throwable {
         tpvController.afegeixProducteACatalegAmbPreuUnitat(nomProducte,codiBarres,preuUnitat,iva);

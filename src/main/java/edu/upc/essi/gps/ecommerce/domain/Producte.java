@@ -16,11 +16,11 @@ public class Producte {
         this.iva=0.21; //Predefinit
     }
 
-    public Producte(String nomProducte, String codiBarres, double preuBase, double iva) {
+    public Producte(String nomProducte, String codiBarres, double preuUnitat, double iva) {
         this.nom = nomProducte;
         this.codiBarres = codiBarres;
         this.iva = iva;
-        this.preuUnitat = preuBase+(preuBase*iva);
+        this.preuUnitat = preuUnitat;
     }
 
 
