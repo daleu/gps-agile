@@ -4,6 +4,7 @@ import edu.upc.essi.gps.ecommerce.exceptions.*;
 import edu.upc.essi.gps.ecommerce.repositoris.VendesServei;
 import edu.upc.essi.gps.ecommerce.repositoris.DevolucionsServei;
 
+import java.util.Calendar;
 import java.util.Map;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ public class TPVController {
     private final DevolucionsServei devolucionsServei = new DevolucionsServei();
     private final VendesServei vendesServei = new VendesServei();
     private double canvi;
+    private String nomBotiga;
 
     private Cataleg cataleg = new Cataleg();
 
@@ -71,7 +73,11 @@ public class TPVController {
     public void setVendaActual(Venda vendaActual) {
         this.vendaActual = vendaActual;
     }
-
+    public void setNomBotiga(String nomBotiga ) { this.nomBotiga = nomBotiga; }
+    public String setNomBotiga() { return this.nomBotiga; }
+    public void setNomBotigaVendaDefinitATPV(){ //Una venda tindrà la mateixa botiga que el TPV que l'ha iniciada.
+        vendaActual.setNomBotiga(nomBotiga);
+    }
 
     //------------------------------
     //INTRODUIR PRODUCTES A UNA VENDA
@@ -184,6 +190,20 @@ public class TPVController {
     public String getLiniaTiquetVendaActual(int num) throws NoHiHaTiquetException {
         return vendaActual.getLiniaTiquet(num);
     }
+
+    public String getDataActual() {
+        Calendar calendari = Calendar.getInstance();
+        return ""+calendari.get(Calendar.DATE) + "/" + calendari.get(Calendar.DAY_OF_MONTH) + "/" + calendari.get(Calendar.YEAR);
+    }
+    public String getHoraActual() {
+        Calendar calendari = Calendar.getInstance();
+        return "" + calendari.get(Calendar.HOUR) + ":" + calendari.get(Calendar.MINUTE);
+    }
+
+    public String getDataIHoraActual() {
+        return getDataActual() + " " + getHoraActual();
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////FUNCIONS CONTROLADOR/////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

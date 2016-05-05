@@ -1,5 +1,6 @@
 package edu.upc.essi.gps.ecommerce;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.ca.Aleshores;
 import cucumber.api.java.ca.Donat;
 import cucumber.api.java.ca.I;
@@ -240,6 +241,16 @@ public class StepDefinitions {
         }
     }
 
+
+    @I("^la linia de l'hora i data (\\d+) del tiquet sera \"([^\"]*)\" la data i hora actual i \"([^\"]*)\"$")
+    public void laLiniaDeLHoraIDataDelTiquetSera(int num, String linia1, String linia2) {
+        try {
+            assertEquals(linia1+tpvController.getDataIHoraActual()+linia2,tpvController.getLiniaTiquetVendaActual(num));
+        } catch (NoHiHaTiquetException e) {
+            this.exception = e;
+        }
+    }
+
     @I("^es va fer una venda amb id (\\d+) dels següens productes i seguents unitats$")
     public void esVaFerUnaVendaAmbIdDelsSegüensProductesISeguentsUnitats(int idVenda, Map<String,Integer> productesVenda) throws VendaJaIniciadaException, ProducteNoExisteixException {
 
@@ -262,5 +273,20 @@ public class StepDefinitions {
     @I("^indico que el client paga (.+) euros en efectiu$")
     public void indicoQueElClientPagaEurosEnEfectiu(double preuPagament) {
         tpvController.setPreuPagament(preuPagament);
+    }
+
+    @I("^l'empleat que ha iniciat la venda es diu \"([^\"]*)\"$")
+    public void lEmpleatQueHaIniciatLaVendaEsDiu(String nom) {
+        tpvController.getVendaActual().setNomPilaEmpleat(nom);
+    }
+
+    @Donat("^el TPV esta a la botiga \"([^\"]*)\"$")
+    public void elTPVEstaALaBotiga(String nomBotiga) {
+        tpvController.setNomBotiga(nomBotiga);
+    }
+
+    @I("^es marca el nom de la botiga -ja definit al TPV- a la venda$")
+    public void esMarcaElNomDeLaBotigaJaDefinitAlTPVALaVenda() {
+        tpvController.setNomBotigaVendaDefinitATPV();
     }
 }
