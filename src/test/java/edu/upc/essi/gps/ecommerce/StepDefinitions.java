@@ -1,5 +1,6 @@
 package edu.upc.essi.gps.ecommerce;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.ca.Aleshores;
 import cucumber.api.java.ca.Donat;
 import cucumber.api.java.ca.I;
@@ -124,10 +125,6 @@ public class StepDefinitions {
         tpvController.anularVendaActual();
     }
 
-    @I("^el client paga (.+) euros en efectiu$")
-    public void elClientPagaEurosEnEfectiu(double valor) throws Throwable {
-        tpvController.setPreuPagament(valor);
-    }
 
     @I("^s'afegeix a la linia de venda (\\d+) unitats del producte amb codi de barres \"([^\"]*)\"$")
     public void sAfegeixALaLiniaDeVendaUnitatsDelProducteAmbCodiDeBarres(int unitatsProd, String codiBarres) throws Throwable {
@@ -262,4 +259,9 @@ public class StepDefinitions {
         assertEquals(expectedpreu, tpvController.getVendaActual().getPreuTotal(), 0.001);
     }
 
+
+    @I("^indico que el client paga (.+) euros$")
+    public void IndicoQueElClientPagaEuros(double preuClient) {
+        tpvController.setPreuPagament(preuClient);
+    }
 }

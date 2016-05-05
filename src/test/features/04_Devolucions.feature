@@ -19,7 +19,7 @@ Característica: Retornar un producte
   Aleshores existeix una devolucio del producte "777" de la venda 111 pel motiu "Defectuos"
   I el preu total es la suma dels productes a vendre menys el de la devolució, es a dir, 19,75
 
-  Escenari: Retornar dos productes amb saldo negatius
+  Escenari: Retornar dos productes amb saldo negatiu
     Quan inicio una nova venda
     I s'afegeix a la linia de venda 3 unitats del producte amb codi de barres "333"
     I es vol indicar una devolucio de 1 unitats del producte "777" de la venda 111 pel motiu "Defectuos"
