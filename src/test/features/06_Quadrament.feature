@@ -49,6 +49,12 @@ Característica: Quadrament al finalitzar un torn
     I demano el quadrament
     Aleshores obtinc un missatge que diu "Quadrament incorrecte"
 
+  Escenari: Introduir capital final més d'un cop
+    Quan introdueixo al tpv 1055.20 finals
+    I introdueixo al tpv 1000.70 finals
+    I introdueixo al tpv 990.50 finals
+    Aleshores el tpv té 990.50 finals
+
 
 
 
