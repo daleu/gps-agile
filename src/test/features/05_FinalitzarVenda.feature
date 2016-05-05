@@ -38,7 +38,7 @@ Característica: Finalitzar venda
     I que hi ha una linia de venda amb 2 unitats del producte amb codi de barres "444"
     #2,2
     #Total: 74,58
-    Quan indico que el client paga 100,0 euros
+    Quan indico que el client paga 100,0 euros en efectiu
     I es finalitza la venda
     Aleshores el valor a retornar al client és de 25,42
     I la linia 1 del tiquet sera " | Num. Venda: 1 | "

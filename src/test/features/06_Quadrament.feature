@@ -39,7 +39,7 @@ Característica: Quadrament al finalitzar un torn
     I que hi ha una linia de venda amb 2 unitats del producte amb codi de barres "1"
     I que hi ha una linia de venda amb 1 unitats del producte amb codi de barres "2"
     I que hi ha una linia de venda amb 4 unitats del producte amb codi de barres "3"
-    I el client paga 50 euros en efectiu
+    I indico que el client paga 50 euros en efectiu
     I es finalitza la venda
     I que hi ha una venda iniciada
     I que hi ha una linia de venda amb 1 unitats del producte amb codi de barres "1"

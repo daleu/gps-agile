@@ -260,8 +260,8 @@ public class StepDefinitions {
     }
 
 
-    @I("^indico que el client paga (.+) euros$")
-    public void IndicoQueElClientPagaEuros(double preuClient) {
-        tpvController.setPreuPagament(preuClient);
+    @I("^indico que el client paga (.+) euros en efectiu$")
+    public void indicoQueElClientPagaEurosEnEfectiu(double preuPagament) {
+        tpvController.setPreuPagament(preuPagament);
     }
 }
