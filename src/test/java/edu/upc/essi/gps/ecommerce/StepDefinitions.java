@@ -1,6 +1,5 @@
 package edu.upc.essi.gps.ecommerce;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.ca.Aleshores;
 import cucumber.api.java.ca.Donat;
 import cucumber.api.java.ca.I;
@@ -10,10 +9,7 @@ import edu.upc.essi.gps.ecommerce.exceptions.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import javafx.util.Pair;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+
 import java.util.Map;
 
 public class StepDefinitions {
@@ -210,7 +206,7 @@ public class StepDefinitions {
 
     @Aleshores("^el valor a retornar al client és de (.+)$")
     public void elValorARetornarAlClientÉsDe(double valor) throws Throwable {
-        assertEquals(valor, tpvController.getCanviUltimaVenda(), 0.001);
+        assertEquals(valor, tpvController.getCanviVenda(), 0.01);
 
     }
 

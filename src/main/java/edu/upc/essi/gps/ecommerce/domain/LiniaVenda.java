@@ -42,6 +42,8 @@ public class LiniaVenda {
         return producte.getPreuUnitat();
     }
 
+    public double getIVAProducte() {return producte.getIVA();}
+
 
     public double getTotalPreuBase(double iva) {
         if(producte.mateixIva(iva)) return producte.getPreuBase()*quantitat;

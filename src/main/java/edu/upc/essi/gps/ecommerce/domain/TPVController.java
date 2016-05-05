@@ -175,7 +175,7 @@ public class TPVController {
     // Tancament Venda
     //------------------------------
     public void setPreuPagament(double valor) {vendaActual.setPreuPagament(valor);}
-    public double getCanviUltimaVenda() {
+    public double getCanviVenda() {
         return vendaActual.getCanvi();
     }
 

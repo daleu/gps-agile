@@ -3,7 +3,9 @@ package edu.upc.essi.gps.ecommerce.domain;
 import edu.upc.essi.gps.domain.Entity;
 import edu.upc.essi.gps.ecommerce.exceptions.NoHiHaTiquetException;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
 
 public class Venda implements Entity {
@@ -116,17 +118,37 @@ public class Venda implements Entity {
             }
         }
     }
-
+    public int getNumDiferentsIVAs() {
+        List<Double> llistaIVAs = new ArrayList<>();
+        for (LiniaVenda lv : liniesVenda) {
+            if(!llistaIVAs.contains(lv.getIVAProducte())) llistaIVAs.add(lv.getIVAProducte());
+        }
+        return llistaIVAs.size();
+    }
+    public List<Double> getElsDiferentsIVAs(){
+        List<Double> llistaIVAs = new ArrayList<>();
+        for (LiniaVenda lv : liniesVenda) {
+            if(!llistaIVAs.contains(lv.getIVAProducte())) llistaIVAs.add(lv.getIVAProducte());
+        }
+        return llistaIVAs;
+    }
     public void calculaTiquet() {
         String sep = " | "; //Separacio
         tiquet = new ArrayList<>();
         tiquet.add(sep + "Tiquet" + sep); //El tiquet comenca a la posició 1 no a la 0
         tiquet.add(sep + "Num. Venda: " + id + sep);
         for (LiniaVenda lv : liniesVenda) {
-            tiquet.add(sep + lv.getQuantitat() + sep + lv.getNomProducte() + sep + "P.u. " + lv.getPreuUnitat() + sep
-                    + "P.l. " + lv.getPreuTotal() + sep);
+            tiquet.add(sep + lv.getQuantitat() + sep + lv.getNomProducte() + sep + "P.u. " + new DecimalFormat("##.##").format(lv.getPreuUnitat()) + sep
+                    + "P.l. " + new DecimalFormat("##.##").format(lv.getPreuTotal()) + sep);
         }
-        tiquet.add(sep + "Total: " + getPreuTotal() + sep + "Canvi: "+ getCanvi() + sep);
+        List<Double> vIVAs = getElsDiferentsIVAs();
+        for(int i = 0; i < vIVAs.size(); ++i) {
+            tiquet.add(sep + vIVAs.get(i)*100 + "%" + sep + "P.B: " +
+                    new DecimalFormat("##.##").format(getSumaPreuBaseVendaPerIva(vIVAs.get(i))) + sep
+                    + "P.T: " + new DecimalFormat("##.##").format(getSumaPreuUnitatVendaPerIva(vIVAs.get(i))) + sep);
+        }
+        tiquet.add(sep + "Total: " + new DecimalFormat("##.##").format(getPreuTotal()) + sep + "Canvi: " +
+                new DecimalFormat("##.##").format(getCanvi()) + sep);
     }
 
     public String getLiniaTiquet(int num) throws NoHiHaTiquetException {

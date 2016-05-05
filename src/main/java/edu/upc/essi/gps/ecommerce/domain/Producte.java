@@ -43,4 +43,6 @@ public class Producte {
     public boolean mateixIva(double iva) {
         return this.iva == iva;
     }
+
+    public double getIVA() {return this.iva;}
 }
