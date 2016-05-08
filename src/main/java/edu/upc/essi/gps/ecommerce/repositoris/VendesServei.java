@@ -24,6 +24,8 @@ public class VendesServei {
         return result;
     }
 
+
+
     public void guardarVenda(Venda ven){
         vendesRepositori.checkInsert(ven);
         vendesRepositori.insert(ven);

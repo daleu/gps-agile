@@ -49,7 +49,7 @@ Característica: Finalitzar venda
     #(Per cada linia) "Quantitat, NomProducte, PreuUnitat, PreuLinia"
     #(Per cada grup d'IVA): "IVA aplicat PreuSumaTotalsBase PreuSumaTotals"
     #"mètodePagament TotalAPagar Pagat Canvi"
-    I la linia 1 del tiquet sera " | Nom empleat: Joan | Nom botiga: Carroça | "
+#    I la linia 1 del tiquet sera " | Nom empleat: Joan | Nom botiga: Carroça | "
     I la linia de l'hora i data 2 del tiquet sera " | Num. Venda: 1 | " la data i hora actual i " | Codi Tiquet: 1"
     I la linia 3 del tiquet sera " | 2 | Action Man | P.u. 15 | P.l. 30 | "
     I la linia 4 del tiquet sera " | 2 | Barbie | P.u. 14 | P.l. 28 | "

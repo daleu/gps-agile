@@ -4,6 +4,7 @@ import edu.upc.essi.gps.ecommerce.exceptions.*;
 import edu.upc.essi.gps.ecommerce.repositoris.VendesServei;
 import edu.upc.essi.gps.ecommerce.repositoris.DevolucionsServei;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Set;
@@ -18,6 +19,7 @@ public class TPVController {
     private double efectiuFi;
     private double dinersEnCaixa;
     private String estatQuadrament;
+    private Torn tornActual;
     private Devolucio devolucioActual;
     private final DevolucionsServei devolucionsServei = new DevolucionsServei();
     private final VendesServei vendesServei = new VendesServei();
@@ -49,12 +51,29 @@ public class TPVController {
         }
     }
 
-    public void tancamentVenda() throws VendaNoIniciadaException, VendaJaFinalitzadaException {
+    public void iniciarVendaAmbData(String data, String hora) throws VendaJaIniciadaException, ParseException {
+        if (this.vendaActual == null) {
+            vendaActual = vendesServei.novaVenda();
+            vendaActual.setData(data,hora);
+        } else {
+            if(this.vendaActual.isFinalitzada() ) vendaActual = vendesServei.novaVenda();
+            else throw new VendaJaIniciadaException();
+        }
+    }
+
+
+    public void tancamentVenda() throws VendaNoIniciadaException, VendaJaFinalitzadaException, ParseException {
         if (vendaActual != null)  {
             if(!vendaActual.isFinalitzada()) {
                 vendesServei.guardarVenda(vendaActual);
                 dinersEnCaixa += vendaActual.getPreuTotal();
-                vendaActual.finalitzar();
+
+                //TODO : If temporal fins quadrament arreglat
+                if (tornActual == null){
+                    tornActual = new Torn("BB","BB");
+                    vendaActual.setData("10/05/2016","10:05");
+                }
+                vendaActual.finalitzar(tornActual);
             }
             else throw new VendaJaFinalitzadaException();
         }
@@ -288,5 +307,14 @@ public class TPVController {
             afegirProducteLiniaVenda(p, productesVenda.get(p));
         }
         guardarVendaActual();
+    }
+
+
+    public void iniciarTorn(String nomEmpleat,String botigaActual) {
+        tornActual = new Torn(nomEmpleat,botigaActual);
+    }
+
+    public Torn getTornActual() {
+        return tornActual;
     }
 }

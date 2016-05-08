@@ -5,7 +5,11 @@ import edu.upc.essi.gps.ecommerce.exceptions.DevolucioNoPossibleException;
 import edu.upc.essi.gps.ecommerce.exceptions.NoHiHaTiquetException;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Venda implements Entity {
@@ -16,6 +20,7 @@ public class Venda implements Entity {
     private boolean finalitzada;
     private String nomPilaEmpleat;
     private String nomBotiga;
+    private Date data;
     Tiquet tiquet;
 
     public Venda(int numVenda) {
@@ -77,10 +82,10 @@ public class Venda implements Entity {
         informacioTancar = "Venda anul·lada";
     }
 
-    public void finalitzar() {
+    public void finalitzar(Torn tornActual) {
         finalitzada = true;
         informacioTancar = "Venda finalitzada";
-        calculaTiquet();
+        calculaTiquet(tornActual);
     }
 
     public void afegeixLinia(Producte p, Integer unitats) {
@@ -153,12 +158,12 @@ public class Venda implements Entity {
         }
         return llistaIVAs;
     }
-    public void calculaTiquet() {
+    public void calculaTiquet(Torn tornActual) {
         String sep = " | "; //Separacio
         tiquet = new Tiquet(id); //De moment els tiquets tenen el mateix id que la venda
         tiquet.addLinia(sep + "Tiquet" + sep); //El tiquet comenca a la posició 1 no a la 0
         //" | Nom empleat: Joan | Nom botiga: JJ | "
-        tiquet.addLinia(sep + "Nom empleat: " + nomPilaEmpleat + sep + "Nom botiga: " + nomBotiga + sep);
+        tiquet.addLinia(sep + "Nom empleat: " + tornActual.getEmpleatActual() + sep + "Nom botiga: " + tornActual.getBotigaActual() + sep);
         //" | Num. Venda: 1 | dd/mm/aaaa hh:mm | Codi Tiquet: 1"
         tiquet.addLinia(sep + "Num. Venda: " + id + sep + tiquet.getDataIHora() + sep + "Codi Tiquet: " + tiquet.getNum());
         for (LiniaVenda lv : liniesVenda) {
@@ -195,5 +200,18 @@ public class Venda implements Entity {
             total += lv.getTotalUnitatBase(iva);
         }
         return total;
+    }
+
+    public void setData(String data, String hora) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        this.data = formatter.parse(data);
+
+        String[] horaSeparada = hora.split(":");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(this.data);
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(horaSeparada[0]));
+        calendar.set(Calendar.MINUTE, Integer.parseInt(horaSeparada[1]));
+        this.data = calendar.getTime();
     }
 }
