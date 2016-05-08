@@ -12,9 +12,7 @@ Característica: Finalitzar venda
   Escenari: Anular una venda amb linies de venda
     Donat existeix el producte "Baldufa" amb codi de barres "123456789" i preu per unitat 3,50
     I que hi ha una venda iniciada
-    I introdueixo al tpv el producte per nom "Baldufa"
-    I introdueixo al tpv el producte per nom "Baldufa"
-    I introdueixo al tpv el producte per nom "Baldufa"
+    I introdueixo al tpv 3 producte amb nom "Baldufa"
     Quan s'anula la venda
     Aleshores no hi ha cap venda iniciada
 

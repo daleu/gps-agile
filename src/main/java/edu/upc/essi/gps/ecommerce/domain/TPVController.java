@@ -102,20 +102,14 @@ public class TPVController {
     //INTRODUIR PRODUCTES A UNA VENDA
     //------------------------------
 
-    public void passarCodi(String codiBarres) throws ProducteNoExisteixException {
+    public void afegirLiniaVendaPerCodi(int quantitat, String codiBarres) throws ProducteNoExisteixException {
         Producte producteIdentificat = cataleg.getProductePerCodi(codiBarres);
-        vendaActual.afegeixLinia(producteIdentificat,1);
+        vendaActual.afegeixLinia(producteIdentificat,quantitat);
     }
 
-    public void introduirNomProducte(String nomProducte) throws ProducteNoExisteixException {
+    public void afegirLiniaVendaPerNom(int quantitat, String nomProducte) throws ProducteNoExisteixException {
         Producte producteIdentificat = cataleg.getProductePerNom(nomProducte);
-        vendaActual.afegeixLinia(producteIdentificat,1);
-    }
-
-    public void afegirProducteLiniaVenda(String codiBarres, int unitats) throws ProducteNoExisteixException {
-        Producte producteIdentificat = cataleg.getProductePerCodi(codiBarres);
-        if(producteIdentificat == null) throw new ProducteNoExisteixException();
-        vendaActual.afegeixLinia(producteIdentificat,unitats);
+        vendaActual.afegeixLinia(producteIdentificat,quantitat);
     }
 
     public boolean possibilitatDeRetorn(int idVenda, String codiBarres, int unitatsProd) {
@@ -304,7 +298,7 @@ public class TPVController {
         iniciarVendaAmbID(idVenda);
         Set<String> prods = productesVenda.keySet();
         for(String p: prods) {
-            afegirProducteLiniaVenda(p, productesVenda.get(p));
+            afegirLiniaVendaPerCodi(productesVenda.get(p), p);
         }
         guardarVendaActual();
     }

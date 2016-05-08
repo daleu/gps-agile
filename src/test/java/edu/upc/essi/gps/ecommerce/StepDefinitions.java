@@ -74,16 +74,6 @@ public class StepDefinitions {
         tpvController.afegeixProducteACataleg(nomProducte, codiBarres, preuUnitat);
     }
 
-    @Quan("^passo pel tpv el codi de barres \"([^\"]*)\"$")
-    public void passoPelTpvElCodiDeBarres(String codiBarres) throws Throwable {
-        tpvController.passarCodi(codiBarres);
-    }
-
-    @Quan("^introdueixo al tpv el producte per nom \"([^\"]*)\"$")
-    public void introdueixoAlTpvElProductePerNom(String nomProducte) throws Throwable {
-        tpvController.introduirNomProducte(nomProducte);
-    }
-
     //TODO: Es podria modificar per la venda te (int) linies de venda. FUNCIO A SOTA
     @Aleshores("^la venda te una linia de venda$")
     public void laVendaTeUnaLiniaDeVenda() throws Throwable {
@@ -128,7 +118,7 @@ public class StepDefinitions {
 
     @I("^s'afegeix a la linia de venda (\\d+) unitats del producte amb codi de barres \"([^\"]*)\"$")
     public void sAfegeixALaLiniaDeVendaUnitatsDelProducteAmbCodiDeBarres(int unitatsProd, String codiBarres) throws Throwable {
-        tpvController.afegirProducteLiniaVenda(codiBarres, unitatsProd);
+        tpvController.afegirLiniaVendaPerCodi(unitatsProd, codiBarres);
     }
 
     @Quan("^introdueixo al tpv (.+) inicials$")
@@ -163,7 +153,7 @@ public class StepDefinitions {
 
     @I("^que hi ha una linia de venda amb (\\d+) unitats del producte amb codi de barres \"([^\"]*)\"$")
     public void HiHaUnaLiniaDeVenda(int unitats, String codi) throws Throwable {
-        tpvController.afegirProducteLiniaVenda(codi, unitats);
+        tpvController.afegirLiniaVendaPerCodi(unitats, codi);
     }
 
     @I("^demano el quadrament")
@@ -288,5 +278,15 @@ public class StepDefinitions {
     @I("^es marca el nom de la botiga -ja definit al TPV- a la venda$")
     public void esMarcaElNomDeLaBotigaJaDefinitAlTPVALaVenda() {
         tpvController.setNomBotigaVendaDefinitATPV();
+    }
+
+    @Quan("^passo pel tpv (\\d+) producte amb codi de barres \"([^\"]*)\"$")
+    public void passoPelTpvProducteAmbCodiDeBarres(int quantitat, String codiBarrres) throws Throwable {
+        tpvController.afegirLiniaVendaPerCodi(quantitat, codiBarrres);
+    }
+
+    @Quan("^introdueixo al tpv (\\d+) producte amb nom \"([^\"]*)\"$")
+    public void introdueixoAlTpvProducteAmbNom(int unitats, String nomProducte) throws Throwable {
+        tpvController.afegirLiniaVendaPerNom(unitats, nomProducte);
     }
 }

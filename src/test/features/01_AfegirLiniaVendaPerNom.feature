@@ -8,7 +8,7 @@ Característica: Afegir una linia de venda per nom
     I existeix el producte "Baldufa" amb codi de barres "123456789" i preu per unitat 3.50
 
   Escenari: Afegir una linia de venda nova per nom
-    Quan introdueixo al tpv el producte per nom "Baldufa"
+    Quan introdueixo al tpv 1 producte amb nom "Baldufa"
     Aleshores la venda te 1 linia de venda
     I la linia de venda 1 te per producte "Baldufa"
     I la linia de venda 1 te per preu unitat 3.50
@@ -17,7 +17,7 @@ Característica: Afegir una linia de venda per nom
 
   Escenari: Fusionar linies de venda per codi de barres
     Donat que hi ha una linia de venda amb 1 unitats del producte amb codi de barres "123456789"
-    Quan introdueixo al tpv el producte per nom "Baldufa"
+    Quan introdueixo al tpv 1 producte amb nom "Baldufa"
     Aleshores la venda te 1 linia de venda
     I la linia de venda 1 te per quantitat 2
     I la linia de venda 1 te per preu unitat 3.50
