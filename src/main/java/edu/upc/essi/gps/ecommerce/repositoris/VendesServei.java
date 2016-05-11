@@ -46,4 +46,7 @@ public class VendesServei {
             vendesRepositori.checkInsert(v);
             vendesRepositori.insert(v);
     }
+
+
+
 }

@@ -22,6 +22,7 @@ public class Venda implements Entity {
     private String nomBotiga;
     private Date data;
     Tiquet tiquet;
+    private String idTorn;
 
     public Venda(int numVenda) {
         this.id = numVenda;

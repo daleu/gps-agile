@@ -25,5 +25,6 @@ Característica: Retornar un producte mentres es fa una venda
     I es vol indicar una devolucio de 1 unitats del producte "777" de la venda 111
     I es vol indicar una devolucio de 1 unitats del producte "222" de la venda 111
     Aleshores existeix una devolucio del producte "222" de la venda 111
+    I existeix una devolucio del producte "777" de la venda 111
     I el preu total es la suma dels productes a vendre menys el de la devolució, es a dir, -30,25
 

@@ -1,6 +1,7 @@
 package edu.upc.essi.gps.ecommerce.domain;
 
 import edu.upc.essi.gps.ecommerce.exceptions.*;
+import edu.upc.essi.gps.ecommerce.repositoris.TornServei;
 import edu.upc.essi.gps.ecommerce.repositoris.VendesServei;
 import edu.upc.essi.gps.ecommerce.repositoris.DevolucionsServei;
 
@@ -20,6 +21,7 @@ public class TPVController {
     private Devolucio devolucioActual;
     private final DevolucionsServei devolucionsServei = new DevolucionsServei();
     private final VendesServei vendesServei = new VendesServei();
+    private final TornServei tornServei = new TornServei();
     private String nomBotiga;
     private String screen;
 
