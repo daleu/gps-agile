@@ -19,7 +19,7 @@ Característica: Visualitzar quadraments
     Donat el TPV esta a la botiga "Carroça"
     Quan inicio un torn amb nom empleat "Joan"
     I cancel·lo el torn sense introduir efectiu inicial
-    Aleshores obtinc un missatge que diu "Torn finalitzat"
+    Aleshores obtinc un missatge que diu "Cancel·lacio acceptada"
 
 
   Escenari: Iniciar un torn quan ja n'hi ha un d'iniciat

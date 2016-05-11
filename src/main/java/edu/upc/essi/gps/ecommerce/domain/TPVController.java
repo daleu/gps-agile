@@ -15,11 +15,6 @@ import java.util.Set;
 public class TPVController {
     //Classe singleton
     private Venda vendaActual;
-<<<<<<< HEAD
-=======
-    private double efectiuFi;
-    private double dinersEnCaixa;
->>>>>>> 77824064e25c4a7a19fb5163ab837013292c943b
     private Torn tornActual;
     private Devolucio devolucioActual;
     private final DevolucionsServei devolucionsServei = new DevolucionsServei();
