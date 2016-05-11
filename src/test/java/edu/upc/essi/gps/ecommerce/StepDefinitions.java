@@ -239,11 +239,9 @@ public class StepDefinitions {
         tpvController.introduirVendaJaAcabada(idVenda,productesVenda);
     }
 
-    @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+)")
+    @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+) sense motiu")
     public void esVolIndicarUnaDevolucioDeUnitatSDelProducteDeLaVendaPelMotiu(int unitats, String codiProd, int idVenda) throws ProducteNoExisteixException, Exception {
-        tpvController.introduirDevolucio(idVenda,codiProd,unitats," ");
-
-
+        tpvController.introduirDevolucio(idVenda,codiProd,unitats,"");
     }
 
     @I("^el preu total es la suma dels productes a vendre menys el de la devolució, es a dir, (.+)$")
@@ -315,5 +313,16 @@ public class StepDefinitions {
     @I("^finalitzo el torn amb (.+) d'efectiu final$")
     public void finalitzoElTornAmbDesquadrament(Double efectiu) throws Throwable {
         tpvController.finalitzaTorn(efectiu);
+    }
+
+    @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+) pel motiu \"([^\"]*)\"$")
+    public void esVolIndicarUnaDevolucioDeUnitatsDelProducteDeLaVendaPelMotiu(int unitats, String codiBarres, int idVenda, String motiu) throws ProducteNoExisteixException, Exception {
+        tpvController.introduirDevolucio(idVenda,codiBarres,unitats,motiu);
+    }
+
+
+    @Aleshores("^\"([^\"]*)\" es el motiu de l'ultima devolucio$")
+    public void esElMotiuDeLaUltimaDevolucio(String motiu) {
+        assertEquals(tpvController.getUltimaDevolucio().getMotiu(),motiu);
     }
 }
