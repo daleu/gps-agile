@@ -162,11 +162,10 @@ public class StepDefinitions {
     }
 
 
-    @Aleshores("^existeix una devolucio del producte \"([^\"]*)\" de la venda (\\d+) pel motiu \"([^\"]*)\"$")
-    public void existeixUnaDevolucioDelProducteDeLaVendaPelMotiu(String expectedCodiBarres, int expectedIdVenda, String expectedMotiu) throws Throwable {
+    @Aleshores("^existeix una devolucio del producte \"([^\"]*)\" de la venda (\\d+)")
+    public void existeixUnaDevolucioDelProducteDeLaVendaPelMotiu(String expectedCodiBarres, int expectedIdVenda) {
         assertEquals(expectedCodiBarres, tpvController.getCodiBarresDevolucio(expectedIdVenda, expectedCodiBarres, 1));
         assertEquals(expectedIdVenda, tpvController.getIdVendaDevolucio(expectedIdVenda, expectedCodiBarres, 1));
-        assertEquals(expectedMotiu, tpvController.getMotiuDevolucio(expectedIdVenda, expectedCodiBarres, 1));
     }
 
     @Quan("^inicio una nova venda$")
@@ -240,9 +239,9 @@ public class StepDefinitions {
         tpvController.introduirVendaJaAcabada(idVenda,productesVenda);
     }
 
-    @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+) pel motiu \"([^\"]*)\"$")
-    public void esVolIndicarUnaDevolucioDeUnitatSDelProducteDeLaVendaPelMotiu(int unitats, String codiProd, int idVenda, String motiu) throws ProducteNoExisteixException, Exception {
-        tpvController.introduirDevolucio(idVenda,codiProd,unitats,motiu);
+    @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+)")
+    public void esVolIndicarUnaDevolucioDeUnitatSDelProducteDeLaVendaPelMotiu(int unitats, String codiProd, int idVenda) throws ProducteNoExisteixException, Exception {
+        tpvController.introduirDevolucio(idVenda,codiProd,unitats," ");
 
 
     }
