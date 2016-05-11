@@ -25,10 +25,19 @@ public class TPVController {
     private final VendesServei vendesServei = new VendesServei();
     private double canvi;
     private String nomBotiga;
+    private String screen;
 
     private Cataleg cataleg = new Cataleg();
 
     public TPVController(){}
+
+    public String getScreen() {
+        return screen;
+    }
+
+    public void setScreen(String screen) {
+        this.screen = screen;
+    }
 
     //---------------------------
     // Estats de venda
@@ -181,12 +190,8 @@ public class TPVController {
 
     public void quadrament() {
         double diferencia = dinersEnCaixa - efectiuFi;
-        if (Math.abs(diferencia) <= 5) { estatQuadrament = "Quadrament correcte"; }
-        else { estatQuadrament = "Quadrament incorrecte"; }
-    }
-
-    public String getEstatQuadrament() {
-        return estatQuadrament;
+        if (Math.abs(diferencia) <= 5) { screen = "Quadrament correcte"; }
+        else { screen = "Quadrament incorrecte"; }
     }
 
     //------------------------------
@@ -304,8 +309,10 @@ public class TPVController {
     }
 
 
-    public void iniciarTorn(String nomEmpleat,String botigaActual) {
-        tornActual = new Torn(nomEmpleat,botigaActual);
+    public void iniciarTorn(String nomEmpleat) {
+        tornActual = new Torn(nomEmpleat);
+        tornActual.setNomBotiga(nomBotiga);
+        screen = "Bon dia, l'atent en " + nomEmpleat;
     }
 
     public Torn getTornActual() {

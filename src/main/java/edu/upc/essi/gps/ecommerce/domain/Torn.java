@@ -2,20 +2,33 @@ package edu.upc.essi.gps.ecommerce.domain;
 
 
 public class Torn {
-    private String empleatActual;
-    private String botigaActual;
+    private String nomEmpleat;
+    private String nomBotiga;
 
-    public Torn(String empleatAcutal, String botigaActual)
+    public Torn(String empleatAcutal)
     {
-        this.empleatActual = empleatAcutal;
-        this.botigaActual = botigaActual;
+        this.nomEmpleat = empleatAcutal;
     }
 
-    public String getEmpleatActual() {
-        return empleatActual;
+    public Torn(String empleatAcutal, String nomBotiga)
+    {
+        this.nomEmpleat = empleatAcutal;
+        this.nomBotiga = nomBotiga;
     }
 
-    public String getBotigaActual() {
-        return botigaActual;
+    public String getNomEmpleat() {
+        return nomEmpleat;
+    }
+
+    public String getNomBotiga() {
+        return nomBotiga;
+    }
+
+    public void setNomBotiga(String nomBotiga) {
+        this.nomBotiga = nomBotiga;
+    }
+
+    public void setNomEmpleat(String nomEmpleat) {
+        this.nomEmpleat = nomEmpleat;
     }
 }

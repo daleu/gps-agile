@@ -1,6 +1,5 @@
 package edu.upc.essi.gps.ecommerce;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.ca.Aleshores;
 import cucumber.api.java.ca.Donat;
 import cucumber.api.java.ca.I;
@@ -143,7 +142,7 @@ public class StepDefinitions {
 
     @Aleshores("^obtinc un missatge que diu \"([^\"]*)\"$")
     public void obtenirMissatge(String msg) {
-        assertEquals(msg, tpvController.getEstatQuadrament());
+        assertEquals(msg, tpvController.getScreen());
     }
 
     @Donat("^que hi ha al tpv (.+) inicials")
@@ -288,5 +287,17 @@ public class StepDefinitions {
     @Quan("^introdueixo al tpv (\\d+) producte amb nom \"([^\"]*)\"$")
     public void introdueixoAlTpvProducteAmbNom(int unitats, String nomProducte) throws Throwable {
         tpvController.afegirLiniaVendaPerNom(unitats, nomProducte);
+    }
+
+    @Quan("^inicio un torn amb nom empleat \"([^\"]*)\"$")
+    public void inicioUnTornAmbNomEmpleat(String nomEmpleat) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        tpvController.iniciarTorn(nomEmpleat);
+    }
+
+    @Aleshores("^el TPV està sent usat pel \"([^\"]*)\"$")
+    public void elTPVEstàSentUsatPel(String nomEmpleat) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        assertEquals(nomEmpleat,tpvController.getTornActual().getNomEmpleat());
     }
 }

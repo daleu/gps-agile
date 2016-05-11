@@ -163,7 +163,7 @@ public class Venda implements Entity {
         tiquet = new Tiquet(id); //De moment els tiquets tenen el mateix id que la venda
         tiquet.addLinia(sep + "Tiquet" + sep); //El tiquet comenca a la posició 1 no a la 0
         //" | Nom empleat: Joan | Nom botiga: JJ | "
-        tiquet.addLinia(sep + "Nom empleat: " + tornActual.getEmpleatActual() + sep + "Nom botiga: " + tornActual.getBotigaActual() + sep);
+        tiquet.addLinia(sep + "Nom empleat: " + tornActual.getNomEmpleat() + sep + "Nom botiga: " + tornActual.getNomBotiga() + sep);
         //" | Num. Venda: 1 | dd/mm/aaaa hh:mm | Codi Tiquet: 1"
         tiquet.addLinia(sep + "Num. Venda: " + id + sep + tiquet.getDataIHora() + sep + "Codi Tiquet: " + tiquet.getNum());
         for (LiniaVenda lv : liniesVenda) {
