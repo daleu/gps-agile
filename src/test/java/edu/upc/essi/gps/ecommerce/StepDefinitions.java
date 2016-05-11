@@ -284,13 +284,11 @@ public class StepDefinitions {
 
     @Quan("^inicio un torn amb nom empleat \"([^\"]*)\"$")
     public void inicioUnTornAmbNomEmpleat(String nomEmpleat) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
         tpvController.iniciarTorn(nomEmpleat);
     }
 
     @Aleshores("^el TPV està sent usat pel \"([^\"]*)\"$")
     public void elTPVEstàSentUsatPel(String nomEmpleat) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
         assertEquals(nomEmpleat,tpvController.getTornActual().getNomEmpleat());
     }
 
@@ -306,14 +304,16 @@ public class StepDefinitions {
 
     @Quan("^finalitzo el torn$")
     public void finalitzoElTorn() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
         tpvController.finalitzaTorn();
     }
 
     @I("^cancel·lo la finalitzacio del torn$")
-    public void cancelLoLaFinalitzacioDelTorn() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
+    public void canceloLaFinalitzacioDelTorn() throws Throwable {
         tpvController.cancelaAccioTorn();
     }
 
+    @I("^finalitzo el torn amb (.+) d'efectiu final$")
+    public void finalitzoElTornAmbDesquadrament(Double efectiu) throws Throwable {
+        tpvController.finalitzaTorn(efectiu);
+    }
 }
