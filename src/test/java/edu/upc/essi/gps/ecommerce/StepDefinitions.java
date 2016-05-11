@@ -1,5 +1,6 @@
 package edu.upc.essi.gps.ecommerce;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.ca.Aleshores;
 import cucumber.api.java.ca.Donat;
 import cucumber.api.java.ca.I;
@@ -132,7 +133,7 @@ public class StepDefinitions {
 
     @Quan("^introdueixo al tpv (.+) finals$")
     public void introduirEfectiuFinal(double efectiu) throws Throwable {
-        tpvController.setEfectiuFinal(efectiu);
+        tpvController.quadrament(efectiu);
     }
 
     @Aleshores("^el tpv té (.+) finals$")
@@ -154,12 +155,6 @@ public class StepDefinitions {
     public void HiHaUnaLiniaDeVenda(int unitats, String codi) throws Throwable {
         tpvController.afegirLiniaVendaPerCodi(unitats, codi);
     }
-
-    @I("^demano el quadrament")
-    public void demanoQuadrament() {
-        tpvController.quadrament();
-    }
-
 
     @Quan("^vull fer una devolucio$")
     public void vullFerUnaDevolucio() {
@@ -307,6 +302,19 @@ public class StepDefinitions {
 
     @I("^cancel·lo el torn sense introduir efectiu inicial")
     public void cancelarTornSenseEfectiuInicial() {
-        tpvController.cancelaTornSenseEfectiuInicial();
+        tpvController.cancelaAccioTorn();
     }
+
+    @Quan("^finalitzo el torn$")
+    public void finalitzoElTorn() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        tpvController.finalitzaTorn();
+    }
+
+    @I("^cancel·lo la finalitzacio del torn$")
+    public void cancelLoLaFinalitzacioDelTorn() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        tpvController.cancelaAccioTorn();
+    }
+
 }

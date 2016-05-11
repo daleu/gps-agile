@@ -15,9 +15,6 @@ import java.util.Set;
 public class TPVController {
     //Classe singleton
     private Venda vendaActual;
-    private double efectiuFi;
-    private double dinersEnCaixa;
-    private String estatQuadrament;
     private Torn tornActual;
     private Devolucio devolucioActual;
     private final DevolucionsServei devolucionsServei = new DevolucionsServei();
@@ -74,7 +71,7 @@ public class TPVController {
         if (vendaActual != null)  {
             if(!vendaActual.isFinalitzada()) {
                 vendesServei.guardarVenda(vendaActual);
-                dinersEnCaixa += vendaActual.getPreuTotal();
+                if (tornActual != null) tornActual.incrementDinersEnCaixa(vendaActual.getPreuTotal());
 
                 //TODO : If temporal fins quadrament arreglat
                 if (tornActual == null){
@@ -160,8 +157,8 @@ public class TPVController {
 
     public void setEfectiuInicial(double efectiu) {
         if (tornActual != null && !tornActual.getFinalitzat()) {
-            this.tornActual.setEfectiuInici(efectiu);
-            this.dinersEnCaixa = efectiu;
+            tornActual.setEfectiuInici(efectiu);
+            tornActual.setDinersEnCaixa(efectiu);
         }
     }
 
@@ -171,11 +168,14 @@ public class TPVController {
     }
 
     public void setEfectiuFinal(double efectiu) {
-        this.efectiuFi = efectiu;
+        if (tornActual != null && !tornActual.getFinalitzat()) {
+            this.tornActual.setEfectiuFi(efectiu);
+        }
     }
 
     public double getEfectiuFinal() {
-        return this.efectiuFi;
+        if (tornActual != null) { return this.tornActual.getEfectiuFi(); }
+        return 0.0;
     }
 
     public DevolucionsServei getdevolucionsServei() {
@@ -190,10 +190,16 @@ public class TPVController {
     // Càlcul del quadrament
     //------------------------------
 
-    public void quadrament() {
-        double diferencia = dinersEnCaixa - efectiuFi;
-        if (Math.abs(diferencia) <= 5) { screen = "Quadrament correcte"; }
-        else { screen = "Quadrament incorrecte"; }
+    public void quadrament(Double efectiu) {
+        if (tornActual != null) {
+            double diferencia = tornActual.getDinersEnCaixa() - efectiu;
+            if (Math.abs(diferencia) <= 5) {
+            //    screen = "Quadrament correcte";
+                tornActual.setEfectiuFi(efectiu);
+            }
+            tornActual.setEfectiuFi(efectiu);
+
+        }
     }
 
     //------------------------------
@@ -324,8 +330,12 @@ public class TPVController {
         return tornActual;
     }
 
-    public void cancelaTornSenseEfectiuInicial() {
-        tornActual.cancelaTornSenseEfectInicial();
-        screen = "Torn finalitzat";
+    public void finalitzaTorn() {
+        tornActual.finalitza();
+    }
+
+    public void cancelaAccioTorn() {
+        tornActual.cancelarFinalitzacio();
+        screen = "Cancel·lacio acceptada";
     }
 }

@@ -5,6 +5,8 @@ public class Torn {
     private String nomEmpleat;
     private String nomBotiga;
     private Double efectiuInici;
+    private Double efectiuFi;
+    private Double dinersEnCaixa;
     private boolean finalitzat = false;
 
     public Torn(String empleatActual) {
@@ -37,9 +39,27 @@ public class Torn {
 
     public Double getEfectiuInici() {return this.efectiuInici; }
 
-    public void cancelaTornSenseEfectInicial() {
+    public void finalitza() {
         finalitzat = true;
     }
 
+    public void cancelarFinalitzacio() {
+        finalitzat = false;
+    }
+
     public boolean getFinalitzat() { return finalitzat; }
+
+    public Double getEfectiuFi() {
+        return efectiuFi;
+    }
+
+    public void setEfectiuFi(Double efectiuFi) { this.efectiuFi = efectiuFi; }
+
+    public Double getDinersEnCaixa() {
+        return dinersEnCaixa;
+    }
+
+    public void setDinersEnCaixa(Double dinersEnCaixa) { this.dinersEnCaixa = dinersEnCaixa; }
+
+    public void incrementDinersEnCaixa(Double increment) { this.dinersEnCaixa += increment; }
 }
