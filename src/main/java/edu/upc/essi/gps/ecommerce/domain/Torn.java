@@ -4,6 +4,8 @@ package edu.upc.essi.gps.ecommerce.domain;
 public class Torn {
     private String nomEmpleat;
     private String nomBotiga;
+    private Double efectiuInici;
+    private boolean finalitzat = false;
 
     public Torn(String empleatActual) {
         this.nomEmpleat = empleatActual;
@@ -30,4 +32,14 @@ public class Torn {
     public void setNomEmpleat(String nomEmpleat) {
         this.nomEmpleat = nomEmpleat;
     }
+
+    public void setEfectiuInici(Double efectiuInici) { this.efectiuInici = efectiuInici; }
+
+    public Double getEfectiuInici() {return this.efectiuInici; }
+
+    public void cancelaTornSenseEfectInicial() {
+        finalitzat = true;
+    }
+
+    public boolean getFinalitzat() { return finalitzat; }
 }

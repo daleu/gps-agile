@@ -15,7 +15,6 @@ import java.util.Set;
 public class TPVController {
     //Classe singleton
     private Venda vendaActual;
-    private double efectiuInici;
     private double efectiuFi;
     private double dinersEnCaixa;
     private String estatQuadrament;
@@ -25,7 +24,6 @@ public class TPVController {
     private final VendesServei vendesServei = new VendesServei();
     private double canvi;
     private String nomBotiga;
-    private boolean tornIniciat;
     private String screen;
 
     private Cataleg cataleg = new Cataleg();
@@ -161,12 +159,15 @@ public class TPVController {
     //------------------------------
 
     public void setEfectiuInicial(double efectiu) {
-        this.efectiuInici = efectiu;
-        this.dinersEnCaixa = efectiu;
+        if (tornActual != null && !tornActual.getFinalitzat()) {
+            this.tornActual.setEfectiuInici(efectiu);
+            this.dinersEnCaixa = efectiu;
+        }
     }
 
     public double getEfectiuInicial() {
-        return this.efectiuInici;
+        if (tornActual != null && !tornActual.getFinalitzat()) { return this.tornActual.getEfectiuInici(); }
+        return 0.0;
     }
 
     public void setEfectiuFinal(double efectiu) {
@@ -311,16 +312,20 @@ public class TPVController {
 
 
     public void iniciarTorn(String nomEmpleat) {
-        if (!tornIniciat) {
+        if (tornActual == null) {
             tornActual = new Torn(nomEmpleat);
             tornActual.setNomBotiga(nomBotiga);
-            screen = "Bon dia, l'atent en " + nomEmpleat;
-            tornIniciat = true;
+            screen = "Bon dia, l'atén en " + nomEmpleat;
         }
         else { screen = "Ja hi ha un torn iniciat"; }
     }
 
     public Torn getTornActual() {
         return tornActual;
+    }
+
+    public void cancelaTornSenseEfectiuInicial() {
+        tornActual.cancelaTornSenseEfectInicial();
+        screen = "Torn finalitzat";
     }
 }

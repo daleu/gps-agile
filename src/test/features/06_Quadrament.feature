@@ -8,11 +8,6 @@ Característica: Quadrament al finalitzar un torn
     I existeix el producte "Cotxe" amb codi de barres "2" i preu per unitat 22.50
     I existeix el producte "Pilota" amb codi de barres "3" i preu per unitat 1.50
 
-  Escenari: Afegir el capital inicial al començar
-    Donat que no hi ha cap venda iniciada
-    Quan introdueixo al tpv 524.00 inicials
-    Aleshores el tpv té 524.00 inicials
-
   Escenari: Afegir el capital final al demanar el quadrament
     Donat que no hi ha cap venda iniciada
     Quan introdueixo al tpv 524.00 finals

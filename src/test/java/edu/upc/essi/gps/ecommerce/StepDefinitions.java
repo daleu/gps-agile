@@ -230,7 +230,6 @@ public class StepDefinitions {
         }
     }
 
-
     @I("^la linia de l'hora i data (\\d+) del tiquet sera \"([^\"]*)\" la data i hora actual i \"([^\"]*)\"$")
     public void laLiniaDeLHoraIDataDelTiquetSera(int num, String linia1, String linia2) {
         try {
@@ -304,5 +303,10 @@ public class StepDefinitions {
     @I("^el \"([^\"]*)\" ha iniciat un torn")
     public void tornJaIniciat(String nomEmpleat) throws Throwable {
         tpvController.iniciarTorn(nomEmpleat);
+    }
+
+    @I("^cancel·lo el torn sense introduir efectiu inicial")
+    public void cancelarTornSenseEfectiuInicial() {
+        tpvController.cancelaTornSenseEfectiuInicial();
     }
 }
