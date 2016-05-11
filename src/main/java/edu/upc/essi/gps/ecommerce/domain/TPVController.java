@@ -17,12 +17,10 @@ public class TPVController {
     private Venda vendaActual;
     private double efectiuFi;
     private double dinersEnCaixa;
-    private String estatQuadrament;
     private Torn tornActual;
     private Devolucio devolucioActual;
     private final DevolucionsServei devolucionsServei = new DevolucionsServei();
     private final VendesServei vendesServei = new VendesServei();
-    private double canvi;
     private String nomBotiga;
     private String screen;
 
