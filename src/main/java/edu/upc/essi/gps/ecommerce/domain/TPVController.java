@@ -5,7 +5,9 @@ import edu.upc.essi.gps.ecommerce.repositoris.TornServei;
 import edu.upc.essi.gps.ecommerce.repositoris.VendesServei;
 import edu.upc.essi.gps.ecommerce.repositoris.DevolucionsServei;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Set;
@@ -24,6 +26,7 @@ public class TPVController {
     private final TornServei tornServei = new TornServei();
     private String nomBotiga;
     private String screen;
+    private Calendar dataIHora;
 
     private Cataleg cataleg = new Cataleg();
 
@@ -44,6 +47,7 @@ public class TPVController {
     public void iniciarVenda() throws VendaJaIniciadaException {
        if (this.vendaActual == null) {
            vendaActual = vendesServei.novaVenda();
+           vendaActual.setNomBotiga(nomBotiga);
        } else {
            if(this.vendaActual.isFinalitzada() ) vendaActual = vendesServei.novaVenda();
            else throw new VendaJaIniciadaException();
@@ -58,28 +62,12 @@ public class TPVController {
         }
     }
 
-    public void iniciarVendaAmbData(String data, String hora) throws VendaJaIniciadaException, ParseException {
-        if (this.vendaActual == null) {
-            vendaActual = vendesServei.novaVenda();
-            vendaActual.setData(data,hora);
-        } else {
-            if(this.vendaActual.isFinalitzada() ) vendaActual = vendesServei.novaVenda();
-            else throw new VendaJaIniciadaException();
-        }
-    }
-
-
     public void tancamentVenda() throws VendaNoIniciadaException, VendaJaFinalitzadaException, ParseException {
         if (vendaActual != null)  {
             if(!vendaActual.isFinalitzada()) {
                 vendesServei.guardarVenda(vendaActual);
                 if (tornActual != null) tornActual.incrementDinersEnCaixa(vendaActual.getPreuTotal());
 
-                //TODO : If temporal fins quadrament arreglat
-                if (tornActual == null){
-                    tornActual = new Torn("BB","BB");
-                    vendaActual.setData("10/05/2016","10:05");
-                }
                 vendaActual.finalitzar(tornActual);
             }
             else throw new VendaJaFinalitzadaException();
@@ -219,19 +207,12 @@ public class TPVController {
         return vendaActual.getLiniaTiquet(num);
     }
 
-    public String getDataActual() {
-        Calendar calendari = Calendar.getInstance();
-        return ""+calendari.get(Calendar.DATE) + "/" + calendari.get(Calendar.DAY_OF_MONTH) + "/" + calendari.get(Calendar.YEAR);
+    public void setDataIHora(String dataIHora) throws ParseException {
+        DateFormat dF = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        this.dataIHora = Calendar.getInstance();
+        this.dataIHora.setTime(dF.parse(dataIHora));
+        if(vendaActual != null) vendaActual.setDataIHora(this.dataIHora);
     }
-    public String getHoraActual() {
-        Calendar calendari = Calendar.getInstance();
-        return "" + calendari.get(Calendar.HOUR) + ":" + calendari.get(Calendar.MINUTE);
-    }
-
-    public String getDataIHoraActual() {
-        return getDataActual() + " " + getHoraActual();
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////FUNCIONS CONTROLADOR/////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,6 +1,5 @@
 package edu.upc.essi.gps.ecommerce;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.ca.Aleshores;
 import cucumber.api.java.ca.Donat;
 import cucumber.api.java.ca.I;
@@ -11,6 +10,7 @@ import edu.upc.essi.gps.ecommerce.exceptions.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.text.ParseException;
 import java.util.Map;
 
 public class StepDefinitions {
@@ -224,15 +224,6 @@ public class StepDefinitions {
         }
     }
 
-    @I("^la linia de l'hora i data (\\d+) del tiquet sera \"([^\"]*)\" la data i hora actual i \"([^\"]*)\"$")
-    public void laLiniaDeLHoraIDataDelTiquetSera(int num, String linia1, String linia2) {
-        try {
-            assertEquals(linia1+tpvController.getDataIHoraActual()+linia2,tpvController.getLiniaTiquetVendaActual(num));
-        } catch (NoHiHaTiquetException e) {
-            this.exception = e;
-        }
-    }
-
     @I("^es va fer una venda amb id (\\d+) dels següens productes i seguents unitats$")
     public void esVaFerUnaVendaAmbIdDelsSegüensProductesISeguentsUnitats(int idVenda, Map<String,Integer> productesVenda) throws VendaJaIniciadaException, ProducteNoExisteixException {
 
@@ -259,7 +250,7 @@ public class StepDefinitions {
 
     @I("^l'empleat que ha iniciat la venda es diu \"([^\"]*)\"$")
     public void lEmpleatQueHaIniciatLaVendaEsDiu(String nom) {
-        tpvController.getVendaActual().setNomPilaEmpleat(nom);
+        tpvController.getVendaActual().setNomEmpleat(nom);
     }
 
     @Donat("^el TPV esta a la botiga \"([^\"]*)\"$")
@@ -315,5 +306,14 @@ public class StepDefinitions {
     @I("^finalitzo el torn amb (.+) d'efectiu final$")
     public void finalitzoElTornAmbDesquadrament(Double efectiu) throws Throwable {
         tpvController.finalitzaTorn(efectiu);
+    }
+
+    @I("^que estem a dia i hora \"([^\"]*)\"$")
+    public void queEstemADiaIHora(String dataIHora) {
+        try {
+            tpvController.setDataIHora(dataIHora);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }
