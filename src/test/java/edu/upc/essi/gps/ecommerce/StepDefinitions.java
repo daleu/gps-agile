@@ -300,4 +300,9 @@ public class StepDefinitions {
         // Write code here that turns the phrase above into concrete actions
         assertEquals(nomEmpleat,tpvController.getTornActual().getNomEmpleat());
     }
+
+    @I("^el \"([^\"]*)\" ha iniciat un torn")
+    public void tornJaIniciat(String nomEmpleat) throws Throwable {
+        tpvController.iniciarTorn(nomEmpleat);
+    }
 }

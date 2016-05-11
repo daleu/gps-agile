@@ -25,6 +25,7 @@ public class TPVController {
     private final VendesServei vendesServei = new VendesServei();
     private double canvi;
     private String nomBotiga;
+    private boolean tornIniciat;
     private String screen;
 
     private Cataleg cataleg = new Cataleg();
@@ -102,7 +103,7 @@ public class TPVController {
         this.vendaActual = vendaActual;
     }
     public void setNomBotiga(String nomBotiga ) { this.nomBotiga = nomBotiga; }
-    public String setNomBotiga() { return this.nomBotiga; }
+    public String getNomBotiga() { return this.nomBotiga; }
     public void setNomBotigaVendaDefinitATPV(){ //Una venda tindrà la mateixa botiga que el TPV que l'ha iniciada.
         vendaActual.setNomBotiga(nomBotiga);
     }
@@ -310,9 +311,13 @@ public class TPVController {
 
 
     public void iniciarTorn(String nomEmpleat) {
-        tornActual = new Torn(nomEmpleat);
-        tornActual.setNomBotiga(nomBotiga);
-        screen = "Bon dia, l'atent en " + nomEmpleat;
+        if (!tornIniciat) {
+            tornActual = new Torn(nomEmpleat);
+            tornActual.setNomBotiga(nomBotiga);
+            screen = "Bon dia, l'atent en " + nomEmpleat;
+            tornIniciat = true;
+        }
+        else { screen = "Ja hi ha un torn iniciat"; }
     }
 
     public Torn getTornActual() {

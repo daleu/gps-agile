@@ -5,14 +5,13 @@ public class Torn {
     private String nomEmpleat;
     private String nomBotiga;
 
-    public Torn(String empleatAcutal)
-    {
-        this.nomEmpleat = empleatAcutal;
+    public Torn(String empleatActual) {
+        this.nomEmpleat = empleatActual;
     }
 
-    public Torn(String empleatAcutal, String nomBotiga)
+    public Torn(String empleatActual, String nomBotiga)
     {
-        this.nomEmpleat = empleatAcutal;
+        this.nomEmpleat = empleatActual;
         this.nomBotiga = nomBotiga;
     }
 
