@@ -37,7 +37,7 @@ Característica: Finalitzar un torn
     Aleshores el tpv té 44,00 finals
 
 
-  Escenari: Introduir capital final més d'un cop
+  Escenari: Introduir capital final més d'un cop fins quadrar i finalitzar el torn
     Donat el TPV esta a la botiga "Carroça"
     I el "Joan" ha iniciat un torn
     I que hi ha al tpv 0,00 inicials
@@ -53,41 +53,25 @@ Característica: Finalitzar un torn
     Quan introdueixo al tpv 55,20 finals
     I introdueixo al tpv 50,70 finals
     I introdueixo al tpv 44,50 finals
+    I finalitzo el torn
     Aleshores el tpv té 44,50 finals
 
-#
-#
-#  Escenari: Acceptem quadrament si la diferència és <= 5€
-#    Donat que hi ha al tpv 0.00 inicials
-#    I que hi ha una venda iniciada
-#    I que hi ha una linia de venda amb 2 unitats del producte amb codi de barres "1"
-#    I que hi ha una linia de venda amb 1 unitats del producte amb codi de barres "2"
-#    I que hi ha una linia de venda amb 4 unitats del producte amb codi de barres "3"
-#    I es finalitza la venda
-#    I que hi ha una venda iniciada
-#    I que hi ha una linia de venda amb 1 unitats del producte amb codi de barres "1"
-#    I que hi ha una linia de venda amb 3 unitats del producte amb codi de barres "3"
-#    I es finalitza la venda
-#    Quan introdueixo al tpv 43.50 finals
-#    I demano el quadrament
-#    Aleshores obtinc un missatge que diu "Quadrament correcte"
-#
-#  Escenari: Indiquem quadrament incorrecte si la diferència és > 5€
-#    Donat que hi ha al tpv 0.00 inicials
-#    I que hi ha una venda iniciada
-#    I que hi ha una linia de venda amb 2 unitats del producte amb codi de barres "1"
-#    I que hi ha una linia de venda amb 1 unitats del producte amb codi de barres "2"
-#    I que hi ha una linia de venda amb 4 unitats del producte amb codi de barres "3"
-#    I indico que el client paga 50 euros en efectiu
-#    I es finalitza la venda
-#    I que hi ha una venda iniciada
-#    I que hi ha una linia de venda amb 1 unitats del producte amb codi de barres "1"
-#    I que hi ha una linia de venda amb 3 unitats del producte amb codi de barres "3"
-#    I es finalitza la venda
-#    Quan introdueixo al tpv 100.00 finals
-#    I demano el quadrament
-#    Aleshores obtinc un missatge que diu "Quadrament incorrecte"
-
+  Escenari: Acceptem el desquadrament quan la diferència és > 5€ i finalitzem el torn
+    Donat el TPV esta a la botiga "Carroça"
+    I el "Joan" ha iniciat un torn
+    I que hi ha al tpv 0,00 inicials
+    I que hi ha una venda iniciada
+    I que hi ha una linia de venda amb 2 unitats del producte amb codi de barres "1"
+    I que hi ha una linia de venda amb 1 unitats del producte amb codi de barres "2"
+    I que hi ha una linia de venda amb 4 unitats del producte amb codi de barres "3"
+    I es finalitza la venda
+    I que hi ha una venda iniciada
+    I que hi ha una linia de venda amb 1 unitats del producte amb codi de barres "1"
+    I que hi ha una linia de venda amb 3 unitats del producte amb codi de barres "3"
+    I es finalitza la venda
+    Quan introdueixo al tpv 55,20 finals
+    I finalitzo el torn amb 55,20 d'efectiu final
+    Aleshores el tpv té 55,20 finals
 
 
 

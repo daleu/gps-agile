@@ -340,4 +340,9 @@ public class TPVController {
         tornActual.cancelarFinalitzacio();
         screen = "Cancel·lacio acceptada";
     }
+
+    public void finalitzaTorn(Double efectiu) {
+        tornActual.setEfectiuFi(efectiu);
+        tornActual.finalitza();
+    }
 }
