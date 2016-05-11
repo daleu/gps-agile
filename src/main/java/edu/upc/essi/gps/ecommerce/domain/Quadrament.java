@@ -8,6 +8,11 @@ import java.util.ArrayList;
 public class Quadrament {
     private double efectiuFinal;
     private double efectiuInicial;
-    private int numVendes;
-    private ArrayList vendes;
+    private Integer idTorn;
+
+    public Quadrament(double efectiuInicial, double efectiuFinal, Integer idTorn) {
+        this.efectiuInicial = efectiuInicial;
+        this.efectiuFinal = efectiuFinal;
+        this.idTorn = idTorn;
+    }
 }

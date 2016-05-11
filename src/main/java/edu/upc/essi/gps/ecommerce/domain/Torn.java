@@ -1,13 +1,16 @@
 package edu.upc.essi.gps.ecommerce.domain;
 
 
-public class Torn {
+import edu.upc.essi.gps.domain.Entity;
+
+public class Torn implements Entity{
     private String nomEmpleat;
     private String nomBotiga;
     private Double efectiuInici;
     private Double efectiuFi;
     private Double dinersEnCaixa;
     private boolean finalitzat = false;
+    private Integer id;
 
     public Torn(String empleatActual) {
         this.nomEmpleat = empleatActual;
@@ -49,6 +52,7 @@ public class Torn {
 
     public boolean getFinalitzat() { return finalitzat; }
 
+
     public Double getEfectiuFi() {
         return efectiuFi;
     }
@@ -62,4 +66,13 @@ public class Torn {
     public void setDinersEnCaixa(Double dinersEnCaixa) { this.dinersEnCaixa = dinersEnCaixa; }
 
     public void incrementDinersEnCaixa(Double increment) { this.dinersEnCaixa += increment; }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
