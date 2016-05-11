@@ -58,7 +58,7 @@ public class StepDefinitions {
     }
 
     @Aleshores("^obtinc un error que diu \"([^\"]*)\"$")
-    public void obtincUnErrorQueDiu(String expectedMessage) throws Throwable {
+    public void obtincUnErrorQueFDiu(String expectedMessage) throws Throwable {
         assertNotNull(this.exception);
         assertEquals(expectedMessage, this.exception.getMessage());
     }
@@ -230,11 +230,9 @@ public class StepDefinitions {
         tpvController.introduirVendaJaAcabada(idVenda,productesVenda);
     }
 
-    @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+)")
+    @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+) sense motiu")
     public void esVolIndicarUnaDevolucioDeUnitatSDelProducteDeLaVendaPelMotiu(int unitats, String codiProd, int idVenda) throws ProducteNoExisteixException, Exception {
-        tpvController.introduirDevolucio(idVenda,codiProd,unitats," ");
-
-
+        tpvController.introduirDevolucio(idVenda,codiProd,unitats,"");
     }
 
     @I("^el preu total es la suma dels productes a vendre menys el de la devolució, es a dir, (.+)$")
@@ -308,6 +306,7 @@ public class StepDefinitions {
         tpvController.finalitzaTorn(efectiu);
     }
 
+
     @I("^que estem a dia i hora \"([^\"]*)\"$")
     public void queEstemADiaIHora(String dataIHora) {
         try {
@@ -315,5 +314,17 @@ public class StepDefinitions {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+) pel motiu \"([^\"]*)\"$")
+    public void esVolIndicarUnaDevolucioDeUnitatsDelProducteDeLaVendaPelMotiu(int unitats, String codiBarres, int idVenda, String motiu) throws ProducteNoExisteixException, Exception {
+        tpvController.introduirDevolucio(idVenda,codiBarres,unitats,motiu);
+    }
+
+
+    @Aleshores("^\"([^\"]*)\" es el motiu de l'ultima devolucio$")
+    public void esElMotiuDeLaUltimaDevolucio(String motiu) {
+        assertEquals(tpvController.getUltimaDevolucio().getMotiu(),motiu);
+
     }
 }

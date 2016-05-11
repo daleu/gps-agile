@@ -285,6 +285,9 @@ public class TPVController {
     public void introduirDevolucio(int idVenda, String codiProd, int unitats, String motiu) throws ProducteNoExisteixException, Exception {
         iniciarDevolucio();
         if(possibilitatDeRetorn(idVenda,codiProd,unitats)) {
+
+            if(motiu == "") motiu = "No existeix motiu";
+
             afegirDevolucioLiniaVenda(idVenda, codiProd, unitats, motiu);
         }
         else throw new DevolucioNoPossibleException();
@@ -325,5 +328,9 @@ public class TPVController {
     public void finalitzaTorn(Double efectiu) {
         tornActual.setEfectiuFi(efectiu);
         tornActual.finalitza();
+    }
+
+    public Devolucio getUltimaDevolucio() {
+        return devolucionsServei.getUltimaDevolucio();
     }
 }
