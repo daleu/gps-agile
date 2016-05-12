@@ -20,7 +20,6 @@ public class TPVController {
     //Classe singleton
     private Venda vendaActual;
     private Torn tornActual;
-    private Quadrament quadrament;
     private Devolucio devolucioActual;
     private final DevolucionsServei devolucionsServei = new DevolucionsServei();
     private final VendesServei vendesServei = new VendesServei();
