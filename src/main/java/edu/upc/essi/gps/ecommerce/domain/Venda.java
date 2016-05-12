@@ -187,7 +187,7 @@ public class Venda implements Entity {
                     + "P.T: " + new DecimalFormat("##.##").format(getSumaPreuUnitatVendaPerIva(vIVAs.get(i))) + sep);
         }
         tiquet.addLinia(sep + "Total: " + new DecimalFormat("##.##").format(getPreuTotal()) + sep + "Canvi: " +
-                new DecimalFormat("##.##").format(getCanvi()) + sep);
+                new DecimalFormat("##.##").format(getCanvi()) + sep + "Pagat en: " + "Efectiu" + sep);
 
         SimpleDateFormat  dF = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String dataIH = dF.format(dataIHora.getTime());

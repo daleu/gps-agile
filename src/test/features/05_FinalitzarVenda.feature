@@ -16,7 +16,6 @@ Característica: Finalitzar venda
     Quan s'anula la venda
     Aleshores no hi ha cap venda iniciada
 
-    #L'ESTI FENT: CÈLIA
   Escenari: Finalitzar una venda amb linies de venda i s'imprimeix el tiquet
     Donat el TPV esta a la botiga "Carroça"
     I existeix el producte "Action Man", amb codi de barres "777", preu Unitat 15 i iva 0,21
@@ -56,7 +55,7 @@ Característica: Finalitzar venda
     I la linia 6 del tiquet sera " | 2 | Llaminadura Xaxi | P.u. 1 | P.l. 2 | "
     I la linia 7 del tiquet sera " | 21.0% | P.B: 47,93 | P.T: 58 | "
     I la linia 8 del tiquet sera " | 10.0% | P.B: 3,64 | P.T: 4 | "
-    I la linia 9 del tiquet sera " | Total: 62 | Canvi: 3 | "
+    I la linia 9 del tiquet sera " | Total: 62 | Canvi: 3 | Pagat en: Efectiu | "
     I la linia 10 del tiquet sera " | 12/04/2016 12:34:20 | "
     I la linia 11 del tiquet sera " | Atès per: Joan | "
     #Faltarà fer els descomptes quan en tinguem
