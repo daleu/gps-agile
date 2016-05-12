@@ -29,7 +29,7 @@ public class DevolucionsServei {
         devolucionsRepositori.insert(dev);
     }
 
-    public List<Devolucio> llistarVendes(){
+    public List<Devolucio> llistarDevolucions(){
         return devolucionsRepositori.list();
     }
 
@@ -39,5 +39,16 @@ public class DevolucionsServei {
 
     public Devolucio trobarPerParametres(int expectedIdVenda, String expectedCodiBarres, int i) {
         return devolucionsRepositori.trobarDevolucioPerParametres(expectedIdVenda,expectedCodiBarres);
+    }
+
+    public Devolucio getUltimaDevolucio() {
+        List<Devolucio> devolucions  = llistarDevolucions();
+        Devolucio aux = devolucions.get(0);
+        for (Devolucio dev: devolucions) {
+            if (dev.getId() > aux.getId()) {
+                aux = dev;
+            }
+        }
+        return aux;
     }
 }

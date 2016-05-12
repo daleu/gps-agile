@@ -4,6 +4,7 @@ import edu.upc.essi.gps.domain.Entity;
 import edu.upc.essi.gps.ecommerce.exceptions.DevolucioNoPossibleException;
 import edu.upc.essi.gps.ecommerce.exceptions.NoHiHaTiquetException;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,17 +19,20 @@ public class Venda implements Entity {
     private String informacioTancar;
     private double preuPagament;
     private boolean finalitzada;
-    private String nomPilaEmpleat;
+    private String nomEmpleat;
     private String nomBotiga;
     private Date data;
-    Tiquet tiquet;
+    private Calendar dataIHora;
     private Integer idTorn;
+    Tiquet tiquet;
 
     public Venda(int numVenda) {
         this.id = numVenda;
         liniesVenda = new ArrayList<>();
         finalitzada = false;
         tiquet = null;
+        nomBotiga = "BB";
+        dataIHora = Calendar.getInstance();
     }
 
     public int getId() {
@@ -55,12 +59,12 @@ public class Venda implements Entity {
         return preuPagament-getPreuTotal();
     }
 
-    public String getNomPilaEmpleat() {
-        return nomPilaEmpleat;
+    public String getEmpleat() {
+        return nomEmpleat;
     }
 
-    public void setNomPilaEmpleat(String nomPilaEmpleat) {
-        this.nomPilaEmpleat = nomPilaEmpleat;
+    public void setNomEmpleat(String nomPilaEmpleat) {
+        this.nomEmpleat = nomPilaEmpleat;
     }
 
     public String getNomBotiga() {
@@ -79,6 +83,11 @@ public class Venda implements Entity {
         }
         return preu;
     }
+
+    public void setDataIHora(Calendar dataIHora) {
+            this.dataIHora = dataIHora;
+    }
+
     public void anular() {
         informacioTancar = "Venda anul·lada";
     }
@@ -164,9 +173,9 @@ public class Venda implements Entity {
         tiquet = new Tiquet(id); //De moment els tiquets tenen el mateix id que la venda
         tiquet.addLinia(sep + "Tiquet" + sep); //El tiquet comenca a la posició 1 no a la 0
         //" | Nom empleat: Joan | Nom botiga: JJ | "
-        tiquet.addLinia(sep + "Nom empleat: " + tornActual.getNomEmpleat() + sep + "Nom botiga: " + tornActual.getNomBotiga() + sep);
+        tiquet.addLinia(sep + "Nom botiga: " + nomBotiga + sep);
         //" | Num. Venda: 1 | dd/mm/aaaa hh:mm | Codi Tiquet: 1"
-        tiquet.addLinia(sep + "Num. Venda: " + id + sep + tiquet.getDataIHora() + sep + "Codi Tiquet: " + tiquet.getNum());
+        tiquet.addLinia(sep + "Num. Venda: " + id + sep + "Codi Tiquet: C" + tiquet.getNum());
         for (LiniaVenda lv : liniesVenda) {
             tiquet.addLinia(sep + lv.getQuantitat() + sep + lv.getNomProducte() + sep + "P.u. " + new DecimalFormat("##.##").format(lv.getPreuUnitat()) + sep
                     + "P.l. " + new DecimalFormat("##.##").format(lv.getPreuTotal()) + sep);
@@ -179,6 +188,11 @@ public class Venda implements Entity {
         }
         tiquet.addLinia(sep + "Total: " + new DecimalFormat("##.##").format(getPreuTotal()) + sep + "Canvi: " +
                 new DecimalFormat("##.##").format(getCanvi()) + sep);
+
+        SimpleDateFormat  dF = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String dataIH = dF.format(dataIHora.getTime());
+        tiquet.addLinia(sep + dataIH + sep);
+        tiquet.addLinia(sep + "Atès per: " + nomEmpleat + sep);
     }
 
     public String getLiniaTiquet(int num) throws NoHiHaTiquetException {

@@ -15,15 +15,15 @@ Característica: Retornar un producte mentres es fa una venda
   Quan inicio una nova venda
   I s'afegeix a la linia de venda 3 unitats del producte amb codi de barres "333"
   I s'afegeix a la linia de venda 1 unitats del producte amb codi de barres "222"
-  I es vol indicar una devolucio de 1 unitats del producte "777" de la venda 111
+  I es vol indicar una devolucio de 1 unitats del producte "777" de la venda 111 sense motiu
   Aleshores existeix una devolucio del producte "777" de la venda 111
   I el preu total es la suma dels productes a vendre menys el de la devolució, es a dir, 19,75
 
   Escenari: Retorno un producte en una venda amb una lina de venda i el resultat de la venda es negatiu
     Quan inicio una nova venda
     I s'afegeix a la linia de venda 3 unitats del producte amb codi de barres "333"
-    I es vol indicar una devolucio de 1 unitats del producte "777" de la venda 111
-    I es vol indicar una devolucio de 1 unitats del producte "222" de la venda 111
+    I es vol indicar una devolucio de 1 unitats del producte "777" de la venda 111 sense motiu
+    I es vol indicar una devolucio de 1 unitats del producte "222" de la venda 111 sense motiu
     Aleshores existeix una devolucio del producte "222" de la venda 111
     I existeix una devolucio del producte "777" de la venda 111
     I el preu total es la suma dels productes a vendre menys el de la devolució, es a dir, -30,25

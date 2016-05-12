@@ -1,6 +1,5 @@
 package edu.upc.essi.gps.ecommerce;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.ca.Aleshores;
 import cucumber.api.java.ca.Donat;
 import cucumber.api.java.ca.I;
@@ -11,6 +10,7 @@ import edu.upc.essi.gps.ecommerce.exceptions.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.text.ParseException;
 import java.util.Map;
 
 public class StepDefinitions {
@@ -58,7 +58,7 @@ public class StepDefinitions {
     }
 
     @Aleshores("^obtinc un error que diu \"([^\"]*)\"$")
-    public void obtincUnErrorQueDiu(String expectedMessage) throws Throwable {
+    public void obtincUnErrorQueFDiu(String expectedMessage) throws Throwable {
         assertNotNull(this.exception);
         assertEquals(expectedMessage, this.exception.getMessage());
     }
@@ -224,26 +224,15 @@ public class StepDefinitions {
         }
     }
 
-    @I("^la linia de l'hora i data (\\d+) del tiquet sera \"([^\"]*)\" la data i hora actual i \"([^\"]*)\"$")
-    public void laLiniaDeLHoraIDataDelTiquetSera(int num, String linia1, String linia2) {
-        try {
-            assertEquals(linia1+tpvController.getDataIHoraActual()+linia2,tpvController.getLiniaTiquetVendaActual(num));
-        } catch (NoHiHaTiquetException e) {
-            this.exception = e;
-        }
-    }
-
     @I("^es va fer una venda amb id (\\d+) dels següens productes i seguents unitats$")
     public void esVaFerUnaVendaAmbIdDelsSegüensProductesISeguentsUnitats(int idVenda, Map<String,Integer> productesVenda) throws VendaJaIniciadaException, ProducteNoExisteixException {
 
         tpvController.introduirVendaJaAcabada(idVenda,productesVenda);
     }
 
-    @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+)")
+    @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+) sense motiu")
     public void esVolIndicarUnaDevolucioDeUnitatSDelProducteDeLaVendaPelMotiu(int unitats, String codiProd, int idVenda) throws ProducteNoExisteixException, Exception {
-        tpvController.introduirDevolucio(idVenda,codiProd,unitats," ");
-
-
+        tpvController.introduirDevolucio(idVenda,codiProd,unitats,"");
     }
 
     @I("^el preu total es la suma dels productes a vendre menys el de la devolució, es a dir, (.+)$")
@@ -259,7 +248,7 @@ public class StepDefinitions {
 
     @I("^l'empleat que ha iniciat la venda es diu \"([^\"]*)\"$")
     public void lEmpleatQueHaIniciatLaVendaEsDiu(String nom) {
-        tpvController.getVendaActual().setNomPilaEmpleat(nom);
+        tpvController.getVendaActual().setNomEmpleat(nom);
     }
 
     @Donat("^el TPV esta a la botiga \"([^\"]*)\"$")
@@ -325,6 +314,27 @@ public class StepDefinitions {
     @Aleshores("^obtinc (\\d+) linies$")
     public void obtincLinies(int numVendes) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        assertEquals(numVendes,tpvController.getNumVendesQUadrament());
+        assertEquals(numVendes, tpvController.getNumVendesQUadrament());
+    }
+
+    @I("^que estem a dia i hora \"([^\"]*)\"$")
+    public void queEstemADiaIHora(String dataIHora) {
+        try {
+            tpvController.setDataIHora(dataIHora);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+) pel motiu \"([^\"]*)\"$")
+    public void esVolIndicarUnaDevolucioDeUnitatsDelProducteDeLaVendaPelMotiu(int unitats, String codiBarres, int idVenda, String motiu) throws ProducteNoExisteixException, Exception {
+        tpvController.introduirDevolucio(idVenda,codiBarres,unitats,motiu);
+    }
+
+
+    @Aleshores("^\"([^\"]*)\" es el motiu de l'ultima devolucio$")
+    public void esElMotiuDeLaUltimaDevolucio(String motiu) {
+        assertEquals(tpvController.getUltimaDevolucio().getMotiu(),motiu);
+
     }
 }
