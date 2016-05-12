@@ -17,8 +17,7 @@ Característica: Finalitzar venda
     Aleshores no hi ha cap venda iniciada
 
   Escenari: Finalitzar una venda amb linies de venda i s'imprimeix el tiquet
-    Donat el TPV esta a la botiga "Carroça"
-    I existeix el producte "Action Man", amb codi de barres "777", preu Unitat 15 i iva 0,21
+    Donat existeix el producte "Action Man", amb codi de barres "777", preu Unitat 15 i iva 0,21
   #12,396 Preu Base.
     I existeix el producte "Barbie", amb codi de barres "111", preu Unitat 14 i iva 0,21
   #11,57 Preu Base.
@@ -26,6 +25,7 @@ Característica: Finalitzar venda
   #1,818 Preu Base.
     I existeix el producte "Llaminadura Xaxi", amb codi de barres "444", preu Unitat 1 i iva 0,1
   #0,909 Preu Base.
+    I el TPV esta a la botiga "Carroça"
     I que hi ha una venda iniciada
     I es marca el nom de la botiga -ja definit al TPV- a la venda
     I l'empleat que ha iniciat la venda es diu "Joan"

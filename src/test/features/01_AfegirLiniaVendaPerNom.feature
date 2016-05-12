@@ -4,8 +4,8 @@
 Característica: Afegir una linia de venda per nom i quantitat
 
   Rerefons:
-    Donat que hi ha una venda iniciada
-    I existeix el producte "Baldufa" amb codi de barres "123456789" i preu per unitat 3.50
+    Donat existeix el producte "Baldufa" amb codi de barres "123456789" i preu per unitat 3.50
+    I que hi ha una venda iniciada
 
   Escenari: Afegir una linia de venda nova per nom
     Quan introdueixo al tpv 1 producte amb nom "Baldufa"
