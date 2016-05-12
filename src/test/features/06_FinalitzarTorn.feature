@@ -7,11 +7,11 @@ Característica: Finalitzar un torn
     Donat existeix el producte "Baldufa" amb codi de barres "1" i preu per unitat 3.50
     I existeix el producte "Cotxe" amb codi de barres "2" i preu per unitat 22.50
     I existeix el producte "Pilota" amb codi de barres "3" i preu per unitat 1.50
+    I que no hi ha cap torn iniciat
 
   Escenari: Finalitzar un torn per error
     Donat el TPV esta a la botiga "Carroça"
     I que no hi ha cap venda iniciada
-    I que no hi ha cap torn iniciat
     I el "Joan" ha iniciat un torn
     I que hi ha al tpv 0,00 inicials
     Quan finalitzo el torn
