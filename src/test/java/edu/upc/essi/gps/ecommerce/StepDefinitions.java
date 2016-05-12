@@ -132,7 +132,7 @@ public class StepDefinitions {
         assertEquals(inicial, tpvController.getEfectiuInicial(), 0.0);
     }
 
-    @Quan("^introdueixo al tpv (.+) finals$")
+    @Quan("^introdueixo al tpv (.+) finals per fer el quadrament")
     public void introduirEfectiuFinal(double efectiu) throws Throwable {
         tpvController.quadrament(efectiu);
     }
@@ -302,7 +302,7 @@ public class StepDefinitions {
         tpvController.cancelaAccioTorn();
     }
 
-    @I("^finalitzo el torn amb (.+) d'efectiu final$")
+    @I("^finalitzo el torn amb (.+) d'efectiu final acceptant el desquadrament$")
     public void finalitzoElTornAmbDesquadrament(Double efectiu) throws Throwable {
         tpvController.finalitzaTorn(efectiu);
     }

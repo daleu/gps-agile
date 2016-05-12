@@ -31,7 +31,7 @@ Característica: Finalitzar un torn
     I que hi ha una linia de venda amb 1 unitats del producte amb codi de barres "1"
     I que hi ha una linia de venda amb 3 unitats del producte amb codi de barres "3"
     I es finalitza la venda
-    Quan introdueixo al tpv 44,00 finals
+    Quan introdueixo al tpv 44,00 finals per fer el quadrament
     I finalitzo el torn
     Aleshores el tpv té 44,00 finals
 
@@ -49,9 +49,9 @@ Característica: Finalitzar un torn
     I que hi ha una linia de venda amb 1 unitats del producte amb codi de barres "1"
     I que hi ha una linia de venda amb 3 unitats del producte amb codi de barres "3"
     I es finalitza la venda
-    Quan introdueixo al tpv 55,20 finals
-    I introdueixo al tpv 50,70 finals
-    I introdueixo al tpv 44,50 finals
+    Quan introdueixo al tpv 55,20 finals per fer el quadrament
+    I introdueixo al tpv 50,70 finals per fer el quadrament
+    I introdueixo al tpv 44,50 finals per fer el quadrament
     I finalitzo el torn
     Aleshores el tpv té 44,50 finals
 
@@ -68,8 +68,8 @@ Característica: Finalitzar un torn
     I que hi ha una linia de venda amb 1 unitats del producte amb codi de barres "1"
     I que hi ha una linia de venda amb 3 unitats del producte amb codi de barres "3"
     I es finalitza la venda
-    Quan introdueixo al tpv 55,20 finals
-    I finalitzo el torn amb 55,20 d'efectiu final
+    Quan introdueixo al tpv 55,20 finals per fer el quadrament
+    I finalitzo el torn amb 55,20 d'efectiu final acceptant el desquadrament
     Aleshores el tpv té 55,20 finals
 
 
