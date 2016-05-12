@@ -38,6 +38,6 @@ Característica: Visualitzar quadraments
     I introdueixo al tpv 311,3 finals
     I finalitzo el torn
     Quan indico que vull visualitzar els quadraments
-    Aleshores obtinc 0 linies
-   # I la linia 1 sera "TORN 1:  EfectiuInicial: 222,3 | EfectiuFinal: 266,8 | Numero de Vendes: 2 | Vendes: 1,2"
-   # I la linia 2 sera "TORN 2:  EfectiuInicial: 266,8 | EfectiuFinal: 311,3 | Numero de Vendes: 2 | Vendes: 3,4"
+    Aleshores obtinc 2 linies
+    I la linia 1 sera "TORN 1:  EfectiuInicial: 222,3 | EfectiuFinal: 266,8 | Numero de Vendes: 2 | Vendes: 1,2"
+    I la linia 2 sera "TORN 2:  EfectiuInicial: 266,8 | EfectiuFinal: 311,3 | Numero de Vendes: 2 | Vendes: 3,4"

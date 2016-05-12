@@ -350,20 +350,28 @@ public class TPVController {
 
         liniesQuadrament = new ArrayList<String>();
         System.out.println(listQuadraments.size());
+
         for (int i = 0; i<listQuadraments.size(); ++i){
+
             Torn tornAux = listQuadraments.get(i);
-            List listVendes = vendesServei.llistarVendes();
+            List<Venda> listVendes = vendesServei.llistarVendes();
             ArrayList vendes = new ArrayList<Integer>();
-            for (int j = 0; j < vendes.size(); ++j){
-                Venda vendaAux = (Venda) listVendes.get(j);
-                if (vendaAux.getIdTorn()== tornAux.getId()) vendes.add(vendaAux.getId());
+
+            for (int j = 0; j < listVendes.size(); ++j){
+                Venda vendaAux =  listVendes.get(j);
+                if(vendaAux.getIdTorn() != null){
+                    if (vendaAux.getIdTorn() == tornAux.getId()) vendes.add(vendaAux.getId());
+                }
+
             }
             numVendesQuadrament = vendes.size();
+
             String linea = "TORN " + tornAux.getId() + ":  EfectiuInicial: "+tornAux.getEfectiuInici()+" | EfectiuFinal: "+tornAux.getEfectiuFi()+" | Numero de Vendes: "+vendes.size()+" | Vendes: ";
             for (int x = 0; x < vendes.size(); ++x){
                 if(x == 0) linea = linea + vendes.get(x);
                 else linea = linea +","+vendes.get(x);
             }
+
             liniesQuadrament.add(linea);
         }
     }
@@ -377,5 +385,13 @@ public class TPVController {
 
     public void setTornActual(Torn tornActual) {
         this.tornActual = tornActual;
+    }
+
+    public String getLiniaQuadrament(int numLinia) {
+        return liniesQuadrament.get(numLinia-1);
+    }
+
+    public int getNumLineasQuadrament() {
+        return liniesQuadrament.size();
     }
 }

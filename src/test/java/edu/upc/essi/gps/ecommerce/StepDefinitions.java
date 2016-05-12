@@ -314,8 +314,7 @@ public class StepDefinitions {
 
     @Aleshores("^obtinc (\\d+) linies$")
     public void obtincLinies(int numVendes) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        assertEquals(numVendes, tpvController.getNumVendesQUadrament());
+        assertEquals(numVendes, tpvController.getNumLineasQuadrament());
     }
 
     @I("^que estem a dia i hora \"([^\"]*)\"$")
@@ -342,5 +341,10 @@ public class StepDefinitions {
     @I("^que no hi ha cap torn iniciat$")
     public void queNoHiHaCapTornIniciat() {
         tpvController.setTornActual(null);
+    }
+
+    @I("^la linia (\\d+) sera \"([^\"]*)\"$")
+    public void laLiniaSera(int numLinia, String linia)  {
+        assertEquals(tpvController.getLiniaQuadrament(numLinia), linia);
     }
 }
