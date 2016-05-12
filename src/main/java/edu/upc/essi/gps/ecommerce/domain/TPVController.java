@@ -54,7 +54,11 @@ public class TPVController {
            if(this.tornActual != null) vendaActual.setIdTorn(tornActual.getId());
            vendaActual.setNomBotiga(nomBotiga);
        } else {
-           if(this.vendaActual.isFinalitzada() ) vendaActual = vendesServei.novaVenda();
+           if(this.vendaActual.isFinalitzada() ) {
+               vendaActual = vendesServei.novaVenda();
+               if(this.tornActual != null) vendaActual.setIdTorn(tornActual.getId());
+               vendaActual.setNomBotiga(nomBotiga);
+           }
            else throw new VendaJaIniciadaException();
        }
     }
@@ -72,6 +76,7 @@ public class TPVController {
         if (vendaActual != null)  {
             if(!vendaActual.isFinalitzada()) {
                 vendesServei.guardarVenda(vendaActual);
+
                 if (tornActual != null) tornActual.incrementDinersEnCaixa(vendaActual.getPreuTotal());
 
                 vendaActual.finalitzar(tornActual);
@@ -317,7 +322,6 @@ public class TPVController {
             int id = tornServei.assignarIdTorn();
             tornActual = new Torn(id,nomEmpleat,nomBotiga);
             screen = "Bon dia, l'atén en " + nomEmpleat;
-            System.out.println("sahusahfas "+tornServei.llistarTorns().size());
         }
         else { screen = "Ja hi ha un torn iniciat"; }
     }
@@ -366,7 +370,7 @@ public class TPVController {
             }
             numVendesQuadrament = vendes.size();
 
-            String linea = "TORN " + tornAux.getId() + ":  EfectiuInicial: "+tornAux.getEfectiuInici()+" | EfectiuFinal: "+tornAux.getEfectiuFi()+" | Numero de Vendes: "+vendes.size()+" | Vendes: ";
+            String linea = "TORN " + tornAux.getId() + ":  EfectiuInicial: "+tornAux.getEfectiuInici().toString()+" | EfectiuFinal: "+tornAux.getEfectiuFi().toString()+" | Numero de Vendes: "+vendes.size()+" | Vendes: ";
             for (int x = 0; x < vendes.size(); ++x){
                 if(x == 0) linea = linea + vendes.get(x);
                 else linea = linea +","+vendes.get(x);
