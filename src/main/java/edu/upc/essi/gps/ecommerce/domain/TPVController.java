@@ -352,7 +352,6 @@ public class TPVController {
         List<Torn> listQuadraments = tornServei.llistarTorns();
 
         liniesQuadrament = new ArrayList<String>();
-        System.out.println(listQuadraments.size());
 
         for (int i = 0; i<listQuadraments.size(); ++i){
 
