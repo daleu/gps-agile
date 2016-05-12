@@ -17,7 +17,7 @@ Característica: Saber motiu de la devolucio
     I es finalitza la venda
     Aleshores "Defectuos" es el motiu de l'ultima devolucio
 
-  Escenari: El client no vol donar motiu
+  Escenari: El client no vol donar motiu de la devolucio
     Quan inicio una nova venda
     I es vol indicar una devolucio de 2 unitats del producte "111" de la venda 444 sense motiu
     I es finalitza la venda

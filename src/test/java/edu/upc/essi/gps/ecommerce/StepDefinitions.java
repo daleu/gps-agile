@@ -122,22 +122,22 @@ public class StepDefinitions {
         tpvController.afegirLiniaVendaPerCodi(unitatsProd, codiBarres);
     }
 
-    @Quan("^introdueixo al tpv (.+) inicials$")
+    @Quan("^introdueixo al tpv (.+)  d'efectiu inicial$")
     public void introduirEfectiuInicial(double efectiu) throws Throwable {
         tpvController.setEfectiuInicial(efectiu);
     }
 
-    @Aleshores("^el tpv té (.+) inicials$")
+    @Aleshores("^el tpv té (.+)  d'efectiu inicial$")
     public void elTpvTeInicials(double inicial) throws Throwable {
         assertEquals(inicial, tpvController.getEfectiuInicial(), 0.0);
     }
 
-    @Quan("^introdueixo al tpv (.+) finals per fer el quadrament")
+    @Quan("^introdueixo al tpv (.+) d'efectiu final per fer el quadrament")
     public void introduirEfectiuFinal(double efectiu) throws Throwable {
         tpvController.quadrament(efectiu);
     }
 
-    @Aleshores("^el tpv té (.+) finals$")
+    @Aleshores("^el tpv té (.+) d'efectiu final$")
     public void elTpvTeFinals(double fin) throws Throwable {
         assertEquals(fin, tpvController.getEfectiuFinal(), 0.0);
     }
@@ -147,7 +147,7 @@ public class StepDefinitions {
         assertEquals(msg, tpvController.getScreen());
     }
 
-    @Donat("^que hi ha al tpv (.+) inicials")
+    @Donat("^que hi ha al tpv (.+) d'efectiu inicial")
     public void elTpvHiHaInicials(double efectiu) throws Throwable {
         tpvController.setEfectiuInicial(efectiu);
     }

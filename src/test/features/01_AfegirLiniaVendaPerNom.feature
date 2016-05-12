@@ -1,7 +1,7 @@
 # language: ca
 
 #noinspection SpellCheckingInspection
-Característica: Afegir una linia de venda per nom
+Característica: Afegir una linia de venda per nom i quantitat
 
   Rerefons:
     Donat que hi ha una venda iniciada

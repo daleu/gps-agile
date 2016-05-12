@@ -12,7 +12,7 @@ Característica: Visualitzar quadraments
 
   Escenari: Visualitzar quadraments
     Donat el "Joan" ha iniciat un torn
-    I que hi ha al tpv 222,30 inicials
+    I que hi ha al tpv 222,30  d'efectiu inicial
     I que hi ha una venda iniciada
     I que hi ha una linia de venda amb 2 unitats del producte amb codi de barres "1"
     I que hi ha una linia de venda amb 1 unitats del producte amb codi de barres "2"
@@ -22,10 +22,10 @@ Característica: Visualitzar quadraments
     I que hi ha una linia de venda amb 1 unitats del producte amb codi de barres "1"
     I que hi ha una linia de venda amb 3 unitats del producte amb codi de barres "3"
     I es finalitza la venda
-    I introdueixo al tpv 266,8 finals
+    I introdueixo al tpv 266,8 d'efectiu final per fer el quadrament
     I finalitzo el torn
     I el "Ernest" ha iniciat un torn
-    I que hi ha al tpv 266,8 inicials
+    I que hi ha al tpv 266,8  d'efectiu inicial
     I que hi ha una venda iniciada
     I que hi ha una linia de venda amb 2 unitats del producte amb codi de barres "1"
     I que hi ha una linia de venda amb 1 unitats del producte amb codi de barres "2"
@@ -35,7 +35,7 @@ Característica: Visualitzar quadraments
     I que hi ha una linia de venda amb 1 unitats del producte amb codi de barres "1"
     I que hi ha una linia de venda amb 3 unitats del producte amb codi de barres "3"
     I es finalitza la venda
-    I introdueixo al tpv 311,3 finals
+    I introdueixo al tpv 311,3 d'efectiu final per fer el quadrament
     I finalitzo el torn
     Quan indico que vull visualitzar els quadraments
     Aleshores obtinc 2 linies

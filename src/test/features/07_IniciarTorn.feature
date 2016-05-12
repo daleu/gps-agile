@@ -12,8 +12,8 @@ Característica: Iniciar torn
   Escenari: Entrar l'efectiu inicial a l'iniciar el torn
     Donat el TPV esta a la botiga "Carroça"
     Quan inicio un torn amb nom empleat "Joan"
-    I introdueixo al tpv 200,43 inicials
-    Aleshores el tpv té 200,43 inicials
+    I introdueixo al tpv 200,43  d'efectiu inicial
+    Aleshores el tpv té 200,43  d'efectiu inicial
 
   Escenari: Iniciar i finalitzar un torn sense introduir l'efectiu inicial
     Donat el TPV esta a la botiga "Carroça"

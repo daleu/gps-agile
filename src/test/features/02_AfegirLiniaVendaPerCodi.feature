@@ -1,7 +1,7 @@
 # language: ca
 
 #noinspection SpellCheckingInspection
-Característica: Afegir una linia de venda per codi de barres
+Característica: Afegir una linia de venda per codi de barres i quantitat
   Rerefons:
     Donat que hi ha una venda iniciada
     I existeix el producte "Baldufa" amb codi de barres "123456789" i preu per unitat 3.50
