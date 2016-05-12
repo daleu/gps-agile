@@ -171,7 +171,10 @@ public class TPVController {
 
     public double getEfectiuFinal() {
         if (tornActual != null) { return this.tornActual.getEfectiuFi(); }
-        return 0.0;
+        else {
+            Torn t = tornServei.getUltimTorn();
+            return t.getEfectiuFi();
+        }
     }
 
     public DevolucionsServei getdevolucionsServei() {
@@ -311,9 +314,8 @@ public class TPVController {
 
     public void iniciarTorn(String nomEmpleat) {
         if (tornActual == null) {
-            tornActual = new Torn(nomEmpleat);
-            tornActual.setNomBotiga(nomBotiga);
-            tornActual.setId(tornServei.assignarIdTorn());
+            int id = tornServei.assignarIdTorn();
+            tornActual = new Torn(id,nomEmpleat,nomBotiga);
             screen = "Bon dia, l'atén en " + nomEmpleat;
             System.out.println("sahusahfas "+tornServei.llistarTorns().size());
         }
@@ -327,24 +329,29 @@ public class TPVController {
     public void finalitzaTorn() {
         tornActual.finalitza();
         tornServei.guardarTorn(tornActual);
+        tornActual = null;
     }
 
-    public void cancelaAccioTorn() {
-        tornActual.cancelarFinalitzacio();
+    public void cancelaAccioTorn()
+    {
+        if (tornActual == null) tornActual = tornServei.getUltimTorn();
+        else tornActual = null;
         screen = "Cancel·lacio acceptada";
     }
 
     public void finalitzaTorn(Double efectiu) {
         tornActual.setEfectiuFi(efectiu);
         tornActual.finalitza();
+        tornServei.guardarTorn(tornActual);
     }
 
     public void calcularQuadraments() {
-        List listQuadraments = tornServei.llistarTorns();
+        List<Torn> listQuadraments = tornServei.llistarTorns();
+
         liniesQuadrament = new ArrayList<String>();
         System.out.println(listQuadraments.size());
-        for (int i = 1; i<listQuadraments.size()+1; ++i){
-            Torn tornAux = (Torn) listQuadraments.get(i);
+        for (int i = 0; i<listQuadraments.size(); ++i){
+            Torn tornAux = listQuadraments.get(i);
             List listVendes = vendesServei.llistarVendes();
             ArrayList vendes = new ArrayList<Integer>();
             for (int j = 0; j < vendes.size(); ++j){
@@ -366,5 +373,9 @@ public class TPVController {
     }
     public Devolucio getUltimaDevolucio() {
         return devolucionsServei.getUltimaDevolucio();
+    }
+
+    public void setTornActual(Torn tornActual) {
+        this.tornActual = tornActual;
     }
 }

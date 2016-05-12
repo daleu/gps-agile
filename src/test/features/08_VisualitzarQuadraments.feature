@@ -10,6 +10,7 @@ Característica: Visualitzar quadraments
 
   Escenari: Visualitzar quadraments
     Donat el TPV esta a la botiga "Carroça"
+    I que no hi ha cap torn iniciat
     I el "Joan" ha iniciat un torn
     I que hi ha al tpv 222,30 inicials
     I que hi ha una venda iniciada

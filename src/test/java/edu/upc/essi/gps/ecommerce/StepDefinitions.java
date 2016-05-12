@@ -1,5 +1,6 @@
 package edu.upc.essi.gps.ecommerce;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.ca.Aleshores;
 import cucumber.api.java.ca.Donat;
 import cucumber.api.java.ca.I;
@@ -336,5 +337,10 @@ public class StepDefinitions {
     public void esElMotiuDeLaUltimaDevolucio(String motiu) {
         assertEquals(tpvController.getUltimaDevolucio().getMotiu(),motiu);
 
+    }
+
+    @I("^que no hi ha cap torn iniciat$")
+    public void queNoHiHaCapTornIniciat() {
+        tpvController.setTornActual(null);
     }
 }

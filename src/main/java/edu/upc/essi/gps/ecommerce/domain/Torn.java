@@ -10,7 +10,7 @@ public class Torn implements Entity{
     private Double efectiuFi;
     private Double dinersEnCaixa;
     private boolean finalitzat = false;
-    private Integer id;
+    private int id;
 
     public Torn(String empleatActual) {
         this.nomEmpleat = empleatActual;
@@ -19,6 +19,12 @@ public class Torn implements Entity{
     public Torn(String empleatActual, String nomBotiga)
     {
         this.nomEmpleat = empleatActual;
+        this.nomBotiga = nomBotiga;
+    }
+
+    public Torn(int id, String nomEmpleat, String nomBotiga) {
+        this.id = id;
+        this.nomEmpleat = nomEmpleat;
         this.nomBotiga = nomBotiga;
     }
 
@@ -75,4 +81,6 @@ public class Torn implements Entity{
     public void setId(int id) {
         this.id = id;
     }
+
+
 }
