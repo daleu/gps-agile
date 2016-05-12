@@ -1,8 +1,5 @@
 package edu.upc.essi.gps.ecommerce.repositoris;
-
-import edu.upc.essi.gps.ecommerce.domain.LiniaVenda;
 import edu.upc.essi.gps.ecommerce.domain.Venda;
-
 import java.util.List;
 public class VendesServei {
 
@@ -24,8 +21,6 @@ public class VendesServei {
         return result;
     }
 
-
-
     public void guardarVenda(Venda ven){
         vendesRepositori.checkInsert(ven);
         vendesRepositori.insert(ven);
@@ -46,7 +41,4 @@ public class VendesServei {
             vendesRepositori.checkInsert(v);
             vendesRepositori.insert(v);
     }
-
-
-
 }

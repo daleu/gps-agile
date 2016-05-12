@@ -12,8 +12,9 @@ public class TornRepositori extends Repository<Torn> {
         }
 
         @Override
-        protected void checkInsert(Torn entity) throws RuntimeException {
-            if(trobarTorn(entity.getId())!=null)
-                throw new IllegalArgumentException("Ja existeix una venda amb aquest nom");
+        protected void checkInsert(Torn torn) throws RuntimeException {
+            System.out.println("       ? "+trobarTorn(torn.getId()));
+            if(trobarTorn(torn.getId())!=null)
+                throw new IllegalArgumentException("Ja existeix un torn amb aquest nom");
         }
 }

@@ -6,9 +6,7 @@ import edu.upc.essi.gps.ecommerce.repositoris.VendesServei;
 import edu.upc.essi.gps.ecommerce.repositoris.DevolucionsServei;
 
 import java.text.ParseException;
-import java.util.Calendar;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by edu on 28/04/16.
@@ -24,6 +22,9 @@ public class TPVController {
     private final TornServei tornServei = new TornServei();
     private String nomBotiga;
     private String screen;
+
+    private ArrayList<String> liniesQuadrament;
+    private int numVendesQuadrament;
 
     private Cataleg cataleg = new Cataleg();
 
@@ -44,6 +45,7 @@ public class TPVController {
     public void iniciarVenda() throws VendaJaIniciadaException {
        if (this.vendaActual == null) {
            vendaActual = vendesServei.novaVenda();
+           if(this.tornActual != null) vendaActual.setIdTorn(tornActual.getId());
        } else {
            if(this.vendaActual.isFinalitzada() ) vendaActual = vendesServei.novaVenda();
            else throw new VendaJaIniciadaException();
@@ -53,6 +55,7 @@ public class TPVController {
     public void iniciarVendaAmbID(int id) throws VendaJaIniciadaException { //Per a JOCS de PROVA
         if (this.vendaActual == null) {
             vendaActual = vendesServei.novaVendaAmbID(id);
+            if (tornActual!=null)vendaActual.setIdTorn(tornActual.getId());
         } else {
             throw new VendaJaIniciadaException();
         }
@@ -323,7 +326,9 @@ public class TPVController {
         if (tornActual == null) {
             tornActual = new Torn(nomEmpleat);
             tornActual.setNomBotiga(nomBotiga);
+            tornActual.setId(tornServei.assignarIdTorn());
             screen = "Bon dia, l'atén en " + nomEmpleat;
+            System.out.println("sahusahfas "+tornServei.llistarTorns().size());
         }
         else { screen = "Ja hi ha un torn iniciat"; }
     }
@@ -334,6 +339,7 @@ public class TPVController {
 
     public void finalitzaTorn() {
         tornActual.finalitza();
+        tornServei.guardarTorn(tornActual);
     }
 
     public void cancelaAccioTorn() {
@@ -344,5 +350,31 @@ public class TPVController {
     public void finalitzaTorn(Double efectiu) {
         tornActual.setEfectiuFi(efectiu);
         tornActual.finalitza();
+    }
+
+    public void calcularQuadraments() {
+        List listQuadraments = tornServei.llistarTorns();
+        liniesQuadrament = new ArrayList<String>();
+        System.out.println(listQuadraments.size());
+        for (int i = 1; i<listQuadraments.size()+1; ++i){
+            Torn tornAux = (Torn) listQuadraments.get(i);
+            List listVendes = vendesServei.llistarVendes();
+            ArrayList vendes = new ArrayList<Integer>();
+            for (int j = 0; j < vendes.size(); ++j){
+                Venda vendaAux = (Venda) listVendes.get(j);
+                if (vendaAux.getIdTorn()== tornAux.getId()) vendes.add(vendaAux.getId());
+            }
+            numVendesQuadrament = vendes.size();
+            String linea = "TORN " + tornAux.getId() + ":  EfectiuInicial: "+tornAux.getEfectiuInici()+" | EfectiuFinal: "+tornAux.getEfectiuFi()+" | Numero de Vendes: "+vendes.size()+" | Vendes: ";
+            for (int x = 0; x < vendes.size(); ++x){
+                if(x == 0) linea = linea + vendes.get(x);
+                else linea = linea +","+vendes.get(x);
+            }
+            liniesQuadrament.add(linea);
+        }
+    }
+
+    public int getNumVendesQUadrament(){
+        return numVendesQuadrament;
     }
 }

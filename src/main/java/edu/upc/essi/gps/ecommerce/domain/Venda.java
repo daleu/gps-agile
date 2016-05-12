@@ -22,7 +22,7 @@ public class Venda implements Entity {
     private String nomBotiga;
     private Date data;
     Tiquet tiquet;
-    private String idTorn;
+    private Integer idTorn;
 
     public Venda(int numVenda) {
         this.id = numVenda;
@@ -214,5 +214,13 @@ public class Venda implements Entity {
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(horaSeparada[0]));
         calendar.set(Calendar.MINUTE, Integer.parseInt(horaSeparada[1]));
         this.data = calendar.getTime();
+    }
+
+    public void setIdTorn(int id){
+        idTorn = id;
+    }
+
+    public Integer getIdTorn() {
+        return idTorn;
     }
 }

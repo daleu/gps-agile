@@ -316,4 +316,15 @@ public class StepDefinitions {
     public void finalitzoElTornAmbDesquadrament(Double efectiu) throws Throwable {
         tpvController.finalitzaTorn(efectiu);
     }
+
+    @Quan("^indico que vull visualitzar els quadraments$")
+    public void indicoQueVullVisualitzarElsQuadraments() throws Throwable {
+        tpvController.calcularQuadraments();
+    }
+
+    @Aleshores("^obtinc (\\d+) linies$")
+    public void obtincLinies(int numVendes) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        assertEquals(numVendes,tpvController.getNumVendesQUadrament());
+    }
 }
