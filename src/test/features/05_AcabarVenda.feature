@@ -3,6 +3,16 @@
 #noinspection SpellCheckingInspection
 Característica: Finalitzar venda
 
+  Rerefons:
+    Donada existeix el producte "Action Man", amb codi de barres "777", preu Unitat 15 i iva 0,21
+  #12,396 Preu Base.
+    I existeix el producte "Barbie", amb codi de barres "111", preu Unitat 14 i iva 0,21
+  #11,57 Preu Base.
+    I existeix el producte "Lot Guminoles", amb codi de barres "333", preu Unitat 2 i iva 0,1
+  #1,818 Preu Base.
+    I existeix el producte "Llaminadura Xaxi", amb codi de barres "444", preu Unitat 1 i iva 0,1
+  #0,909 Preu Base.
+
 
   Escenari: Anul.lar una venda buida
     Donat que hi ha una venda iniciada
@@ -17,17 +27,8 @@ Característica: Finalitzar venda
     Aleshores no hi ha cap venda iniciada
 
   Escenari: Finalitzar una venda amb linies de venda i s'imprimeix el tiquet
-    Donat existeix el producte "Action Man", amb codi de barres "777", preu Unitat 15 i iva 0,21
-  #12,396 Preu Base.
-    I existeix el producte "Barbie", amb codi de barres "111", preu Unitat 14 i iva 0,21
-  #11,57 Preu Base.
-    I existeix el producte "Lot Guminoles", amb codi de barres "333", preu Unitat 2 i iva 0,1
-  #1,818 Preu Base.
-    I existeix el producte "Llaminadura Xaxi", amb codi de barres "444", preu Unitat 1 i iva 0,1
-  #0,909 Preu Base.
     I el TPV esta a la botiga "Carroça"
     I que hi ha una venda iniciada
-    I es marca el nom de la botiga -ja definit al TPV- a la venda
     I l'empleat que ha iniciat la venda es diu "Joan"
     I que hi ha una linia de venda amb 2 unitats del producte amb codi de barres "777"
   #12,396*2=24,792
@@ -61,16 +62,8 @@ Característica: Finalitzar venda
     #Faltarà fer els descomptes quan en tinguem
 
       #L'ESTI FENT: CÈLIA
-  Escenari: Finalitzar una venda amb linies de venda
+  Escenari: Anular una venda amb linies de venda quan el client ja ha pagat
     Donat el TPV esta a la botiga "Carroça"
-    I existeix el producte "Action Man", amb codi de barres "777", preu Unitat 15 i iva 0,21
-  #12,396 Preu Base.
-    I existeix el producte "Barbie", amb codi de barres "111", preu Unitat 14 i iva 0,21
-  #11,57 Preu Base.
-    I existeix el producte "Lot Guminoles", amb codi de barres "333", preu Unitat 2 i iva 0,1
-  #1,818 Preu Base.
-    I existeix el producte "Llaminadura Xaxi", amb codi de barres "444", preu Unitat 1 i iva 0,1
-  #0,909 Preu Base.
     I que hi ha una venda iniciada
     I es marca el nom de la botiga -ja definit al TPV- a la venda
     I l'empleat que ha iniciat la venda es diu "Joan"
