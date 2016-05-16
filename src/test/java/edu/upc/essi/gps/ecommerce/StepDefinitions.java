@@ -241,10 +241,22 @@ public class StepDefinitions {
         assertEquals(expectedpreu, tpvController.getVendaActual().getPreuTotal(), 0.001);
     }
 
-
     @I("^indico que el client paga (.+) euros en efectiu$")
     public void indicoQueElClientPagaEurosEnEfectiu(double preuPagament) {
-        tpvController.setPreuPagament(preuPagament);
+        try {
+            tpvController.setPreuPagamentAmbEfectiu(preuPagament);
+        } catch (ModeDePagamentIncorrecteException e) {
+            this.exception = e;
+        }
+    }
+
+    @I("^indico que el client paga (.+) euros amb la tarjeta \"([^\"]*)\"")
+    public void indicoQueElClientPagaEurosAmbTarjeta(double preuPagament, String numTarjeta) {
+        try {
+            tpvController.pagamentAmbTarjeta(preuPagament, numTarjeta);
+        } catch (ModeDePagamentIncorrecteException | TarjetaNoValidaException e) {
+            this.exception = e;
+        }
     }
 
     @I("^l'empleat que ha iniciat la venda es diu \"([^\"]*)\"$")
@@ -346,5 +358,31 @@ public class StepDefinitions {
     @I("^la linia (\\d+) sera \"([^\"]*)\"$")
     public void laLiniaSera(int numLinia, String linia)  {
         assertEquals(tpvController.getLiniaQuadrament(numLinia), linia);
+    }
+
+    @Donat("^que hi ha una venda iniciada amb dues linies linies de venda amb 2 productes 222 i un 333$")
+    public void queHiHaUnaVendaIniciadaAmbLiniesDeVenda1() {
+        try {
+            tpvController.iniciarVenda();
+            tpvController.afegirLiniaVendaPerCodi(2, "222");
+            tpvController.afegirLiniaVendaPerCodi(1, "333");
+        } catch (VendaJaIniciadaException | ProducteNoExisteixException e) {
+            this.exception = e;
+        }
+    }
+
+    @Quan("^indico que el client vol pagar en efectiu")
+    public void indicoQueElClientVolPagarEnEfectiu() {
+        tpvController.getVendaActual().setTipusPagamentEfectiu();
+    }
+
+    @Quan("^indico que el client vol pagar amb tarjeta$")
+    public void indicoQueElClientVolPagarAmbTarjeta() {
+        tpvController.getVendaActual().setTipusPagamentTarjeta();
+    }
+
+    @Aleshores("^la tarjeta es invalida$")
+    public void laTarjetaEsInvalida() {
+        assertEquals("Error: El mode de pagament és incorrecte.", exception.getMessage());
     }
 }

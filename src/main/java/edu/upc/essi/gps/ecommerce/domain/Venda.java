@@ -2,26 +2,25 @@ package edu.upc.essi.gps.ecommerce.domain;
 
 import edu.upc.essi.gps.domain.Entity;
 import edu.upc.essi.gps.ecommerce.exceptions.DevolucioNoPossibleException;
+import edu.upc.essi.gps.ecommerce.exceptions.ModeDePagamentIncorrecteException;
 import edu.upc.essi.gps.ecommerce.exceptions.NoHiHaTiquetException;
+import edu.upc.essi.gps.ecommerce.exceptions.TarjetaNoValidaException;
 
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class Venda implements Entity {
+    static private String EFECTIU = "en efectiu";
+    static private String TARJETA = "amb tarjeta";
     private int id;
     private List<LiniaVenda> liniesVenda;
     private String informacioTancar;
     private double preuPagament;
+    private String tipusPagament;
     private boolean finalitzada;
     private String nomEmpleat;
     private String nomBotiga;
-    private Date data;
     private Calendar dataIHora;
     private Integer idTorn;
     Tiquet tiquet;
@@ -33,13 +32,34 @@ public class Venda implements Entity {
         tiquet = null;
         nomBotiga = "BB";
         dataIHora = Calendar.getInstance();
+        tipusPagament = EFECTIU;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setPreuPagament(double valor) {preuPagament=valor;}
+    public void setTipusPagamentEfectiu() {
+        tipusPagament = EFECTIU;
+    }
+
+    public void setTipusPagamentTarjeta() {
+        tipusPagament = TARJETA;
+    }
+
+    public void setPreuPagamentAmbEfectiu(double valor) throws ModeDePagamentIncorrecteException {
+        if(tipusPagament.equals(EFECTIU)) preuPagament = valor;
+        else throw new ModeDePagamentIncorrecteException();
+    }
+
+    public void setPagamentAmbTarjeta(double valor, String numTarjeta) throws ModeDePagamentIncorrecteException, TarjetaNoValidaException {
+        if(tipusPagament.equals(TARJETA)) {
+            if(numTarjeta.length() == 19 ) preuPagament = valor;
+            else throw new TarjetaNoValidaException();
+        }
+        else throw new ModeDePagamentIncorrecteException();
+    }
+
     public String getInformacioTancar() { return informacioTancar; }
 
     public boolean isEmpty() {
@@ -124,7 +144,7 @@ public class Venda implements Entity {
     public boolean conteLiniaVenda(String codiBarres, int unitatsProd) {
 
         for(int i = 0; i < liniesVenda.size(); ++i) {
-            if(liniesVenda.get(i).getCodiProducte() ==codiBarres) {
+            if(Objects.equals(liniesVenda.get(i).getCodiProducte(), codiBarres)) {
                 if(liniesVenda.get(i).getQuantitat() >= unitatsProd) {
                     return true;
                 }
@@ -187,7 +207,7 @@ public class Venda implements Entity {
                     + "P.T: " + new DecimalFormat("##.##").format(getSumaPreuUnitatVendaPerIva(vIVAs.get(i))) + sep);
         }
         tiquet.addLinia(sep + "Total: " + new DecimalFormat("##.##").format(getPreuTotal()) + sep + "Canvi: " +
-                new DecimalFormat("##.##").format(getCanvi()) + sep + "Pagat en: " + "Efectiu" + sep);
+                new DecimalFormat("##.##").format(getCanvi()) + sep + "Pagat " + tipusPagament + sep);
 
         SimpleDateFormat  dF = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String dataIH = dF.format(dataIHora.getTime());
@@ -215,19 +235,6 @@ public class Venda implements Entity {
             total += lv.getTotalUnitatBase(iva);
         }
         return total;
-    }
-
-    public void setData(String data, String hora) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        this.data = formatter.parse(data);
-
-        String[] horaSeparada = hora.split(":");
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(this.data);
-        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(horaSeparada[0]));
-        calendar.set(Calendar.MINUTE, Integer.parseInt(horaSeparada[1]));
-        this.data = calendar.getTime();
     }
 
     public void setIdTorn(int id){

@@ -208,7 +208,19 @@ public class TPVController {
     //------------------------------
     // Tancament Venda
     //------------------------------
-    public void setPreuPagament(double valor) {vendaActual.setPreuPagament(valor);}
+
+    public void setTipusPagamentEfectiu() {
+        vendaActual.setTipusPagamentEfectiu();
+    }
+    public void setTipusPagamentTarjeta() {
+        vendaActual.setTipusPagamentTarjeta();
+    }
+    public void setPreuPagamentAmbEfectiu(double valor) throws ModeDePagamentIncorrecteException {
+        vendaActual.setPreuPagamentAmbEfectiu(valor);
+    }
+    public void pagamentAmbTarjeta(double valor, String numTarjeta) throws ModeDePagamentIncorrecteException, TarjetaNoValidaException {
+        vendaActual.setPagamentAmbTarjeta(valor, numTarjeta);
+    }
     public double getCanviVenda() {
         return vendaActual.getCanvi();
     }
