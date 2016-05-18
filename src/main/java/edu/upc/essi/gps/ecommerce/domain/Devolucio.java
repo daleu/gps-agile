@@ -3,21 +3,22 @@ package edu.upc.essi.gps.ecommerce.domain;
 
 import edu.upc.essi.gps.domain.Entity;
 import edu.upc.essi.gps.ecommerce.repositoris.DevolucionsServei;
+import edu.upc.essi.gps.ecommerce.domain.Producte;
 
 public class Devolucio implements Entity {
     private int idDevolucio;
     private int idVenda;
-    private String codiBarres;
+    private Producte prodRetornat;
     private int unitatsProducte;
     private String motiu;
 
     public Devolucio() {
     }
 
-    public Devolucio(int idVenda, String codiBarres, int unitatsProducte, String motiu) {
+    public Devolucio(int idVenda,  Producte prodRetornat, int unitatsProducte, String motiu) {
         DevolucionsServei devolucionsServei = new DevolucionsServei();
         this.idVenda = idVenda;
-        this.codiBarres = codiBarres;
+        this.prodRetornat = prodRetornat;
         this.unitatsProducte = unitatsProducte;
         this.motiu = motiu;
     }
@@ -38,12 +39,12 @@ public class Devolucio implements Entity {
         this.idVenda = idVenda;
     }
 
-    public String getCodiBarres() {
-        return codiBarres;
+    public Producte getProducteRetornat() {
+        return prodRetornat;
     }
 
-    public void setCodiBarres(String codiBarres) {
-        this.codiBarres = codiBarres;
+    public void setProducteRetornat(Producte prodRetornat) {
+        this.prodRetornat = prodRetornat;
     }
 
     public int getUnitatsProducte() {

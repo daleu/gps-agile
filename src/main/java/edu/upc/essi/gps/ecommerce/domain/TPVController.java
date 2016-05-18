@@ -74,9 +74,12 @@ public class TPVController {
     public void tancamentVenda() throws VendaNoIniciadaException, VendaJaFinalitzadaException, ParseException {
         if (vendaActual != null)  {
             if(!vendaActual.isFinalitzada()) {
+
                 vendesServei.guardarVenda(vendaActual);
 
                 if (tornActual != null) tornActual.incrementDinersEnCaixa(vendaActual.getPreuTotal());
+
+                vendaActual.gestionarDevolucions(devolucionsServei);
 
                 vendaActual.finalitzar(tornActual);
             }
@@ -137,18 +140,16 @@ public class TPVController {
     }
 
 
-    public void afegirDevolucioLiniaVenda(int idVenda, String codiBarres, int unitatsProd,String motiu) throws ProducteNoExisteixException, Exception {
+    public void afegirDevolucioAVenda(int idVenda, String codiBarres, int unitatsProd,String motiu) throws ProducteNoExisteixException{
+
        Producte pRetorn = cataleg.getProductePerCodi(codiBarres);
-       //1. Introduit a linia de venda en negatiu
-        vendaActual.afegeixDevolucio(pRetorn,unitatsProd);
-        //2. Deixar constancia en la devolucio
-        devolucioActual.setIdVenda(idVenda);
-        devolucioActual.setCodiBarres(codiBarres);
-        devolucioActual.setUnitatsProducte(unitatsProd);
-        devolucioActual.setMotiu(motiu);
-       //2. Actualitzar repositoris per evitar repetir
-        devolucionsServei.guardarDevolucio(devolucioActual);
-        //vendesServei.indicarDevolucio(idVenda,codiBarres,unitatsProd);
+        if (pRetorn != null) {
+
+            vendaActual.afegeixDevolucio(pRetorn,unitatsProd,motiu);
+        }
+        else {
+            throw new ProducteNoExisteixException();
+        }
     }
 
     //------------------------------
@@ -263,10 +264,6 @@ public class TPVController {
         cataleg.afegeixProducte(producte);
     }
 
-    public String getCodiBarresDevolucio(int expectedIdVenda, String expectedCodiBarres, int i) {
-        Devolucio dev = devolucionsServei.trobarPerParametres(expectedIdVenda,expectedCodiBarres,1);
-        return dev.getCodiBarres();
-    }
 
     public int getIdVendaDevolucio(int expectedIdVenda, String expectedCodiBarres, int i) {
         Devolucio dev = devolucionsServei.trobarPerParametres(expectedIdVenda,expectedCodiBarres,1);
@@ -313,7 +310,7 @@ public class TPVController {
 
             if(motiu == "") motiu = "No existeix motiu";
 
-            afegirDevolucioLiniaVenda(idVenda, codiProd, unitats, motiu);
+            afegirDevolucioAVenda(idVenda, codiProd, unitats, motiu);
         }
         else throw new DevolucioNoPossibleException();
     }
