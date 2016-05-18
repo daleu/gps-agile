@@ -12,7 +12,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class StepDefinitions {
     /*
@@ -165,7 +167,6 @@ public class StepDefinitions {
 
     @Aleshores("^existeix una devolucio del producte \"([^\"]*)\" de la venda (\\d+)")
     public void existeixUnaDevolucioDelProducteDeLaVendaPelMotiu(String expectedCodiBarres, int expectedIdVenda) {
-        assertEquals(expectedCodiBarres, tpvController.getCodiBarresDevolucio(expectedIdVenda, expectedCodiBarres, 1));
         assertEquals(expectedIdVenda, tpvController.getIdVendaDevolucio(expectedIdVenda, expectedCodiBarres, 1));
     }
 
@@ -226,9 +227,20 @@ public class StepDefinitions {
     }
 
     @I("^es va fer una venda amb id (\\d+) dels següens productes i seguents unitats$")
-    public void esVaFerUnaVendaAmbIdDelsSegüensProductesISeguentsUnitats(int idVenda, Map<String,Integer> productesVenda) throws VendaJaIniciadaException, ProducteNoExisteixException {
+    public void esVaFerUnaVendaAmbIdDelsSegüensProductesISeguentsUnitats(int idVenda, Map<String,Integer> productesVenda) throws VendaJaIniciadaException, ProducteNoExisteixException, VendaJaFinalitzadaException, ParseException, VendaNoIniciadaException {
 
-        tpvController.introduirVendaJaAcabada(idVenda,productesVenda);
+        tpvController.setNomBotiga("Girona");
+        tpvController.iniciarTorn("Manolet");
+        tpvController.setEfectiuInicial(300);
+        tpvController.iniciarVendaAmbID(idVenda);
+
+        Set<String> prods = productesVenda.keySet();
+        for(String p: prods) {
+            tpvController.afegirLiniaVendaPerCodi(productesVenda.get(p), p);
+        }
+
+        tpvController.tancamentVenda();
+        tpvController.finalitzaTorn();
     }
 
     @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+) sense motiu")
@@ -393,6 +405,11 @@ public class StepDefinitions {
 
     @Aleshores ("^el torn està finalitzat")
     public void elTornEstaFinalitzat() throws Throwable {
-        assertEquals(true,tpvController.getTornActual() == null);
+        assertEquals(true, tpvController.getTornActual() == null);
+    }
+
+    @Aleshores("^el tiquet mostra les següents devolucions$")
+    public void elTiquetMostraLesSegüentsDevolucions() throws Throwable {
+        throw new PendingException();
     }
 }

@@ -17,14 +17,16 @@ public class DevolucionsRepositori extends Repository<Devolucio>{
             throw new IllegalArgumentException("Ja existeix una venda amb aquest nom");
     }
 
+
     public Devolucio trobarDevolucioPerParametres(int expectedIdVenda, String expectedCodiBarres) { //FALTA PULIR INTRODUINT UNITATS
         List<Devolucio> devolucions = list();
         for(Devolucio d: devolucions) {
-            if((d.getIdVenda() == expectedIdVenda) && (d.getCodiBarres() == expectedCodiBarres)) {
+            if((d.getIdVenda() == expectedIdVenda) && (d.getProducteRetornat().getCodiBarres() == expectedCodiBarres)) {
                 return d;
             }
         }
         return null;
     }
+
 
 }

@@ -10,7 +10,6 @@ public class Torn implements Entity{
     private Double efectiuTemporal;
     private Double efectiuFi;
     private Double dinersEnCaixa;
-    private boolean finalitzat = false;
     private int id;
 
     public Torn(String empleatActual) {
@@ -48,17 +47,6 @@ public class Torn implements Entity{
     public void setEfectiuInici(Double efectiuInici) { this.efectiuInici = efectiuInici; }
 
     public Double getEfectiuInici() {return this.efectiuInici; }
-
-    public void finalitza() {
-        finalitzat = true;
-    }
-
-    public void cancelarFinalitzacio() {
-        finalitzat = false;
-    }
-
-    public boolean getFinalitzat() { return finalitzat; }
-
 
     public Double getEfectiuFi() {
         return efectiuFi;
