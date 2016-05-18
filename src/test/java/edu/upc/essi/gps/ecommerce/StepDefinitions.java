@@ -309,14 +309,14 @@ public class StepDefinitions {
         tpvController.finalitzaTorn();
     }
 
+    @Aleshores("^el torn no es finalitza$")
+    public void tornNoFinalitzat() throws Throwable {
+        assertEquals(true,tpvController.getTornActual() != null);
+    }
+
     @I("^cancel·lo la finalitzacio del torn$")
     public void canceloLaFinalitzacioDelTorn() throws Throwable {
         tpvController.cancelaAccioTorn();
-    }
-
-    @I("^finalitzo el torn amb (.+) d'efectiu final acceptant el desquadrament$")
-    public void finalitzoElTornAmbDesquadrament(Double efectiu) throws Throwable {
-        tpvController.finalitzaTorn(efectiu);
     }
 
     @Quan("^indico que vull visualitzar els quadraments$")
@@ -384,5 +384,15 @@ public class StepDefinitions {
     @Aleshores("^la tarjeta es invalida$")
     public void laTarjetaEsInvalida() {
         assertEquals("Error: El mode de pagament és incorrecte.", exception.getMessage());
+    }
+
+    @Quan("^accepto el desquadrament$")
+    public void acceptoElDesquadrament() throws Throwable {
+        tpvController.acceptoDesquadrament();
+    }
+
+    @Aleshores ("^el torn està finalitzat")
+    public void elTornEstaFinalitzat() throws Throwable {
+        assertEquals(true,tpvController.getTornActual() == null);
     }
 }

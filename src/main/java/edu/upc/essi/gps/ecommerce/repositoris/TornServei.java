@@ -18,6 +18,10 @@ public class TornServei {
         tornRepositori.insert(tor);
     }
 
+    public void eliminarTorn (Torn tor) {
+        tornRepositori.delete(tor);
+    }
+
     public List<Torn> llistarTorns() {
         return tornRepositori.list();
     }

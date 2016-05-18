@@ -7,6 +7,7 @@ public class Torn implements Entity{
     private String nomEmpleat;
     private String nomBotiga;
     private Double efectiuInici;
+    private Double efectiuTemporal;
     private Double efectiuFi;
     private Double dinersEnCaixa;
     private boolean finalitzat = false;
@@ -83,4 +84,11 @@ public class Torn implements Entity{
     }
 
 
+    public Double getEfectiuTemporal() {
+        return efectiuTemporal;
+    }
+
+    public void setEfectiuTemporal(Double efectiuTemporal) {
+        this.efectiuTemporal = efectiuTemporal;
+    }
 }

@@ -19,7 +19,7 @@ Característica: Iniciar torn
     Donat el TPV esta a la botiga "Carroça"
     Quan inicio un torn amb nom empleat "Joan"
     I cancel·lo el torn sense introduir efectiu inicial
-    Aleshores obtinc un missatge que diu "Cancel·lacio acceptada"
+    Aleshores obtinc un missatge que diu "Cancel·lacio acceptada. No hi ha cap torn iniciat"
 
 
   Escenari: Iniciar un torn quan ja n'hi ha un d'iniciat

@@ -167,18 +167,8 @@ public class TPVController {
         return 0.0;
     }
 
-    public void setEfectiuFinal(double efectiu) {
-        if (tornActual != null && !tornActual.getFinalitzat()) {
-            this.tornActual.setEfectiuFi(efectiu);
-        }
-    }
-
     public double getEfectiuFinal() {
-        if (tornActual != null) { return this.tornActual.getEfectiuFi(); }
-        else {
-            Torn t = tornServei.getUltimTorn();
-            return t.getEfectiuFi();
-        }
+        return tornServei.getUltimTorn().getEfectiuFi();
     }
 
     public DevolucionsServei getdevolucionsServei() {
@@ -194,15 +184,30 @@ public class TPVController {
     //------------------------------
 
     public void quadrament(Double efectiu) {
-        if (tornActual != null) {
-            double diferencia = tornActual.getDinersEnCaixa() - efectiu;
-            if (Math.abs(diferencia) <= 5) {
-            //    screen = "Quadrament correcte";
-                tornActual.setEfectiuFi(efectiu);
-            }
-            tornActual.setEfectiuFi(efectiu);
-
+        Torn t = tornServei.getUltimTorn();
+        t.setEfectiuTemporal(efectiu);
+        double diferencia = t.getDinersEnCaixa() - efectiu;
+        //System.out.println(diferencia);
+        if (Math.abs(diferencia) <= 5) {
+            screen = "Torn finalitzat amb quadrament de caixa";
+            t.setEfectiuFi(efectiu);
         }
+        else if (diferencia < 5) {  //més efectiu en caixa del real
+            screen = "Torn no finalitzat. L'efectiu en caixa introduit és superior al suposat per més de 5 euros";
+            tornActual = t;
+            tornServei.eliminarTorn(tornActual);
+        }
+        else if (diferencia > 5) {  //menys efectiu en caixa del real
+            screen = "Torn no finalitzat. L'efectiu en caixa introduit és inferior al suposat per més de 5 euros";
+            tornActual = t;
+            tornServei.eliminarTorn(tornActual);
+        }
+    }
+
+    public void acceptoDesquadrament() {    //el torn no està finalitzat
+        tornActual.setEfectiuFi(tornActual.getEfectiuTemporal());
+        screen = "Torn finalitzat amb desquadrament de caixa";
+        finalitzaTorn();
     }
 
     //------------------------------
@@ -349,15 +354,15 @@ public class TPVController {
 
     public void cancelaAccioTorn()
     {
-        if (tornActual == null) tornActual = tornServei.getUltimTorn();
-        else tornActual = null;
-        screen = "Cancel·lacio acceptada";
-    }
-
-    public void finalitzaTorn(Double efectiu) {
-        tornActual.setEfectiuFi(efectiu);
-        tornActual.finalitza();
-        tornServei.guardarTorn(tornActual);
+        if (tornActual != null) {   //torn iniciat per error
+            tornActual = null;
+            screen = "Cancel·lacio acceptada. No hi ha cap torn iniciat";
+        }
+        else {  //torn finalitzat per error
+            tornActual = tornServei.getUltimTorn();
+            tornServei.eliminarTorn(tornActual);
+            screen = "Cancel·lacio acceptada. En " + tornActual.getNomEmpleat() + " continua amb el seu torn";
+        }
     }
 
     public void calcularQuadraments() {
