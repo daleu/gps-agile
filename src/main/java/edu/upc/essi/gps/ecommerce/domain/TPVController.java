@@ -62,12 +62,18 @@ public class TPVController {
        }
     }
 
-    public void iniciarVendaAmbID(int id) throws VendaJaIniciadaException { //Per a JOCS de PROVA
+    public void iniciarVendaAmbID(int id) throws VendaJaIniciadaException {
         if (this.vendaActual == null) {
             vendaActual = vendesServei.novaVendaAmbID(id);
-            if (tornActual!=null)vendaActual.setIdTorn(tornActual.getId());
+            if(this.tornActual != null) vendaActual.setIdTorn(tornActual.getId());
+            vendaActual.setNomBotiga(nomBotiga);
         } else {
-            throw new VendaJaIniciadaException();
+            if(this.vendaActual.isFinalitzada() ) {
+                vendaActual = vendesServei.novaVendaAmbID(id);
+                if(this.tornActual != null) vendaActual.setIdTorn(tornActual.getId());
+                vendaActual.setNomBotiga(nomBotiga);
+            }
+            else throw new VendaJaIniciadaException();
         }
     }
 
@@ -122,7 +128,9 @@ public class TPVController {
 
     public boolean possibilitatDeRetorn(int idVenda, String codiBarres, int unitatsProd) {
         Venda ven_anterior = vendesServei.trobaPerCodi(idVenda);
+
         if(ven_anterior != null) {
+
             if(ven_anterior.conteLiniaVenda(codiBarres,unitatsProd)) return true;
         }
         return false;
@@ -132,25 +140,12 @@ public class TPVController {
     // SOBRE DEVOLUCIONS
     //----------------------------------
 
-    public void iniciarDevolucio(){
-        devolucioActual = devolucionsServei.novaDevolucio();
-    }
     public void acabarDevolucio(){
         devolucioActual = devolucionsServei.novaDevolucio();
     }
 
 
-    public void afegirDevolucioAVenda(int idVenda, String codiBarres, int unitatsProd,String motiu) throws ProducteNoExisteixException{
 
-       Producte pRetorn = cataleg.getProductePerCodi(codiBarres);
-        if (pRetorn != null) {
-
-            vendaActual.afegeixDevolucio(pRetorn,unitatsProd,motiu);
-        }
-        else {
-            throw new ProducteNoExisteixException();
-        }
-    }
 
     //------------------------------
     // Afegir efectiu pel quadrament del torn
@@ -271,10 +266,24 @@ public class TPVController {
         cataleg.afegeixProducte(producte);
     }
 
+    public void afegirDevolucioAVenda(int idVenda, String codiBarres, int unitatsProd,String motiu) throws ProducteNoExisteixException{
+
+        Producte pRetorn = cataleg.getProductePerCodi(codiBarres);
+        if (pRetorn != null) {
+            if (possibilitatDeRetorn(idVenda,codiBarres,unitatsProd)) {
+                devolucioActual = devolucionsServei.novaDevolucio(pRetorn, unitatsProd, motiu, idVenda, vendaActual.getId());
+                vendaActual.afegeixDevolucio(devolucioActual);
+            }
+            else screen = "El producte introduit no es pot retornar";
+        }
+        else {
+            throw new ProducteNoExisteixException();
+        }
+    }
 
     public int getIdVendaDevolucio(int expectedIdVenda, String expectedCodiBarres, int i) {
         Devolucio dev = devolucionsServei.trobarPerParametres(expectedIdVenda,expectedCodiBarres,1);
-        return dev.getIdVenda();
+        return dev.getIdVendaCompra();
     }
 
     public String getMotiuDevolucio(int expectedIdVenda, String expectedCodiBarres, int i) {
@@ -305,32 +314,6 @@ public class TPVController {
         double aux =  vendaActual.getSumaPreuUnitatVendaPerIva(iva);
         return aux;
     }
-
-    public void guardarVendaActual() {
-        vendesServei.guardarVenda(vendaActual);
-        vendaActual = null;
-    }
-
-    public void introduirDevolucio(int idVenda, String codiProd, int unitats, String motiu) throws ProducteNoExisteixException, Exception {
-        iniciarDevolucio();
-        if(possibilitatDeRetorn(idVenda,codiProd,unitats)) {
-
-            if(motiu == "") motiu = "No existeix motiu";
-
-            afegirDevolucioAVenda(idVenda, codiProd, unitats, motiu);
-        }
-        else throw new DevolucioNoPossibleException();
-    }
-
-    public void introduirVendaJaAcabada(int idVenda, Map<String,Integer> productesVenda) throws VendaJaIniciadaException, ProducteNoExisteixException {
-        iniciarVendaAmbID(idVenda);
-        Set<String> prods = productesVenda.keySet();
-        for(String p: prods) {
-            afegirLiniaVendaPerCodi(productesVenda.get(p), p);
-        }
-        guardarVendaActual();
-    }
-
 
     public void iniciarTorn(String nomEmpleat) {
         if (tornActual == null) {
@@ -397,5 +380,19 @@ public class TPVController {
 
     public int getNumLineasQuadrament() {
         return liniesDesquadrament.size();
+    }
+
+    public boolean existsLiniaTiquet(List<String> list) {
+        return vendaActual.getTiquet().existsLinies(list);
+    }
+
+    public int getIdVendaRetorn(int idVendaCompra, String codiProd, int i) {
+        Devolucio dev = devolucionsServei.trobarPerParametres(idVendaCompra,codiProd,1);
+        return dev.getIdVendaRetorn();
+    }
+
+    public int getNumDevolucionsVenda(int idVenda) {
+        Venda v = vendesServei.trobaPerCodi(idVenda);
+        return v.getNumDevolucions();
     }
 }

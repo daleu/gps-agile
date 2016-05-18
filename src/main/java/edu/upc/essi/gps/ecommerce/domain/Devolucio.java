@@ -7,7 +7,8 @@ import edu.upc.essi.gps.ecommerce.domain.Producte;
 
 public class Devolucio implements Entity {
     private int idDevolucio;
-    private int idVenda;
+    private int idVendaCompra;
+    private int idVendaRetorn;
     private Producte prodRetornat;
     private int unitatsProducte;
     private String motiu;
@@ -15,9 +16,10 @@ public class Devolucio implements Entity {
     public Devolucio() {
     }
 
-    public Devolucio(int idVenda,  Producte prodRetornat, int unitatsProducte, String motiu) {
+    public Devolucio(int idVendaCompra, int idVendaRetorn,  Producte prodRetornat, int unitatsProducte, String motiu) {
         DevolucionsServei devolucionsServei = new DevolucionsServei();
-        this.idVenda = idVenda;
+        this.idVendaCompra = idVendaCompra;
+        this.idVendaRetorn = idVendaRetorn;
         this.prodRetornat = prodRetornat;
         this.unitatsProducte = unitatsProducte;
         this.motiu = motiu;
@@ -31,12 +33,12 @@ public class Devolucio implements Entity {
         this.motiu = motiu;
     }
 
-    public int getIdVenda() {
-        return idVenda;
+    public int getIdVendaCompra() {
+        return idVendaCompra;
     }
 
-    public void setIdVenda(int idVenda) {
-        this.idVenda = idVenda;
+    public void setIdVendaCompra(int idVenda) {
+        this.idVendaCompra = idVenda;
     }
 
     public Producte getProducteRetornat() {
@@ -62,5 +64,13 @@ public class Devolucio implements Entity {
 
     public void setID(int ID) {
         this.idDevolucio = ID;
+    }
+
+    public void setIdVendaRetorn(int idVendaRetorn) {
+        this.idVendaRetorn = idVendaRetorn;
+    }
+
+    public int getIdVendaRetorn() {
+        return idVendaRetorn;
     }
 }

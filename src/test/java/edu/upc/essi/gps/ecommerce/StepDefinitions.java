@@ -159,15 +159,11 @@ public class StepDefinitions {
         tpvController.afegirLiniaVendaPerCodi(unitats, codi);
     }
 
-    @Quan("^vull fer una devolucio$")
-    public void vullFerUnaDevolucio() {
-        tpvController.iniciarDevolucio();
-    }
-
 
     @Aleshores("^existeix una devolucio del producte \"([^\"]*)\" de la venda (\\d+)")
     public void existeixUnaDevolucioDelProducteDeLaVendaPelMotiu(String expectedCodiBarres, int expectedIdVenda) {
         assertEquals(expectedIdVenda, tpvController.getIdVendaDevolucio(expectedIdVenda, expectedCodiBarres, 1));
+
     }
 
     @Quan("^inicio una nova venda$")
@@ -245,7 +241,7 @@ public class StepDefinitions {
 
     @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+) sense motiu")
     public void esVolIndicarUnaDevolucioDeUnitatSDelProducteDeLaVendaPelMotiu(int unitats, String codiProd, int idVenda) throws ProducteNoExisteixException, Exception {
-        tpvController.introduirDevolucio(idVenda,codiProd,unitats,"");
+        tpvController.afegirDevolucioAVenda(idVenda,codiProd,unitats,"");
     }
 
     @I("^el preu total es la suma dels productes a vendre menys el de la devolució, es a dir, (.+)$")
@@ -352,7 +348,7 @@ public class StepDefinitions {
 
     @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+) pel motiu \"([^\"]*)\"$")
     public void esVolIndicarUnaDevolucioDeUnitatsDelProducteDeLaVendaPelMotiu(int unitats, String codiBarres, int idVenda, String motiu) throws ProducteNoExisteixException, Exception {
-        tpvController.introduirDevolucio(idVenda,codiBarres,unitats,motiu);
+        tpvController.afegirDevolucioAVenda(idVenda,codiBarres,unitats,motiu);
     }
 
 
@@ -409,7 +405,29 @@ public class StepDefinitions {
     }
 
     @Aleshores("^el tiquet mostra les següents devolucions$")
-    public void elTiquetMostraLesSegüentsDevolucions() throws Throwable {
-        throw new PendingException();
+    public void elTiquetMostraLesSegüentsDevolucions(List<String> list) {
+        assertEquals(true,tpvController.existsLiniaTiquet(list));
+    }
+
+    @Aleshores("^el tpv m'indica \"([^\"]*)\"$")
+    public void elTpvMIndica(String missatge) throws Throwable {
+        assertEquals(tpvController.getScreen(),missatge);
+    }
+
+    @Quan("^inicio una nova venda amb id (\\d+)$")
+    public void inicioUnaNovaVendaAmbId(int idVenda) throws Throwable {
+        tpvController.iniciarVendaAmbID(idVenda);
+    }
+
+
+    @I("^la venda (\\d+) no te assignada cap devolucio$")
+    public void laVendaNoTeAssignadaCapDevolucio(int idVenda)  {
+        assertEquals(0, tpvController.getNumDevolucionsVenda(idVenda));
+    }
+
+    @Aleshores("^la venda (\\d+) conte una devolucio del producte \"([^\"]*)\" de la venda (\\d+)$")
+    public void laVendaConteUnaDevolucioDelProducteDeLaVenda(int expectedIdVendaRetorn, String codiProd, int idVendaCompra) {
+        assertEquals(expectedIdVendaRetorn, tpvController.getIdVendaRetorn(idVendaCompra, codiProd, 1));
+
     }
 }

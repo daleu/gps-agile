@@ -24,8 +24,8 @@ public class Venda implements Entity {
     private String nomBotiga;
     private Calendar dataIHora;
     private Integer idTorn;
-    Tiquet tiquet;
-    List<Devolucio> devolucions;
+    private Tiquet tiquet;
+    private List<Devolucio> devolucions;
 
     public Venda(int numVenda) {
         this.id = numVenda;
@@ -35,6 +35,7 @@ public class Venda implements Entity {
         nomBotiga = "BB";
         dataIHora = Calendar.getInstance();
         tipusPagament = EFECTIU;
+        devolucions = new ArrayList<>();
     }
 
     public int getId() {
@@ -80,7 +81,7 @@ public class Venda implements Entity {
         return total;
     }
     public double getCanvi() {
-        return preuPagament-getPreuTotal();
+        return preuPagament-getPreuTotal()-getPreuDevolucions();
     }
 
     public String getEmpleat() {
@@ -158,18 +159,16 @@ public class Venda implements Entity {
     public boolean conteLiniaVenda(String codiBarres, int unitatsProd) {
 
         for(int i = 0; i < liniesVenda.size(); ++i) {
+
             if(Objects.equals(liniesVenda.get(i).getCodiProducte(), codiBarres)) {
-                if(liniesVenda.get(i).getQuantitat() >= unitatsProd) {
-                    return true;
-                }
+                return true;
             }
         }
         return false;
     }
 
-    public void afegeixDevolucio(Producte pRetorn, int unitatsProd, String motiu) {
-
-        Devolucio dev = new Devolucio(id,pRetorn,unitatsProd,motiu);
+    public void afegeixDevolucio(Devolucio dev) {
+       devolucions.add(dev);
     }
 
     public void modificarLinia(String codiBarres, int unitatsProd) throws DevolucioNoPossibleException {
@@ -288,16 +287,24 @@ public class Venda implements Entity {
 
     public void liniesTiquetDevolucio() {
         String sep = " | ";
-        String linia = sep + " Devolucio(ns): " + sep;
+        String linia = sep + "Devolucio(ns):" + sep;
 
         tiquet.addLinia(linia);
 
         for (Devolucio dev: devolucions) {
             linia = sep + dev.getUnitatsProducte() + sep + dev.getProducteRetornat().getNom();
-            linia += sep + "P.u" + sep + new DecimalFormat("##.##").format(dev.getProducteRetornat().getPreuUnitat());
-            linia += sep + "P.l" + sep + new DecimalFormat("##.##").format(dev.getProducteRetornat().getPreuUnitat()*dev.getUnitatsProducte()) + sep;
+            linia += sep + "P.u " + new DecimalFormat("##.##").format(dev.getProducteRetornat().getPreuUnitat());
+            linia += sep + "P.l " + new DecimalFormat("##.##").format(dev.getProducteRetornat().getPreuUnitat()*dev.getUnitatsProducte()) + sep;
             tiquet.addLinia(linia);
         }
 
+    }
+
+    public Tiquet getTiquet() {
+        return tiquet;
+    }
+
+    public int getNumDevolucions() {
+        return devolucions.size();
     }
 }

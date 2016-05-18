@@ -21,7 +21,7 @@ public class DevolucionsRepositori extends Repository<Devolucio>{
     public Devolucio trobarDevolucioPerParametres(int expectedIdVenda, String expectedCodiBarres) { //FALTA PULIR INTRODUINT UNITATS
         List<Devolucio> devolucions = list();
         for(Devolucio d: devolucions) {
-            if((d.getIdVenda() == expectedIdVenda) && (d.getProducteRetornat().getCodiBarres() == expectedCodiBarres)) {
+            if((d.getIdVendaCompra() == expectedIdVenda) && (d.getProducteRetornat().getCodiBarres() == expectedCodiBarres)) {
                 return d;
             }
         }

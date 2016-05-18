@@ -43,4 +43,15 @@ public class Tiquet {
     public String getDataIHora() {
         return getData() + " " + getHora();
     }
+
+    public Boolean existsLinies(List<String> s) {
+        int i = 0;
+        for(String lin: liniesTiquet) {
+            if(lin == s.get(0)){
+                if(s.size() == (i +1)) return true;
+                else ++i;
+            }
+        }
+        return false;
+    }
 }
