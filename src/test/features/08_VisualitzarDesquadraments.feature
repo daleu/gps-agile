@@ -12,7 +12,7 @@ Característica: Visualitzar quadraments
 
   Escenari: Visualitzar quadraments
     Donat el "Joan" ha iniciat un torn
-    I que hi ha al tpv 222,30  d'efectiu inicial
+    I que hi ha al tpv 0,00  d'efectiu inicial
     I que hi ha una venda iniciada
     I que hi ha una linia de venda amb 2 unitats del producte amb codi de barres "1"
     I que hi ha una linia de venda amb 1 unitats del producte amb codi de barres "2"
@@ -23,9 +23,11 @@ Característica: Visualitzar quadraments
     I que hi ha una linia de venda amb 3 unitats del producte amb codi de barres "3"
     I es finalitza la venda
     I finalitzo el torn
-    I introdueixo al tpv 266,8 d'efectiu final per fer el quadrament
+    #total venut al torn 43,50€
+    I introdueixo al tpv 50,00 d'efectiu final per fer el quadrament
+    I accepto el desquadrament
     I el "Ernest" ha iniciat un torn
-    I que hi ha al tpv 266,8  d'efectiu inicial
+    I que hi ha al tpv 43,50  d'efectiu inicial
     I que hi ha una venda iniciada
     I que hi ha una linia de venda amb 2 unitats del producte amb codi de barres "1"
     I que hi ha una linia de venda amb 1 unitats del producte amb codi de barres "2"
@@ -36,8 +38,10 @@ Característica: Visualitzar quadraments
     I que hi ha una linia de venda amb 3 unitats del producte amb codi de barres "3"
     I es finalitza la venda
     I finalitzo el torn
-    I introdueixo al tpv 311,3 d'efectiu final per fer el quadrament
-    Quan indico que vull visualitzar els quadraments
+    #total venut al torn 43,50€
+    I introdueixo al tpv 80,00 d'efectiu final per fer el quadrament
+    I accepto el desquadrament
+    Quan indico que vull visualitzar els desquadraments
     Aleshores obtinc 2 linies
-    I la linia 1 sera "TORN 1:  EfectiuInicial: 222.3 | EfectiuFinal: 266.8 | Numero de Vendes: 2 | Vendes: 1,2"
-    I la linia 2 sera "TORN 2:  EfectiuInicial: 266.8 | EfectiuFinal: 311.3 | Numero de Vendes: 2 | Vendes: 3,4"
+    I la linia 1 sera "TORN 1: NomEmpleat: Joan | Botiga: Carroça | EfectiuInicial: 0.0 | EfectiuFinal: 50.0 | Diferencia: 6.5"
+    I la linia 2 sera "TORN 2: NomEmpleat: Ernest | Botiga: Carroça | EfectiuInicial: 43.5 | EfectiuFinal: 80.0 | Diferencia: -7.0"

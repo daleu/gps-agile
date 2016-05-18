@@ -28,7 +28,7 @@ public class TPVController {
     private String screen;
     private Calendar dataIHora;
 
-    private ArrayList<String> liniesQuadrament;
+    private ArrayList<String> liniesDesquadrament;
     private int numVendesQuadrament;
 
     private Cataleg cataleg = new Cataleg();
@@ -191,6 +191,7 @@ public class TPVController {
         //System.out.println(diferencia);
         if (Math.abs(diferencia) <= 5) {
             screen = "Torn finalitzat amb quadrament de caixa";
+            t.setQuadrat(true);
             t.setEfectiuFi(efectiu);
         }
         else if (diferencia < 5) {  //més efectiu en caixa del real
@@ -208,6 +209,7 @@ public class TPVController {
     public void acceptoDesquadrament() {    //el torn no està finalitzat
         tornActual.setEfectiuFi(tornActual.getEfectiuTemporal());
         screen = "Torn finalitzat amb desquadrament de caixa";
+        tornActual.setQuadrat(false);
         finalitzaTorn();
     }
 
@@ -361,33 +363,20 @@ public class TPVController {
         }
     }
 
-    public void calcularQuadraments() {
-        List<Torn> listQuadraments = tornServei.llistarTorns();
+    public void calcularDesquadraments() {
+        List<Torn> listTorns = tornServei.llistarTorns();
+        //System.out.println(listTorns.size());
+        //System.out.println(tornServei.llistarTorns());
+        liniesDesquadrament = new ArrayList<String>();
 
-        liniesQuadrament = new ArrayList<String>();
-
-        for (int i = 0; i<listQuadraments.size(); ++i){
-
-            Torn tornAux = listQuadraments.get(i);
-            List<Venda> listVendes = vendesServei.llistarVendes();
-            ArrayList vendes = new ArrayList<Integer>();
-
-            for (int j = 0; j < listVendes.size(); ++j){
-                Venda vendaAux =  listVendes.get(j);
-                if(vendaAux.getIdTorn() != null){
-                    if (vendaAux.getIdTorn() == tornAux.getId()) vendes.add(vendaAux.getId());
-                }
-
+        for (int i = 0; i<listTorns.size(); ++i){
+            Torn tornAux = listTorns.get(i);
+            if (!tornAux.getQuadrat()) {
+                String linea = "TORN " + tornAux.getId() + ": NomEmpleat: " + tornAux.getNomEmpleat() + " | Botiga: " + tornAux.getNomBotiga() +
+                        " | EfectiuInicial: " + tornAux.getEfectiuInici().toString() + " | EfectiuFinal: " + tornAux.getEfectiuFi().toString() +
+                        " | Diferencia: " + (tornAux.getEfectiuFi() - tornAux.getDinersEnCaixa());
+                liniesDesquadrament.add(linea);
             }
-            numVendesQuadrament = vendes.size();
-
-            String linea = "TORN " + tornAux.getId() + ":  EfectiuInicial: "+tornAux.getEfectiuInici().toString()+" | EfectiuFinal: "+tornAux.getEfectiuFi().toString()+" | Numero de Vendes: "+vendes.size()+" | Vendes: ";
-            for (int x = 0; x < vendes.size(); ++x){
-                if(x == 0) linea = linea + vendes.get(x);
-                else linea = linea +","+vendes.get(x);
-            }
-
-            liniesQuadrament.add(linea);
         }
     }
 
@@ -403,10 +392,10 @@ public class TPVController {
     }
 
     public String getLiniaQuadrament(int numLinia) {
-        return liniesQuadrament.get(numLinia-1);
+        return liniesDesquadrament.get(numLinia-1);
     }
 
     public int getNumLineasQuadrament() {
-        return liniesQuadrament.size();
+        return liniesDesquadrament.size();
     }
 }

@@ -331,9 +331,9 @@ public class StepDefinitions {
         tpvController.cancelaAccioTorn();
     }
 
-    @Quan("^indico que vull visualitzar els quadraments$")
-    public void indicoQueVullVisualitzarElsQuadraments() throws Throwable {
-        tpvController.calcularQuadraments();
+    @Quan("^indico que vull visualitzar els desquadraments$")
+    public void indicoQueVullVisualitzarElsDesuadraments() throws Throwable {
+        tpvController.calcularDesquadraments();
     }
 
     @Aleshores("^obtinc (\\d+) linies$")

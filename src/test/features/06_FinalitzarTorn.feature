@@ -21,10 +21,13 @@ Característica: Finalitzar un torn
     I que hi ha una linia de venda amb 3 unitats del producte amb codi de barres "3"
     I es finalitza la venda
 
+    #total venut al torn 43,50€
+
   Escenari: Finalitzar un torn per error
     Quan finalitzo el torn
     I cancel·lo la finalitzacio del torn
     Aleshores obtinc un missatge que diu "Cancel·lacio acceptada. En Joan continua amb el seu torn"
+    I el torn no es finalitza
 
   Escenari: Finalitzar un torn amb quadrament
     Quan finalitzo el torn

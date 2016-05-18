@@ -27,7 +27,7 @@ Característica: Finalitzar venda
     Aleshores no hi ha cap venda iniciada
 
   Escenari: Finalitzar una venda amb linies de venda i s'imprimeix el tiquet
-    I el TPV esta a la botiga "Carroça"
+    Donat el TPV esta a la botiga "Carroça"
     I que hi ha una venda iniciada
     I l'empleat que ha iniciat la venda es diu "Joan"
     I que hi ha una linia de venda amb 2 unitats del producte amb codi de barres "777"
