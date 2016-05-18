@@ -15,11 +15,11 @@ Característica: Saber motiu de la devolucio
     Quan inicio una nova venda
     I es vol indicar una devolucio de 1 unitats del producte "333" de la venda 444 pel motiu "Defectuos"
     I es finalitza la venda
-    #Aleshores "Defectuos" es el motiu de l'ultima devolucio
+    Aleshores "Defectuos" es el motiu de l'ultima devolucio
 
   Escenari: El client no vol donar motiu de la devolucio
     Quan inicio una nova venda
     I es vol indicar una devolucio de 2 unitats del producte "111" de la venda 444 sense motiu
     I es finalitza la venda
-    #Aleshores "No existeix motiu" es el motiu de l'ultima devolucio
+    Aleshores "No existeix motiu" es el motiu de l'ultima devolucio
 

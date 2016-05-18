@@ -12,9 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.text.ParseException;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class StepDefinitions {
     /*
@@ -167,6 +165,7 @@ public class StepDefinitions {
 
     @Aleshores("^existeix una devolucio del producte \"([^\"]*)\" de la venda (\\d+)")
     public void existeixUnaDevolucioDelProducteDeLaVendaPelMotiu(String expectedCodiBarres, int expectedIdVenda) {
+        assertEquals(expectedCodiBarres, tpvController.getCodiBarresDevolucio(expectedIdVenda, expectedCodiBarres, 1));
         assertEquals(expectedIdVenda, tpvController.getIdVendaDevolucio(expectedIdVenda, expectedCodiBarres, 1));
     }
 
@@ -227,20 +226,9 @@ public class StepDefinitions {
     }
 
     @I("^es va fer una venda amb id (\\d+) dels següens productes i seguents unitats$")
-    public void esVaFerUnaVendaAmbIdDelsSegüensProductesISeguentsUnitats(int idVenda, Map<String,Integer> productesVenda) throws VendaJaIniciadaException, ProducteNoExisteixException, VendaJaFinalitzadaException, ParseException, VendaNoIniciadaException {
+    public void esVaFerUnaVendaAmbIdDelsSegüensProductesISeguentsUnitats(int idVenda, Map<String,Integer> productesVenda) throws VendaJaIniciadaException, ProducteNoExisteixException {
 
-        tpvController.setNomBotiga("Girona");
-        tpvController.iniciarTorn("Manolet");
-        tpvController.setEfectiuInicial(300);
-        tpvController.iniciarVendaAmbID(idVenda);
-
-        Set<String> prods = productesVenda.keySet();
-        for(String p: prods) {
-            tpvController.afegirLiniaVendaPerCodi(productesVenda.get(p), p);
-        }
-
-        tpvController.tancamentVenda();
-        tpvController.finalitzaTorn();
+        tpvController.introduirVendaJaAcabada(idVenda,productesVenda);
     }
 
     @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+) sense motiu")
@@ -396,12 +384,5 @@ public class StepDefinitions {
     @Aleshores("^la tarjeta es invalida$")
     public void laTarjetaEsInvalida() {
         assertEquals("Error: El mode de pagament és incorrecte.", exception.getMessage());
-    }
-
-
-    @Aleshores("^el tiquet mostra les següents devolucions$")
-    public void elTiquetMostraLesSegüentsDevolucions() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
     }
 }

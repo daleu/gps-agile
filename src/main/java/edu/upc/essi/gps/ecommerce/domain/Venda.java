@@ -5,7 +5,6 @@ import edu.upc.essi.gps.ecommerce.exceptions.DevolucioNoPossibleException;
 import edu.upc.essi.gps.ecommerce.exceptions.ModeDePagamentIncorrecteException;
 import edu.upc.essi.gps.ecommerce.exceptions.NoHiHaTiquetException;
 import edu.upc.essi.gps.ecommerce.exceptions.TarjetaNoValidaException;
-import edu.upc.essi.gps.ecommerce.repositoris.DevolucionsServei;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -25,7 +24,6 @@ public class Venda implements Entity {
     private Calendar dataIHora;
     private Integer idTorn;
     Tiquet tiquet;
-    List<Devolucio> devolucions;
 
     public Venda(int numVenda) {
         this.id = numVenda;
@@ -71,9 +69,7 @@ public class Venda implements Entity {
     public boolean isFinalitzada() {return finalitzada;}
 
     public double getPreuTotal() {
-
         double total = 0.0;
-
         for (LiniaVenda lv : liniesVenda) {
             total += lv.getPreuTotal();
         }
@@ -100,21 +96,12 @@ public class Venda implements Entity {
         this.nomBotiga = nomBotiga;
     }
 
-    public double getPreuDevolucions() {
-        double preuDev = 0;
-        if( devolucions != null) {
-            for (Devolucio dev : devolucions) {
-                preuDev -= dev.getProducteRetornat().getPreuUnitat()*dev.getUnitatsProducte();
-            }
-        }
-
-        return preuDev;
-    }
-
-    public double getPreuTotalDiferencia() {
+    public double getPreuDevolucio() {
         double preu = 0;
-        preu = getPreuTotal() + getPreuDevolucions();
-        return  preu;
+        for (LiniaVenda lv : liniesVenda) {
+            if(lv.getPreuTotal() < 0) preu -= lv.getPreuTotal();
+        }
+        return preu;
     }
 
     public void setDataIHora(Calendar dataIHora) {
@@ -126,7 +113,6 @@ public class Venda implements Entity {
     }
 
     public void finalitzar(Torn tornActual) {
-
         finalitzada = true;
         informacioTancar = "Venda finalitzada";
         calculaTiquet(tornActual);
@@ -167,9 +153,9 @@ public class Venda implements Entity {
         return false;
     }
 
-    public void afegeixDevolucio(Producte pRetorn, int unitatsProd, String motiu) {
-
-        Devolucio dev = new Devolucio(id,pRetorn,unitatsProd,motiu);
+    public void afegeixDevolucio(Producte pRetorn, int unitatsProd) {
+        Producte retorn = new Producte(pRetorn.getNom(),pRetorn.getCodiBarres(),(-pRetorn.getPreuUnitat()));
+        afegeixLinia(retorn,unitatsProd);
     }
 
     public void modificarLinia(String codiBarres, int unitatsProd) throws DevolucioNoPossibleException {
@@ -197,11 +183,9 @@ public class Venda implements Entity {
     }
     public List<Double> getElsDiferentsIVAs(){
         List<Double> llistaIVAs = new ArrayList<>();
-
         for (LiniaVenda lv : liniesVenda) {
             if(!llistaIVAs.contains(lv.getIVAProducte())) llistaIVAs.add(lv.getIVAProducte());
         }
-
         return llistaIVAs;
     }
     public void calculaTiquet(Torn tornActual) {
@@ -216,29 +200,14 @@ public class Venda implements Entity {
             tiquet.addLinia(sep + lv.getQuantitat() + sep + lv.getNomProducte() + sep + "P.u. " + new DecimalFormat("##.##").format(lv.getPreuUnitat()) + sep
                     + "P.l. " + new DecimalFormat("##.##").format(lv.getPreuTotal()) + sep);
         }
-
-        if (devolucions != null) liniesTiquetDevolucio();
-
-
         List<Double> vIVAs = getElsDiferentsIVAs();
         for(int i = 0; i < vIVAs.size(); ++i) {
             tiquet.addLinia(sep + vIVAs.get(i)*100 + "%" + sep + "P.B: " +
                     new DecimalFormat("##.##").format(getSumaPreuBaseVendaPerIva(vIVAs.get(i))) + sep
                     + "P.T: " + new DecimalFormat("##.##").format(getSumaPreuUnitatVendaPerIva(vIVAs.get(i))) + sep);
         }
-
-
-        if(devolucions != null) {
-
-            tiquet.addLinia(sep + "Total a pagar: "+ new DecimalFormat("##.##").format(getPreuTotal()) + sep);
-            tiquet.addLinia(sep + "Total en retorn: "+ new DecimalFormat("##.##").format(getPreuDevolucions()) + sep);
-
-        }
-
-            tiquet.addLinia(sep + "Total: " + new DecimalFormat("##.##").format(getPreuTotalDiferencia()) + sep + "Canvi: " +
-                    new DecimalFormat("##.##").format(getCanvi()) + sep + "Pagat " + tipusPagament + sep);
-
-
+        tiquet.addLinia(sep + "Total: " + new DecimalFormat("##.##").format(getPreuTotal()) + sep + "Canvi: " +
+                new DecimalFormat("##.##").format(getCanvi()) + sep + "Pagat " + tipusPagament + sep);
 
         SimpleDateFormat  dF = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String dataIH = dF.format(dataIHora.getTime());
@@ -274,30 +243,5 @@ public class Venda implements Entity {
 
     public Integer getIdTorn() {
         return idTorn;
-    }
-
-    public void gestionarDevolucions(DevolucionsServei devolucionsServeis) {
-
-        if (devolucions != null) {
-            for(Devolucio dev: devolucions) {
-                devolucionsServeis.guardarDevolucio(dev);
-            }
-        }
-
-    }
-
-    public void liniesTiquetDevolucio() {
-        String sep = " | ";
-        String linia = sep + " Devolucio(ns): " + sep;
-
-        tiquet.addLinia(linia);
-
-        for (Devolucio dev: devolucions) {
-            linia = sep + dev.getUnitatsProducte() + sep + dev.getProducteRetornat().getNom();
-            linia += sep + "P.u" + sep + new DecimalFormat("##.##").format(dev.getProducteRetornat().getPreuUnitat());
-            linia += sep + "P.l" + sep + new DecimalFormat("##.##").format(dev.getProducteRetornat().getPreuUnitat()*dev.getUnitatsProducte()) + sep;
-            tiquet.addLinia(linia);
-        }
-
     }
 }
