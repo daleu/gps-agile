@@ -216,7 +216,7 @@ public class Venda implements Entity {
                     + "P.l. " + new DecimalFormat("##.##").format(lv.getPreuTotal()) + sep);
         }
 
-        if (devolucions != null) liniesTiquetDevolucio();
+        if (devolucions.size() > 0) liniesTiquetDevolucio();
 
 
         List<Double> vIVAs = getElsDiferentsIVAs();
@@ -227,7 +227,7 @@ public class Venda implements Entity {
         }
 
 
-        if(devolucions != null) {
+        if(devolucions.size() > 0) {
 
             tiquet.addLinia(sep + "Total a pagar: "+ new DecimalFormat("##.##").format(getPreuTotal()) + sep);
             tiquet.addLinia(sep + "Total en retorn: "+ new DecimalFormat("##.##").format(getPreuDevolucions()) + sep);
