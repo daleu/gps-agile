@@ -1,4 +1,4 @@
-package edu.upc.essi.gps.ecommerce.domain.Descomptes;
+package edu.upc.essi.gps.ecommerce.domain.descomptes;
 
 import java.util.Calendar;
 

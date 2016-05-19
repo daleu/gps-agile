@@ -1,4 +1,4 @@
-package edu.upc.essi.gps.ecommerce.domain.Descomptes;
+package edu.upc.essi.gps.ecommerce.domain.descomptes;
 
 /**
  * Created by edu on 19/05/16.
