@@ -40,29 +40,29 @@ Característica: Finalitzar un torn
     Quan finalitzo el torn 
     I introdueixo al tpv 55,20 d'efectiu final per fer el quadrament
     Aleshores el torn segueix actiu
-    I obtinc un missatge que diu "Torn no finalitzat. Hi ha una diferència superior a 5 euros entre l'efectiu en caixa introduit i el suposat"
+    I obtinc un missatge que diu "Torn no finalitzat. La diferència és major o igual a 5 euros entre l'efectiu en caixa introduit i el suposat"
 
   Escenari: Introducció erronia de l'efectiu final per <+5€
     Quan finalitzo el torn
     I introdueixo al tpv 44,00 d'efectiu final per fer el quadrament
     Aleshores el torn segueix actiu
-    I obtinc un missatge que diu "Torn no finalitzat. Hi ha una diferència inferior o igual a 5 euros entre l'efectiu en caixa introduit i el suposat"
+    I obtinc un missatge que diu "Torn no finalitzat. La diferència és menor a 5 euros entre l'efectiu en caixa introduit i el suposat"
 
   Escenari: Introducció repetida erronia de l'efectiu final per >+5€ i >-5€
     Donat finalitzo el torn
     I introdueixo al tpv 55,20 d'efectiu final per fer el quadrament
     I el torn segueix actiu
-    I obtinc un missatge que diu "Torn no finalitzat. Hi ha una diferència superior a 5 euros entre l'efectiu en caixa introduit i el suposat"
+    I obtinc un missatge que diu "Torn no finalitzat. La diferència és major o igual a 5 euros entre l'efectiu en caixa introduit i el suposat"
     Quan finalitzo el torn
     I introdueixo al tpv 35,20 d'efectiu final per fer el quadrament
     Aleshores el torn segueix actiu
-    I obtinc un missatge que diu "Torn no finalitzat. Hi ha una diferència superior a 5 euros entre l'efectiu en caixa introduit i el suposat"
+    I obtinc un missatge que diu "Torn no finalitzat. La diferència és major o igual a 5 euros entre l'efectiu en caixa introduit i el suposat"
 
   Escenari: Introducció repetida correcta de l'efectiu final
     Donat finalitzo el torn
     I introdueixo al tpv 55,20 d'efectiu final per fer el quadrament
     I el torn segueix actiu
-    I obtinc un missatge que diu "Torn no finalitzat. Hi ha una diferència superior a 5 euros entre l'efectiu en caixa introduit i el suposat"
+    I obtinc un missatge que diu "Torn no finalitzat. La diferència és major o igual a 5 euros entre l'efectiu en caixa introduit i el suposat"
     Quan finalitzo el torn
     I introdueixo al tpv 43,50 d'efectiu final per fer el quadrament
     Aleshores el tpv té 43,50 d'efectiu final
@@ -73,7 +73,7 @@ Característica: Finalitzar un torn
     Donat finalitzo el torn
     I introdueixo al tpv 55,20 d'efectiu final per fer el quadrament
     I el torn segueix actiu
-    I obtinc un missatge que diu "Torn no finalitzat. Hi ha una diferència superior a 5 euros entre l'efectiu en caixa introduit i el suposat"
+    I obtinc un missatge que diu "Torn no finalitzat. La diferència és major o igual a 5 euros entre l'efectiu en caixa introduit i el suposat"
     Quan accepto el desquadrament
     Aleshores el tpv té 55,20 d'efectiu final
     I el torn està finalitzat

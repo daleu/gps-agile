@@ -192,13 +192,13 @@ public class TPVController {
             t.setQuadrat(true);
             t.setEfectiuFi(efectiu);
         }
-        else if (Math.abs(diferencia) > 5) {  //més efectiu en caixa del real
-            screen = "Torn no finalitzat. Hi ha una diferència superior a 5 euros entre l'efectiu en caixa introduit i el suposat";
+        else if (Math.abs(diferencia) >= 5) {  //més efectiu en caixa del real
+            screen = "Torn no finalitzat. La diferència és major o igual a 5 euros entre l'efectiu en caixa introduit i el suposat";
             tornActual = t;
             tornServei.eliminarTorn(tornActual);
         }
-        else if (Math.abs(diferencia) <= 5) {  //menys efectiu en caixa del real
-            screen = "Torn no finalitzat. Hi ha una diferència inferior o igual a 5 euros entre l'efectiu en caixa introduit i el suposat";
+        else if (Math.abs(diferencia) < 5) {  //menys efectiu en caixa del real
+            screen = "Torn no finalitzat. La diferència és menor a 5 euros entre l'efectiu en caixa introduit i el suposat";
             tornActual = t;
             tornServei.eliminarTorn(tornActual);
         }
