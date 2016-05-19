@@ -83,7 +83,9 @@ public class TPVController {
 
                 vendesServei.guardarVenda(vendaActual);
 
-                if (tornActual != null) tornActual.incrementDinersEnCaixa(vendaActual.getPreuTotal());
+                if (tornActual != null && (vendaActual.getTipusPagament() != "amb tarjeta") ) {
+                    tornActual.incrementDinersEnCaixa(vendaActual.getPreuTotal());
+                }
 
                 vendaActual.gestionarDevolucions(devolucionsServei);
 
@@ -164,6 +166,7 @@ public class TPVController {
     }
 
     public double getEfectiuFinal() {
+        //System.out.println(tornServei.getUltimTorn().getEfectiuFi());
         return tornServei.getUltimTorn().getEfectiuFi();
     }
 
@@ -183,19 +186,19 @@ public class TPVController {
         Torn t = tornServei.getUltimTorn();
         t.setEfectiuTemporal(efectiu);
         double diferencia = t.getDinersEnCaixa() - efectiu;
-        //System.out.println(diferencia);
-        if (Math.abs(diferencia) <= 5) {
+        //System.out.println(t.getDinersEnCaixa());
+        if (Math.abs(diferencia) == 0) {
             screen = "Torn finalitzat amb quadrament de caixa";
             t.setQuadrat(true);
             t.setEfectiuFi(efectiu);
         }
-        else if (diferencia < 5) {  //més efectiu en caixa del real
-            screen = "Torn no finalitzat. L'efectiu en caixa introduit és superior al suposat per més de 5 euros";
+        else if (Math.abs(diferencia) > 5) {  //més efectiu en caixa del real
+            screen = "Torn no finalitzat. Hi ha una diferència superior a 5 euros entre l'efectiu en caixa introduit i el suposat";
             tornActual = t;
             tornServei.eliminarTorn(tornActual);
         }
-        else if (diferencia > 5) {  //menys efectiu en caixa del real
-            screen = "Torn no finalitzat. L'efectiu en caixa introduit és inferior al suposat per més de 5 euros";
+        else if (Math.abs(diferencia) <= 5) {  //menys efectiu en caixa del real
+            screen = "Torn no finalitzat. Hi ha una diferència inferior o igual a 5 euros entre l'efectiu en caixa introduit i el suposat";
             tornActual = t;
             tornServei.eliminarTorn(tornActual);
         }

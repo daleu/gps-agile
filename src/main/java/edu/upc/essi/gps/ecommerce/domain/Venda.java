@@ -307,4 +307,6 @@ public class Venda implements Entity {
     public int getNumDevolucions() {
         return devolucions.size();
     }
+
+    public String getTipusPagament() { return tipusPagament; }
 }

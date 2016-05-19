@@ -7,9 +7,13 @@ Característica: Retornar un producte mentres es fa una venda
     I existeix el producte "Action Man" amb codi de barres "777" i preu per unitat 15
     I existeix el producte "Baldufa" amb codi de barres "333" i preu per unitat 3,25
     I existeix el producte "Cotxe teledirigit" amb codi de barres "222" i preu per unitat 25
+    I el TPV esta a la botiga "Girona"
+    I el "Manolet" ha iniciat un torn
+    I que hi ha al tpv 300,00 d'efectiu inicial
     I es va fer una venda amb id 111 dels següens productes i seguents unitats
     |777|2|
     |222|1|
+    I es finalitza la venda
 
   Escenari: Retorno un producte en una venda amb una lina de venda i el resultat de la venda es positiu
   Quan inicio una nova venda

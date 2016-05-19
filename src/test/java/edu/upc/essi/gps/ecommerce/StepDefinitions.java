@@ -225,18 +225,12 @@ public class StepDefinitions {
     @I("^es va fer una venda amb id (\\d+) dels següens productes i seguents unitats$")
     public void esVaFerUnaVendaAmbIdDelsSegüensProductesISeguentsUnitats(int idVenda, Map<String,Integer> productesVenda) throws VendaJaIniciadaException, ProducteNoExisteixException, VendaJaFinalitzadaException, ParseException, VendaNoIniciadaException {
 
-        tpvController.setNomBotiga("Girona");
-        tpvController.iniciarTorn("Manolet");
-        tpvController.setEfectiuInicial(300);
         tpvController.iniciarVendaAmbID(idVenda);
 
         Set<String> prods = productesVenda.keySet();
         for(String p: prods) {
             tpvController.afegirLiniaVendaPerCodi(productesVenda.get(p), p);
         }
-
-        tpvController.tancamentVenda();
-        tpvController.finalitzaTorn();
     }
 
     @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+) sense motiu")
@@ -317,7 +311,7 @@ public class StepDefinitions {
         tpvController.finalitzaTorn();
     }
 
-    @Aleshores("^el torn no es finalitza$")
+    @Aleshores("^el torn segueix actiu$")
     public void tornNoFinalitzat() throws Throwable {
         assertEquals(true,tpvController.getTornActual() != null);
     }
