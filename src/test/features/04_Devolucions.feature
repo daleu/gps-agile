@@ -42,30 +42,6 @@ Característica: Retornar un producte mentres es fa una venda
     I existeix una devolucio del producte "777" de la venda 111
     I existeix una devolucio del producte "222" de la venda 111
 
-  Escenari: Retornar un producte que no he venut
-    Quan  inicio una nova venda
-    I s'afegeix a la linia de venda 1 unitats del producte amb codi de barres "444"
-    I es vol indicar una devolucio de 1 unitats del producte "333" de la venda 111 sense motiu
-    I indico que el client paga 25 euros en efectiu
-    I es finalitza la venda
-    Aleshores el tpv m'indica "El producte introduit no es pot retornar"
-    I la linia 8 del tiquet sera " | Total: 25 | Canvi: 0 | Pagat en efectiu | "
-
-  Escenari: Controlar no fer la devolucio d'un producte que ya s'ha retornat
-    Quan inicio una nova venda amb id 1010
-    I s'afegeix a la linia de venda 1 unitats del producte amb codi de barres "444"
-    I es vol indicar una devolucio de 1 unitats del producte "222" de la venda 111 sense motiu
-    I indico que el client paga 20 euros en efectiu
-    I es finalitza la venda
-    I inicio una nova venda amb id 2020
-    I s'afegeix a la linia de venda 1 unitats del producte amb codi de barres "333"
-    I es vol indicar una devolucio de 1 unitats del producte "222" de la venda 1111 sense motiu
-    I indico que el client paga 5 euros en efectiu
-    I es finalitza la venda
-    Aleshores la venda 1010 conte una devolucio del producte "222" de la venda 111
-    I el tpv m'indica "El producte introduit no es pot retornar"
-    I la venda 2020 no te assignada cap devolucio
-
   Escenari: Saber motiu ultima devolucio
     Quan inicio una nova venda
     I es vol indicar una devolucio de 1 unitats del producte "222" de la venda 111 pel motiu "Defectuos"
