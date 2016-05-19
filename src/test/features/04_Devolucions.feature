@@ -65,3 +65,15 @@ Característica: Retornar un producte mentres es fa una venda
     Aleshores la venda 1010 conte una devolucio del producte "222" de la venda 111
     I el tpv m'indica "El producte introduit no es pot retornar"
     I la venda 2020 no te assignada cap devolucio
+
+  Escenari: Saber motiu ultima devolucio
+    Quan inicio una nova venda
+    I es vol indicar una devolucio de 1 unitats del producte "222" de la venda 111 pel motiu "Defectuos"
+    I es finalitza la venda
+    Aleshores "Defectuos" es el motiu de l'ultima devolucio
+
+  Escenari: El client no vol donar motiu de la devolucio
+    Quan inicio una nova venda
+    I es vol indicar una devolucio de 2 unitats del producte "777" de la venda 111 sense motiu
+    I es finalitza la venda
+    Aleshores "No existeix motiu" es el motiu de l'ultima devolucio

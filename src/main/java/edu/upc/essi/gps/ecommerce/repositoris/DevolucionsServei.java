@@ -59,6 +59,7 @@ public class DevolucionsServei {
         result.setID(id);
         result.setIdVendaCompra(idVendaCompra);
         result.setIdVendaRetorn(idVendaRetorn);
+        if (motiu == "") motiu = "No existeix motiu";
         result.setMotiu(motiu);
         result.setProducteRetornat(pRetorn);
         result.setUnitatsProducte(unitatsProd);
