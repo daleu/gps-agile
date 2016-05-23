@@ -243,6 +243,7 @@ public class TPVController {
         this.dataIHora = Calendar.getInstance();
         this.dataIHora.setTime(dF.parse(dataIHora));
         if(vendaActual != null) vendaActual.setDataIHora(this.dataIHora);
+        tornActual.setDataIHoraFiTorn(this.dataIHora);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////FUNCIONS CONTROLADOR/////////////////////////////////////////////////////////
@@ -359,8 +360,9 @@ public class TPVController {
             Torn tornAux = listTorns.get(i);
             if (!tornAux.getQuadrat()) {
                 String linea = "TORN " + tornAux.getId() + ": NomEmpleat: " + tornAux.getNomEmpleat() + " | Botiga: " + tornAux.getNomBotiga() +
-                        " | EfectiuInicial: " + tornAux.getEfectiuInici().toString() + " | EfectiuFinal: " + tornAux.getEfectiuFi().toString() +
-                        " | Diferencia: " + (tornAux.getEfectiuFi() - tornAux.getDinersEnCaixa());
+                        " | Data i Hora: " + tornAux.getDataIHoraFiTorn() + " | EfectiuInicial: " + tornAux.getEfectiuInici().toString() +
+                        " | EfectiuFinal: " + tornAux.getEfectiuFi().toString() + " | Diferencia: " +
+                        (tornAux.getEfectiuFi() - tornAux.getDinersEnCaixa());
                 liniesDesquadrament.add(linea);
             }
         }
