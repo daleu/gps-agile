@@ -242,8 +242,8 @@ public class TPVController {
         DateFormat dF = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         this.dataIHora = Calendar.getInstance();
         this.dataIHora.setTime(dF.parse(dataIHora));
-        if(vendaActual != null) vendaActual.setDataIHora(this.dataIHora);
-        tornActual.setDataIHoraFiTorn(this.dataIHora);
+        if (vendaActual != null) vendaActual.setDataIHora(this.dataIHora);
+        if (tornActual != null) tornActual.setDataIHoraFiTorn(this.dataIHora);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////FUNCIONS CONTROLADOR/////////////////////////////////////////////////////////
