@@ -6,12 +6,14 @@ import cucumber.api.java.ca.Donat;
 import cucumber.api.java.ca.I;
 import cucumber.api.java.ca.Quan;
 import edu.upc.essi.gps.ecommerce.domain.*;
+import edu.upc.essi.gps.ecommerce.domain.descomptes.FactoriaDescomptes;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -419,5 +421,28 @@ public class StepDefinitions {
     public void laVendaConteUnaDevolucioDelProducteDeLaVenda(int expectedIdVendaRetorn, String codiProd, int idVendaCompra) {
         assertEquals(expectedIdVendaRetorn, tpvController.getIdVendaRetorn(idVendaCompra, codiProd, 1));
 
+    }
+
+    @Quan("^creo els vals de descompte:$")
+    public void creoElsValsDeDescompte(Map<Double, Calendar> descomptes) {
+        Set<Double> keys = descomptes.keySet();
+        for (Double key : keys) {
+            FactoriaDescomptes.nouDescomptePerPercentatge(key, descomptes.get(key));
+        }
+    }
+
+    @Aleshores("^existeix el descompte del (\\d+)+%$")
+    public void existeixElDescompteDel(double percentatge) {
+        assertNotNull(tpvController.getDescompteByPercentatge(percentatge));
+    }
+
+    @Quan("^vull veure els vals de descompte existents$")
+    public void vullVeureElsValsDeDescompteExistents() {
+        tpvController.imprimirLListaDescomptes();
+    }
+
+    @Aleshores("^la linia (\\d+) de la llista de Descomptes sera \"([^\"]*)\"$")
+    public void laLiniaDeLaLlistaDeDescomptesSera(int numLinia, String linia)  {
+        assertEquals(linia, tpvController.imprimirLListaDescomptes().get(numLinia));
     }
 }

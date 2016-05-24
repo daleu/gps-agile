@@ -11,8 +11,10 @@ public abstract class Descompte {
     private boolean usat;
     private double descompte;
 
-    public Descompte (int id) {
+    protected Descompte (int id, double descompte, Calendar dataCaducitat) {
         this.id = id;
+        this.descompte = descompte;
+        this.dataCaducitat = dataCaducitat;
     }
 
     public int getId() {
@@ -25,10 +27,6 @@ public abstract class Descompte {
 
     public Calendar getDataCaducitat() {
         return dataCaducitat;
-    }
-
-    public void setDataCaducitat(Calendar dataCaducitat) {
-        this.dataCaducitat = dataCaducitat;
     }
 
     public boolean isUsat() {

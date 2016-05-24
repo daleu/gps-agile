@@ -1,5 +1,7 @@
 package edu.upc.essi.gps.ecommerce.domain;
 
+import edu.upc.essi.gps.ecommerce.domain.descomptes.Descompte;
+import edu.upc.essi.gps.ecommerce.domain.descomptes.FactoriaDescomptes;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
 import edu.upc.essi.gps.ecommerce.repositoris.TornServei;
 import edu.upc.essi.gps.ecommerce.repositoris.VendesServei;
@@ -31,7 +33,9 @@ public class TPVController {
 
     private Cataleg cataleg = new Cataleg();
 
-    public TPVController(){}
+    public TPVController(){
+        FactoriaDescomptes.startFactory();
+    }
 
     public String getScreen() {
         return screen;
@@ -389,5 +393,13 @@ public class TPVController {
     public int getNumDevolucionsVenda(int idVenda) {
         Venda v = vendesServei.trobaPerCodi(idVenda);
         return v.getNumDevolucions();
+    }
+
+    public Descompte getDescompteByPercentatge(double percentatge) {
+        return FactoriaDescomptes.getDescompteByPercentatge(percentatge);
+    }
+
+    public List<String> imprimirLListaDescomptes() {
+        return FactoriaDescomptes.getLlistaDescomptes();
     }
 }
