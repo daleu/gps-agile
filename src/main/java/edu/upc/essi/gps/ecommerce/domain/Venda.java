@@ -4,7 +4,6 @@ import edu.upc.essi.gps.domain.Entity;
 import edu.upc.essi.gps.ecommerce.exceptions.DevolucioNoPossibleException;
 import edu.upc.essi.gps.ecommerce.exceptions.ModeDePagamentIncorrecteException;
 import edu.upc.essi.gps.ecommerce.exceptions.NoHiHaTiquetException;
-import edu.upc.essi.gps.ecommerce.exceptions.TarjetaNoValidaException;
 import edu.upc.essi.gps.ecommerce.repositoris.DevolucionsServei;
 
 import java.text.DecimalFormat;
@@ -55,10 +54,9 @@ public class Venda implements Entity {
         else throw new ModeDePagamentIncorrecteException();
     }
 
-    public void setPagamentAmbTarjeta(double valor, String numTarjeta) throws ModeDePagamentIncorrecteException, TarjetaNoValidaException {
+    public void setPreuPagamentAmbTarjeta(double valor) throws ModeDePagamentIncorrecteException {
         if(tipusPagament.equals(TARJETA)) {
-            if(numTarjeta.length() == 19 ) preuPagament = valor;
-            else throw new TarjetaNoValidaException();
+            preuPagament = valor;
         }
         else throw new ModeDePagamentIncorrecteException();
     }

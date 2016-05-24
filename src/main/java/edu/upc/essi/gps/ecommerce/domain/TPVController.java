@@ -10,8 +10,6 @@ import java.text.ParseException;
 import java.util.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by edu on 28/04/16.
@@ -214,18 +212,11 @@ public class TPVController {
     //------------------------------
     // Tancament Venda
     //------------------------------
-
-    public void setTipusPagamentEfectiu() {
-        vendaActual.setTipusPagamentEfectiu();
-    }
-    public void setTipusPagamentTarjeta() {
-        vendaActual.setTipusPagamentTarjeta();
-    }
     public void setPreuPagamentAmbEfectiu(double valor) throws ModeDePagamentIncorrecteException {
         vendaActual.setPreuPagamentAmbEfectiu(valor);
     }
-    public void pagamentAmbTarjeta(double valor, String numTarjeta) throws ModeDePagamentIncorrecteException, TarjetaNoValidaException {
-        vendaActual.setPagamentAmbTarjeta(valor, numTarjeta);
+    public void setPreuPagamentAmbTarjeta(double valor) throws ModeDePagamentIncorrecteException {
+        vendaActual.setPreuPagamentAmbTarjeta(valor);
     }
     public double getCanviVenda() {
         return vendaActual.getCanvi();
@@ -309,13 +300,12 @@ public class TPVController {
 
 
     public double getSumaPreuBaseVendaPerIva(double iva) {
-        double aux =  vendaActual.getSumaPreuBaseVendaPerIva(iva);
-        return aux;
+        return vendaActual.getSumaPreuBaseVendaPerIva(iva);
     }
 
     public double getSumaPreuUnitatVendaPerIva(double iva) {
-        double aux =  vendaActual.getSumaPreuUnitatVendaPerIva(iva);
-        return aux;
+
+        return vendaActual.getSumaPreuUnitatVendaPerIva(iva);
     }
 
     public void iniciarTorn(String nomEmpleat) {

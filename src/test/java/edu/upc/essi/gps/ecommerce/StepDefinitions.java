@@ -252,11 +252,11 @@ public class StepDefinitions {
         }
     }
 
-    @I("^indico que el client paga (.+) euros amb la tarjeta \"([^\"]*)\"")
-    public void indicoQueElClientPagaEurosAmbTarjeta(double preuPagament, String numTarjeta) {
+    @I("^indico que el client paga (.+) euros amb tarjeta$")
+    public void indicoQueElClientPagaEurosAmbTarjeta(double preuPagament) {
         try {
-            tpvController.pagamentAmbTarjeta(preuPagament, numTarjeta);
-        } catch (ModeDePagamentIncorrecteException | TarjetaNoValidaException e) {
+            tpvController.setPreuPagamentAmbTarjeta(preuPagament);
+        } catch (ModeDePagamentIncorrecteException e) {
             this.exception = e;
         }
     }
@@ -383,10 +383,6 @@ public class StepDefinitions {
         tpvController.getVendaActual().setTipusPagamentTarjeta();
     }
 
-    @Aleshores("^la tarjeta es invalida$")
-    public void laTarjetaEsInvalida() {
-        assertEquals("Error: El mode de pagament és incorrecte.", exception.getMessage());
-    }
 
     @Quan("^accepto el desquadrament$")
     public void acceptoElDesquadrament() throws Throwable {

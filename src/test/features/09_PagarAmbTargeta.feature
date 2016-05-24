@@ -13,7 +13,7 @@ Característica: Escollir pagar amb targeta una venda.
 
   Escenari: El client paga la venda amb tarjeta i s'imprimeix el tiquet
     Quan indico que el client vol pagar amb tarjeta
-    I indico que el client paga 60,9 euros amb la tarjeta "4898-9403-6482-6901"
+    I indico que el client paga 60,9 euros amb tarjeta
     I que estem a dia i hora "21/02/2016 20:24:10"
     I es finalitza la venda
     Aleshores el valor a retornar al client és de 0
@@ -27,9 +27,10 @@ Característica: Escollir pagar amb targeta una venda.
     I la linia 8 del tiquet sera " | Atès per: Johnny Depp | "
 
   Escenari: El client demana pagar amb tarjeta inicialment però després vol pagar amb efecteu
-    Quan indico que el client vol pagar en efectiu
+    Quan indico que el client vol pagar amb tarjeta
+    I indico que el client vol pagar en efectiu
     I indico que el client vol pagar amb tarjeta
-    I indico que el client paga 60,9 euros amb la tarjeta "4898-9484-1282-6901"
+    I indico que el client paga 60,9 euros amb tarjeta
     I que estem a dia i hora "21/02/2016 20:24:10"
     I es finalitza la venda
     Aleshores el valor a retornar al client és de 0
@@ -41,10 +42,3 @@ Característica: Escollir pagar amb targeta una venda.
     I la linia 6 del tiquet sera " | Total: 60,9 | Canvi: 0 | Pagat amb tarjeta | "
     I la linia 7 del tiquet sera " | 21/02/2016 20:24:10 | "
     I la linia 8 del tiquet sera " | Atès per: Johnny Depp | "
-
-  Escenari: El client demana pagar amb tarjeta però la tarjeta no es llegeix bé
-    Quan indico que el client vol pagar en efectiu
-    I indico que el client vol pagar amb tarjeta
-    I indico que el client paga 60,9 euros amb la tarjeta "4898-9403-6482-69019"
-    #La tarjeta es invalida
-    Aleshores la tarjeta es invalida
