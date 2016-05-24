@@ -190,13 +190,13 @@ public class TPVController {
             t.setQuadrat(true);
             t.setEfectiuFi(efectiu);
         }
-        else if (Math.abs(diferencia) > 5) {  //més efectiu en caixa del real
-            screen = "Torn no finalitzat. Hi ha una diferència superior a 5 euros entre l'efectiu en caixa introduit i el suposat";
+        else if (Math.abs(diferencia) >= 5) {  //més efectiu en caixa del real
+            screen = "Torn no finalitzat. La diferència és major o igual a 5 euros entre l'efectiu en caixa introduit i el suposat";
             tornActual = t;
             tornServei.eliminarTorn(tornActual);
         }
-        else if (Math.abs(diferencia) <= 5) {  //menys efectiu en caixa del real
-            screen = "Torn no finalitzat. Hi ha una diferència inferior o igual a 5 euros entre l'efectiu en caixa introduit i el suposat";
+        else if (Math.abs(diferencia) < 5) {  //menys efectiu en caixa del real
+            screen = "Torn no finalitzat. La diferència és menor a 5 euros entre l'efectiu en caixa introduit i el suposat";
             tornActual = t;
             tornServei.eliminarTorn(tornActual);
         }
@@ -233,7 +233,8 @@ public class TPVController {
         DateFormat dF = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         this.dataIHora = Calendar.getInstance();
         this.dataIHora.setTime(dF.parse(dataIHora));
-        if(vendaActual != null) vendaActual.setDataIHora(this.dataIHora);
+        if (vendaActual != null) vendaActual.setDataIHora(this.dataIHora);
+        if (tornActual != null) tornActual.setDataIHoraFiTorn(this.dataIHora);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////FUNCIONS CONTROLADOR/////////////////////////////////////////////////////////
@@ -349,8 +350,9 @@ public class TPVController {
             Torn tornAux = listTorns.get(i);
             if (!tornAux.getQuadrat()) {
                 String linea = "TORN " + tornAux.getId() + ": NomEmpleat: " + tornAux.getNomEmpleat() + " | Botiga: " + tornAux.getNomBotiga() +
-                        " | EfectiuInicial: " + tornAux.getEfectiuInici().toString() + " | EfectiuFinal: " + tornAux.getEfectiuFi().toString() +
-                        " | Diferencia: " + (tornAux.getEfectiuFi() - tornAux.getDinersEnCaixa());
+                        " | Data i Hora: " + tornAux.getDataIHoraFiTorn() + " | EfectiuInicial: " + tornAux.getEfectiuInici().toString() +
+                        " | EfectiuFinal: " + tornAux.getEfectiuFi().toString() + " | Diferencia: " +
+                        (tornAux.getEfectiuFi() - tornAux.getDinersEnCaixa());
                 liniesDesquadrament.add(linea);
             }
         }

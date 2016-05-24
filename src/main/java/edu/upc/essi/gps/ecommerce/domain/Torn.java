@@ -3,6 +3,9 @@ package edu.upc.essi.gps.ecommerce.domain;
 
 import edu.upc.essi.gps.domain.Entity;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class Torn implements Entity{
     private String nomEmpleat;
     private String nomBotiga;
@@ -11,6 +14,7 @@ public class Torn implements Entity{
     private Double efectiuFi;
     private Double dinersEnCaixa;
     private Boolean quadrat;
+    private Calendar dataIHora;
     private int id;
 
     public Torn(String empleatActual) {
@@ -83,5 +87,14 @@ public class Torn implements Entity{
 
     public void setQuadrat(Boolean quadrat) {
         this.quadrat = quadrat;
+    }
+
+    public void setDataIHoraFiTorn(Calendar dataIHora) {
+        this.dataIHora = dataIHora;
+    }
+
+    public String getDataIHoraFiTorn () {
+        SimpleDateFormat dF = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return dF.format(dataIHora.getTime());
     }
 }
