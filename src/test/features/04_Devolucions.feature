@@ -45,15 +45,3 @@ Característica: Retornar un producte mentres es fa una venda
     I la linia 10 del tiquet sera " | Total: -55,25 | Canvi: 55,25 | Pagat en efectiu | "
     I existeix una devolucio del producte "777" de la venda 111
     I existeix una devolucio del producte "222" de la venda 111
-
-  Escenari: Saber motiu ultima devolucio
-    Quan inicio una nova venda
-    I es vol indicar una devolucio de 1 unitats del producte "222" de la venda 111 pel motiu "Defectuos"
-    I es finalitza la venda
-    Aleshores "Defectuos" es el motiu de l'ultima devolucio
-
-  Escenari: El client no vol donar motiu de la devolucio
-    Quan inicio una nova venda
-    I es vol indicar una devolucio de 2 unitats del producte "777" de la venda 111 sense motiu
-    I es finalitza la venda
-    Aleshores "No existeix motiu" es el motiu de l'ultima devolucio
