@@ -38,7 +38,7 @@ public class FactoriaDescomptes {
         SimpleDateFormat dF = new SimpleDateFormat("dd/MM/yyyy");
         llistaDescomptes.add("Llista de Descomptes");
         for (Double key : keys) {
-            llistaDescomptes.add(new String("Descompte del " + key
+            llistaDescomptes.add(new String("Descompte de " + key
                     + "% | Caduca el " + dF.format(descomptesPercentatge.get(key).getDataCaducitat().getTime())));
         }
         return llistaDescomptes;
