@@ -9,9 +9,9 @@ Característica: Visualitzar quadraments
     I existeix el producte "Pilota" amb codi de barres "3" i preu per unitat 1,50
     I el TPV esta a la botiga "Carroça"
     I que no hi ha cap torn iniciat
+    I el "Joan" ha iniciat un torn
 
   Escenari: Visualitzar quadraments
-    Donat el "Joan" ha iniciat un torn
     I que hi ha al tpv 0,00  d'efectiu inicial
     I es va fer una venda amb id 111 dels següens productes i seguents unitats
       |1|2|
