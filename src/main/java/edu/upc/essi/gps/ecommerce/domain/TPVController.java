@@ -2,6 +2,7 @@ package edu.upc.essi.gps.ecommerce.domain;
 
 import edu.upc.essi.gps.ecommerce.domain.descomptes.Descompte;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.DescompteImport;
+import edu.upc.essi.gps.ecommerce.domain.descomptes.DescompteImport;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.DescomptePercentatge;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.FactoriaDescomptes;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
@@ -33,6 +34,7 @@ public class TPVController {
     private Calendar dataIHora;
 
     private ArrayList<String> liniesDesquadrament;
+    private List<String> llistaDescomptes = null;
     private int numVendesQuadrament;
 
     private Cataleg cataleg = new Cataleg();
@@ -398,12 +400,36 @@ public class TPVController {
         return v.getNumDevolucions();
     }
 
-    public List<String> imprimirLListaDescomptes() {
-        return descomptesServei.imprimirLlistaDescomptes();
+    public void imprimirLListaDescomptes() {
+        llistaDescomptes = descomptesServei.imprimirLlistaDescomptes();
     }
 
-    public Descompte getDescompteByCodi(int codiDeBarres) {
-        return descomptesServei.trobaPerCodi(codiDeBarres);
+    public void nouDescomptePerImport(double v, String s, String v1) {
+        SimpleDateFormat dF = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date date = dF.parse(s);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            descomptesServei.nouDescompte(v,calendar,"Import",v1);
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public Descompte getDescompteImportByCodi(String codiDeBarres) {
+        return descomptesServei.trobaPerCodi(Integer.parseInt(codiDeBarres));
+    }
+
+    public void nouDescomptePerPercentatge(Double key, Calendar calendar) {
+        descomptesServei.nouDescompte(key,calendar,"Percentatge",null);
+    }
+
+    public Descompte getDescomptePercentatgeByCodi(String codiDeBarres) {
+        return descomptesServei.trobaPerCodi(Integer.parseInt(codiDeBarres));
+    }
+
+    public String getLineaDescompte(int numLinia) {
+        return llistaDescomptes.get(numLinia-1);
     }
 
     public void introduirDescompteVendaActual(int idDesc) {
