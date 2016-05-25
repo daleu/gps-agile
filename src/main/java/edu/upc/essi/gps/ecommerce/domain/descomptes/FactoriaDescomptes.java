@@ -8,6 +8,7 @@ import java.util.*;
  * Created by edu on 19/05/16.
  */
 public class FactoriaDescomptes {
+
    /* private static HashMap<String, DescomptePercentatge> descomptesPercentatge;
     private static HashMap<String, DescompteImport> descomptesImport;
     private static int codiDeBarres = 100;

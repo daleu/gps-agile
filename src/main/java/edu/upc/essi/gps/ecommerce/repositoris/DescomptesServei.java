@@ -19,24 +19,26 @@ public class DescomptesServei {
         this.descomptesRepositori = new DescomptesRepositori();
     }
 
-    public Descompte nouDescompte(double descompte, Calendar dataCaducitat, String tipus,  List<String> args){ //ID auto
+    public Descompte nouDescompte(double descompte, Calendar dataCaducitat, String tipus,  String args){ //ID auto
         int id = descomptesRepositori.newId();
 
         return nouDescompte(id,descompte,dataCaducitat,tipus,args);
 
     }
 
-    public Descompte nouDescompte(int id,double descompte, Calendar dataCaducitat, String tipus,  List<String> args){ //ID manual
+    public Descompte nouDescompte(int id,double descompte, Calendar dataCaducitat, String tipus,  String args){ //ID manual
 
         Descompte result = null;
 
         switch(tipus) {
             case "Import":
-                double impMinim = Double.parseDouble(args.get(0));
+                double impMinim = Double.parseDouble(args);
                 result = new DescompteImport(id,descompte,dataCaducitat,impMinim);
+                break;
 
             case "Percentatge":
                 result = new DescomptePercentatge(id,descompte,dataCaducitat);
+                break;
         }
 
         descomptesRepositori.checkInsert(result);
@@ -102,7 +104,7 @@ public class DescomptesServei {
 
         String linia;
         linia = "Descompte de "+ dAux.getDescompte();
-        linia += "€ | Caduca el " + dF.format(dAux.getDataCaducitat().getTime());
+        linia += "% | Caduca el " + dF.format(dAux.getDataCaducitat().getTime());
         linia += " | Codi de Barres " + dAux.getId();
         return linia;
 

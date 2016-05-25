@@ -427,13 +427,13 @@ public class StepDefinitions {
 
     @Aleshores("^la linia (\\d+) de la llista de Descomptes sera \"([^\"]*)\"$")
     public void laLiniaDeLaLlistaDeDescomptesSera(int numLinia, String linia) {
-        assertEquals(linia, tpvController.imprimirLListaDescomptes().get(numLinia));
+        assertEquals(linia, tpvController.getLineaDescompte(numLinia));
     }
 
     @Quan("^s'introdueix al sistema els vals de descompte per import:$")
     public void sIntrodueixAlSistemaElValPerImport(List<List<String>> descomptes) {
         for (List<String> descompte : descomptes) {
-            FactoriaDescomptes.nouDescomptePerImport(Double.parseDouble(descompte.get(0)), descompte.get(1), Double.parseDouble(descompte.get(2)));
+            tpvController.nouDescomptePerImport(Double.parseDouble(descompte.get(0)), descompte.get(1), descompte.get(2));
         }
     }
 
@@ -446,27 +446,33 @@ public class StepDefinitions {
     public void sIntrodueixAlSistemaElsValsDeDescomptePerPercentatge(Map<Double, Calendar> descomptes) {
         Set<Double> keys = descomptes.keySet();
         for (Double key : keys) {
-            FactoriaDescomptes.nouDescomptePerPercentatge(key, descomptes.get(key));
+            tpvController.nouDescomptePerPercentatge(key, descomptes.get(key));
         }
     }
 
     @I("^existeix el descompte per percentatge amb codi de barres \"([^\"]*)\"$")
     public void existeixElDescomptePerPercentatgeAmbCodiDeBarres(String codiDeBarres) {
-        assertNotNull(tpvController.getDescomptePercentatgeByImport(codiDeBarres));
+        assertNotNull(tpvController.getDescomptePercentatgeByCodi(codiDeBarres));
     }
 
     @Donat("^existeixen els vals de descompte per percentatge:$")
     public void existeixenElsValsDeDescomptePerPercentatge(Map<Double, Calendar> descomptes) throws Throwable {
         Set<Double> keys = descomptes.keySet();
         for (Double key : keys) {
-            FactoriaDescomptes.nouDescomptePerPercentatge(key, descomptes.get(key));
+            tpvController.nouDescomptePerPercentatge(key, descomptes.get(key));
         }
     }
 
     @I("^existeixen els vals de descompte per import:$")
     public void existeixenElsValsDeDescomptePerImport(List<List<String>> descomptes) throws Throwable {
         for (List<String> descompte : descomptes) {
-            FactoriaDescomptes.nouDescomptePerImport(Double.parseDouble(descompte.get(0)), descompte.get(1), Double.parseDouble(descompte.get(2)));
+            tpvController.nouDescomptePerImport(Double.parseDouble(descompte.get(0)), descompte.get(1), descompte.get(2));
         }
+    }
+
+    @Quan("^uso el val de descompte (\\d+)$")
+    public void usoElValDeDescompte(int arg0) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
 }

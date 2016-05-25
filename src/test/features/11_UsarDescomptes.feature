@@ -17,13 +17,13 @@ Característica: Usar els vals de descomptes en les vendes
 
   Escenari: No podem usar un val en una venda buida
     Donat que hi ha una venda iniciada
-    Quan uso el val de descompte 1
+    Quan uso el val de descompte 111
     Aleshores obtinc un error que diu "El val no es pot usar en una venda buida"
 
   Escenari: Usar un val de descompte per percentatge en una venda
     Donat que hi ha una venda iniciada
     I que el total de la venda es 25
-    Quan paso el descompte 111 per tpv
+    Quan paso el descompte 111 pel tpv
     Aleshores el preu total de la venda es 18.75
 
   Escenari: Usar un val de descompte per import en una venda
