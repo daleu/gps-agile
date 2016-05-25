@@ -395,15 +395,15 @@ public class TPVController {
         return v.getNumDevolucions();
     }
 
-    public Descompte getDescompteByPercentatge(double percentatge) {
-        return FactoriaDescomptes.getDescompteByPercentatge(percentatge);
-    }
-
     public List<String> imprimirLListaDescomptes() {
         return FactoriaDescomptes.getLlistaDescomptes();
     }
 
-    public Descompte getDescompteByImport(double euros) {
-        return FactoriaDescomptes.getDescompteByImport(euros);
+    public Descompte getDescompteImportByCodi(String codiDeBarres) {
+        return FactoriaDescomptes.getDescompteImportByCodi(codiDeBarres);
+    }
+
+    public Descompte getDescomptePercentatgeByImport(String codiDeBarres) {
+        return FactoriaDescomptes.getDescomptePercentatgeByCodi(codiDeBarres);
     }
 }

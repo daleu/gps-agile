@@ -9,8 +9,8 @@ public class DescompteImport extends Descompte {
 
     private double importMinim;
 
-    public DescompteImport(int id, double descompte, Calendar dataCaducitat, double importMinim) {
-        super(id, descompte, dataCaducitat);
+    public DescompteImport(String codiDeBarres, double descompte, Calendar dataCaducitat, double importMinim) {
+        super(codiDeBarres, descompte, dataCaducitat);
         this.importMinim = importMinim;
     }
 

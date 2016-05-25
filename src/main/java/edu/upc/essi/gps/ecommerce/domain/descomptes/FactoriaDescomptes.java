@@ -8,13 +8,9 @@ import java.util.*;
  * Created by edu on 19/05/16.
  */
 public class FactoriaDescomptes {
-    private static HashMap<Double, DescomptePercentatge> descomptesPercentatge;
-    private static HashMap<Double, DescompteImport> descomptesImport;
-    private static int id = 0;
-
-    private FactoriaDescomptes() {
-        id = 0;
-    }
+    private static HashMap<String, DescomptePercentatge> descomptesPercentatge;
+    private static HashMap<String, DescompteImport> descomptesImport;
+    private static int codiDeBarres = 100;
 
     public static void startFactory() {
         if (descomptesPercentatge == null) descomptesPercentatge = new HashMap<>();
@@ -22,7 +18,8 @@ public class FactoriaDescomptes {
     }
 
     public static void nouDescomptePerPercentatge(double descompte, Calendar dataCaducitat) {
-        descomptesPercentatge.put(descompte, new DescomptePercentatge(++id, descompte, dataCaducitat));
+        String aux = Integer.toString(++codiDeBarres);
+        descomptesPercentatge.put(aux, new DescomptePercentatge(aux, descompte, dataCaducitat));
     }
 
     public static void nouDescomptePerImport(double descompte, String dataCaducitat, double importMinim) {
@@ -31,35 +28,38 @@ public class FactoriaDescomptes {
             Date date = dF.parse(dataCaducitat);
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
-        descomptesImport.put(descompte, new DescompteImport(++id, descompte, calendar, importMinim));
+            String aux = Integer.toString(++codiDeBarres);
+        descomptesImport.put(aux, new DescompteImport(aux, descompte, calendar, importMinim));
         } catch (ParseException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public static Descompte getDescompteByPercentatge(double valor) {
-        return descomptesPercentatge.get(valor);
-    }
-
     public static List<String> getLlistaDescomptes() {
         List<String> llistaDescomptes = new ArrayList<>();
-        Set<Double> keys = descomptesPercentatge.keySet();
+        Set<String> keys = descomptesPercentatge.keySet();
         SimpleDateFormat dF = new SimpleDateFormat("dd/MM/yyyy");
         llistaDescomptes.add("Llista de Descomptes");
-        for (Double key : keys) {
-            llistaDescomptes.add(new String("Descompte de " + key
-                    + "% | Caduca el " + dF.format(descomptesPercentatge.get(key).getDataCaducitat().getTime())));
+        for (String key : keys) {
+            llistaDescomptes.add("Descompte de " + descomptesPercentatge.get(key).getDescompte()
+                    + "% | Caduca el " + dF.format(descomptesPercentatge.get(key).getDataCaducitat().getTime())
+                    + " | Codi de Barres " + key);
         }
         keys = descomptesImport.keySet();
-        for (Double key : keys) {
-            llistaDescomptes.add(new String("Descompte de " + key
+        for (String key : keys) {
+            llistaDescomptes.add("Descompte de " + descomptesImport.get(key).getDescompte()
                     + "€ | Import minim de " + descomptesImport.get(key).getImportMinim()
-                    + "€ | Caduca el " + dF.format(descomptesImport.get(key).getDataCaducitat().getTime())));
+                    + "€ | Caduca el " + dF.format(descomptesImport.get(key).getDataCaducitat().getTime())
+                    + " | Codi de Barres " + key);
         }
         return llistaDescomptes;
     }
 
-    public static Descompte getDescompteByImport(double euros) {
-        return descomptesImport.get(euros);
+    public static Descompte getDescompteImportByCodi(String codiDeBarres) {
+        return descomptesImport.get(codiDeBarres);
+    }
+
+    public static Descompte getDescomptePercentatgeByCodi(String codiDeBarres) {
+        return descomptesPercentatge.get(codiDeBarres);
     }
 }
