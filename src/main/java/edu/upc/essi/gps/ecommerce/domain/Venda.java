@@ -37,6 +37,7 @@ public class Venda implements Entity {
         dataIHora = Calendar.getInstance();
         tipusPagament = EFECTIU;
         devolucions = new ArrayList<>();
+        descomptes = new ArrayList<>();
     }
 
     public int getId() {

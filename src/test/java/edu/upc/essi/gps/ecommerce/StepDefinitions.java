@@ -1,10 +1,7 @@
 package edu.upc.essi.gps.ecommerce;
 
 import cucumber.api.PendingException;
-import cucumber.api.java.ca.Aleshores;
-import cucumber.api.java.ca.Donat;
-import cucumber.api.java.ca.I;
-import cucumber.api.java.ca.Quan;
+import cucumber.api.java.ca.*;
 import edu.upc.essi.gps.ecommerce.domain.*;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.FactoriaDescomptes;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
@@ -12,7 +9,9 @@ import edu.upc.essi.gps.ecommerce.exceptions.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class StepDefinitions {
@@ -456,12 +455,22 @@ public class StepDefinitions {
     }
 
     @Donat("^existeixen els vals de descompte per percentatge:$")
-    public void existeixenElsValsDeDescomptePerPercentatge(Map<Double, Calendar> descomptes) throws Throwable {
-        Set<Double> keys = descomptes.keySet();
-        for (Double key : keys) {
-            tpvController.nouDescomptePerPercentatge(key, descomptes.get(key));
+    public void existeixenElsValsDeDescomptePerPercentatge(List<String> descomptes) throws Throwable {
+        DateFormat df = new SimpleDateFormat("dd/mm/yyyy");
+
+        for (String aux: descomptes) {
+
+            String[] list = aux.split(",");
+            double desc = Double.parseDouble(list[0]);
+            Date dataCad = df.parse(list[1]);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(dataCad);
+            tpvController.nouDescomptePerPercentatge(desc,calendar);
+
         }
     }
+
+
 
     @I("^existeixen els vals de descompte per import:$")
     public void existeixenElsValsDeDescomptePerImport(List<List<String>> descomptes) throws Throwable {
@@ -473,5 +482,11 @@ public class StepDefinitions {
     @Quan("^uso el val de descompte (\\d+)$")
     public void usoElValDeDescompte(int idDesc)  {
         tpvController.introduirDescompteVendaActual(idDesc);
+    }
+
+    @Donat("^existeixen els vals de descompte per percentatge \"([^\"]*)\"$")
+    public void existeixenElsValsDeDescomptePerPercentatge(String  llista) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
 }

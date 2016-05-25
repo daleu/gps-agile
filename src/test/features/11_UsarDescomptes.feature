@@ -5,9 +5,9 @@ Característica: Usar els vals de descomptes en les vendes
 
   Rerefons:
     Donat existeixen els vals de descompte per percentatge:
-      | 111 | 25 | 07/10/2020 |
-      | 222 | 50 | 23/04/2020 |
-      | 333 | 33 | 10/05/2020 |
+    |111 , 25 , 07/10/2020 |
+    |222 , 50 , 23/04/2020 |
+    |333 , 33 , 10/05/2020 |
     I existeixen els vals de descompte per import:
       | 444 | 10 | 50 | 06/10/2020 |
       | 555 | 20 | 80 | 25/05/2020 |
