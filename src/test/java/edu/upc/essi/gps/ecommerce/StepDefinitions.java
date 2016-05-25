@@ -423,15 +423,11 @@ public class StepDefinitions {
 
     }
 
-    @Quan("^s'introdueix al sistema els vals de descompte per \"([^\"]*)\":$")
-    public void creoElsValsDeDescompte(String tipus, Map<Double, Calendar> descomptes) {
+    @Quan("^s'introdueix al sistema els vals de descompte per percentatge:$")
+    public void creoElsValsDeDescompte(Map<Double, Calendar> descomptes) {
         Set<Double> keys = descomptes.keySet();
         for (Double key : keys) {
-            if (tipus.equals("percentatge")) {
-                FactoriaDescomptes.nouDescomptePerPercentatge(key, descomptes.get(key));
-            } else if (tipus.equals("import")) {
-                FactoriaDescomptes.nouDescomptePerImport(key, descomptes.get(key));
-            }
+            FactoriaDescomptes.nouDescomptePerPercentatge(key, descomptes.get(key));
         }
     }
 
@@ -453,5 +449,10 @@ public class StepDefinitions {
     @Aleshores("^existeix el descompte de (\\d+)€$")
     public void existeixElDescompteDe€(double euros) {
         assertNotNull(tpvController.getDescompteByImport(euros));
+    }
+
+    @I("^s'introdueix al sistema el val per import (\\d+)€, data de caducitat \"([^\"]*)\" i import minim (\\d+)€$")
+    public void sIntrodueixAlSistemaElValPerImport€DataDeCaducitatIImportMinim€(int importVal, String data, int importMinim) {
+        FactoriaDescomptes.nouDescomptePerImport(importVal, data, importMinim);
     }
 }

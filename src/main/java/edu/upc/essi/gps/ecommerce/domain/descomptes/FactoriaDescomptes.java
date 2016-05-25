@@ -1,5 +1,6 @@
 package edu.upc.essi.gps.ecommerce.domain.descomptes;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -24,8 +25,16 @@ public class FactoriaDescomptes {
         descomptesPercentatge.put(descompte, new DescomptePercentatge(++id, descompte, dataCaducitat));
     }
 
-    public static void nouDescomptePerImport(double descompte, Calendar dataCaducitat) {
-        descomptesImport.put(descompte, new DescompteImport(++id, descompte, dataCaducitat));
+    public static void nouDescomptePerImport(double descompte, String dataCaducitat, double importMinim) {
+        SimpleDateFormat dF = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date date = dF.parse(dataCaducitat);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+        descomptesImport.put(descompte, new DescompteImport(++id, descompte, calendar, importMinim));
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static Descompte getDescompteByPercentatge(double valor) {
