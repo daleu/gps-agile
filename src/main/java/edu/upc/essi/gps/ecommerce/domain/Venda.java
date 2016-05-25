@@ -307,4 +307,9 @@ public class Venda implements Entity {
     }
 
     public String getTipusPagament() { return tipusPagament; }
+
+    public boolean PreuTotalNegatiuTargeta() {
+        if(tipusPagament == TARJETA && preuPagament<0) return true;
+        else return true;
+    }
 }

@@ -29,7 +29,7 @@ Característica: Finalitzar venda
     |333|1|
     |444|2|
     I l'empleat que ha iniciat la venda es diu "Joan"
-    I que estem a dia i hora "12/04/2016 12:34:20"
+    I que estem a dia i hora "21/02/2016 20:24:10"
     Quan indico que el client paga 65,0 euros en efectiu
     I es finalitza la venda
     Aleshores el valor a retornar al client és de 3
@@ -42,7 +42,7 @@ Característica: Finalitzar venda
     I la linia 7 del tiquet sera " | 21.0% | P.B: 47,93 | P.T: 58 | "
     I la linia 8 del tiquet sera " | 10.0% | P.B: 3,64 | P.T: 4 | "
     I la linia 9 del tiquet sera " | Total: 62 | Canvi: 3 | Pagat en efectiu | "
-    I la linia 10 del tiquet sera " | 12/04/2016 12:34:20 | "
+    I la linia 10 del tiquet sera " | 21/02/2016 20:24:10 | "
     I la linia 11 del tiquet sera " | Atès per: Joan | "
 
   Escenari: Anular una venda amb linies de venda quan el client ja ha pagat
