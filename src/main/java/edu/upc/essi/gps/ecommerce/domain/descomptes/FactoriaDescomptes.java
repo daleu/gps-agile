@@ -44,8 +44,8 @@ public class FactoriaDescomptes {
         keys = descomptesImport.keySet();
         for (Double key : keys) {
             llistaDescomptes.add(new String("Descompte de " + key
-                    + "€ | Caduca el " + dF.format(descomptesImport.get(key).getDataCaducitat().getTime()))
-                    + " | Import minim de " + descomptesImport.get(key).getImportMinim() + "€");
+                    + "€ | Import minim de " + descomptesImport.get(key).getImportMinim()
+                    + "€ | Caduca el " + dF.format(descomptesImport.get(key).getDataCaducitat().getTime())));
         }
         return llistaDescomptes;
     }
