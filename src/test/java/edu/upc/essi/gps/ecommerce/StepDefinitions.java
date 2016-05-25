@@ -13,10 +13,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.text.ParseException;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class StepDefinitions {
     /*
@@ -423,19 +420,6 @@ public class StepDefinitions {
 
     }
 
-    @Quan("^s'introdueix al sistema els vals de descompte per percentatge:$")
-    public void creoElsValsDeDescompte(Map<Double, Calendar> descomptes) {
-        Set<Double> keys = descomptes.keySet();
-        for (Double key : keys) {
-            FactoriaDescomptes.nouDescomptePerPercentatge(key, descomptes.get(key));
-        }
-    }
-
-    @Aleshores("^existeix el descompte del (\\d+)+%$")
-    public void existeixElDescompteDel(double percentatge) {
-        assertNotNull(tpvController.getDescompteByPercentatge(percentatge));
-    }
-
     @Quan("^vull veure els vals de descompte existents$")
     public void vullVeureElsValsDeDescompteExistents() {
         tpvController.imprimirLListaDescomptes();
@@ -446,13 +430,43 @@ public class StepDefinitions {
         assertEquals(linia, tpvController.imprimirLListaDescomptes().get(numLinia));
     }
 
-    @Aleshores("^existeix el descompte de (\\d+)€$")
-    public void existeixElDescompteDe€(double euros) {
-        assertNotNull(tpvController.getDescompteByImport(euros));
+    @Quan("^s'introdueix al sistema els vals de descompte per import:$")
+    public void sIntrodueixAlSistemaElValPerImport(List<List<String>> descomptes) {
+        for (List<String> descompte : descomptes) {
+            FactoriaDescomptes.nouDescomptePerImport(Double.parseDouble(descompte.get(0)), descompte.get(1), Double.parseDouble(descompte.get(2)));
+        }
     }
 
-    @I("^s'introdueix al sistema el val per import (\\d+)€, data de caducitat \"([^\"]*)\" i import minim (\\d+)€$")
-    public void sIntrodueixAlSistemaElValPerImport€DataDeCaducitatIImportMinim€(int importVal, String data, int importMinim) {
-        FactoriaDescomptes.nouDescomptePerImport(importVal, data, importMinim);
+    @I("^existeix el descompte per import amb codi de barres \"([^\"]*)\"$")
+    public void existeixElDescompteAmbCodiDeBarres(String codiDeBarres) {
+        assertNotNull(tpvController.getDescompteImportByCodi(codiDeBarres));
+    }
+
+    @Quan("^s'introdueix al sistema els vals de descompte per percentatge:$")
+    public void sIntrodueixAlSistemaElsValsDeDescomptePerPercentatge(Map<Double, Calendar> descomptes) {
+        Set<Double> keys = descomptes.keySet();
+        for (Double key : keys) {
+            FactoriaDescomptes.nouDescomptePerPercentatge(key, descomptes.get(key));
+        }
+    }
+
+    @I("^existeix el descompte per percentatge amb codi de barres \"([^\"]*)\"$")
+    public void existeixElDescomptePerPercentatgeAmbCodiDeBarres(String codiDeBarres) {
+        assertNotNull(tpvController.getDescomptePercentatgeByImport(codiDeBarres));
+    }
+
+    @Donat("^existeixen els vals de descompte per percentatge:$")
+    public void existeixenElsValsDeDescomptePerPercentatge(Map<Double, Calendar> descomptes) throws Throwable {
+        Set<Double> keys = descomptes.keySet();
+        for (Double key : keys) {
+            FactoriaDescomptes.nouDescomptePerPercentatge(key, descomptes.get(key));
+        }
+    }
+
+    @I("^existeixen els vals de descompte per import:$")
+    public void existeixenElsValsDeDescomptePerImport(List<List<String>> descomptes) throws Throwable {
+        for (List<String> descompte : descomptes) {
+            FactoriaDescomptes.nouDescomptePerImport(Double.parseDouble(descompte.get(0)), descompte.get(1), Double.parseDouble(descompte.get(2)));
+        }
     }
 }

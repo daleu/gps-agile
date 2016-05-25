@@ -1,11 +1,11 @@
 package edu.upc.essi.gps.ecommerce.domain.descomptes;
 
-import edu.upc.essi.gps.domain.Entity;
-
 import java.util.Calendar;
 
-
-public abstract class Descompte implements Entity {
+/**
+ * Created by edu on 19/05/16.
+ */
+public abstract class Descompte {
     private int id;
     private Calendar dataCaducitat;
     private double descompte;
@@ -14,14 +14,6 @@ public abstract class Descompte implements Entity {
         this.id = id;
         this.descompte = descompte;
         this.dataCaducitat = dataCaducitat;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Calendar getDataCaducitat() {
