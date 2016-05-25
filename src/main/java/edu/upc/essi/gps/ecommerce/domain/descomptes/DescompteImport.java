@@ -22,4 +22,9 @@ public class DescompteImport extends Descompte {
     public int getId() {
         return id;
     }
+
+    @Override
+    public double calcularPreu(double preuFinal) {
+        return (preuFinal - descompte);
+    }
 }

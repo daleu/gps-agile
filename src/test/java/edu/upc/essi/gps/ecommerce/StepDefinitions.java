@@ -469,4 +469,9 @@ public class StepDefinitions {
             FactoriaDescomptes.nouDescomptePerImport(Double.parseDouble(descompte.get(0)), descompte.get(1), Double.parseDouble(descompte.get(2)));
         }
     }
+
+    @Quan("^uso el val de descompte (\\d+)$")
+    public void usoElValDeDescompte(int idDesc)  {
+        tpvController.introduirDescompteVendaActual(idDesc);
+    }
 }

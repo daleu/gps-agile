@@ -25,4 +25,6 @@ public abstract class Descompte implements Entity {
     public double getDescompte() {
         return descompte;
     }
+
+    public abstract double calcularPreu(double preuFinal);
 }

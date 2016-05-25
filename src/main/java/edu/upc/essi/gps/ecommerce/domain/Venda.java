@@ -1,6 +1,7 @@
 package edu.upc.essi.gps.ecommerce.domain;
 
 import edu.upc.essi.gps.domain.Entity;
+import edu.upc.essi.gps.ecommerce.domain.descomptes.Descompte;
 import edu.upc.essi.gps.ecommerce.exceptions.DevolucioNoPossibleException;
 import edu.upc.essi.gps.ecommerce.exceptions.ModeDePagamentIncorrecteException;
 import edu.upc.essi.gps.ecommerce.exceptions.NoHiHaTiquetException;
@@ -25,6 +26,7 @@ public class Venda implements Entity {
     private Integer idTorn;
     private Tiquet tiquet;
     private List<Devolucio> devolucions;
+    private List<Descompte> descomptes;
 
     public Venda(int numVenda) {
         this.id = numVenda;
@@ -112,7 +114,7 @@ public class Venda implements Entity {
 
     public double getPreuTotalDiferencia() {
         double preu = 0;
-        preu = getPreuTotal() + getPreuDevolucions();
+        preu = calculDescompte(getPreuTotal() + getPreuDevolucions());
         return  preu;
     }
 
@@ -307,4 +309,16 @@ public class Venda implements Entity {
     }
 
     public String getTipusPagament() { return tipusPagament; }
+
+    public void aplicarDescompte(Descompte desc) {
+        descomptes.add(desc);
+    }
+
+    public double calculDescompte(double preuFinal){
+
+        for(Descompte dv: descomptes){
+            preuFinal = dv.calcularPreu(preuFinal);
+        }
+        return preuFinal;
+    }
 }

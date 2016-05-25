@@ -15,4 +15,9 @@ public class DescomptePercentatge extends Descompte {
     public int getId() {
         return id;
     }
+
+    @Override
+    public double calcularPreu(double preuFinal) {
+        return (preuFinal - preuFinal*descompte/100);
+    }
 }

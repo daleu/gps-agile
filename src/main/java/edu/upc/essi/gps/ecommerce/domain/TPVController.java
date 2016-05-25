@@ -1,6 +1,8 @@
 package edu.upc.essi.gps.ecommerce.domain;
 
 import edu.upc.essi.gps.ecommerce.domain.descomptes.Descompte;
+import edu.upc.essi.gps.ecommerce.domain.descomptes.DescompteImport;
+import edu.upc.essi.gps.ecommerce.domain.descomptes.DescomptePercentatge;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.FactoriaDescomptes;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
 import edu.upc.essi.gps.ecommerce.repositoris.DescomptesServei;
@@ -404,4 +406,45 @@ public class TPVController {
         return descomptesServei.trobaPerCodi(codiDeBarres);
     }
 
+    public void introduirDescompteVendaActual(int idDesc) {
+
+        Descompte desc = descomptesServei.trobaPerCodi(idDesc);
+
+        if(desc == null) {
+            screen = "Descompte no existeix";return;
+        }
+
+        String tipus="";
+        if (desc instanceof DescompteImport) tipus = "Import";
+        else if (desc instanceof DescomptePercentatge) tipus = "Percentatge";
+
+        if (possibilitatDeDescompte(idDesc,desc,tipus)){
+            vendaActual.aplicarDescompte(desc);
+        }
+    }
+
+    private boolean possibilitatDeDescompte(int idDesc, Descompte desc, String tipus) {
+
+        //1. Mirar si no esta caducat
+        if (dataIHora.compareTo(desc.getDataCaducitat()) <= 0){ // dataIhora <= dataCaducitat
+
+            //2. Mirar condicions
+            switch (tipus) {
+                case "Import":
+                    DescompteImport dAux = (DescompteImport) desc;
+                    if (vendaActual.getPreuTotalDiferencia() >= dAux.getImportMinim()) {
+                        screen = "Possible aplicar descompte";
+                        return true;
+                    }
+                    else {
+                        screen = "Import mínim no vàlid";
+                        return false;
+                    }
+            }
+            screen = "Possible aplicar descompte";
+            return true;
+        }
+        screen = "Descompte caducat";
+        return false;
+    }
 }
