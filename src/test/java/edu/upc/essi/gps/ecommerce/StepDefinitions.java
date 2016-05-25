@@ -192,7 +192,7 @@ public class StepDefinitions {
 
     @Donat("^existeix el producte \"([^\"]*)\", amb codi de barres \"([^\"]*)\", preu Unitat (.+) i iva (.+)$")
     public void existeixElProducteAmbCodiDeBarresPreuUnitatIIva(String nomProducte, String codiBarres, double preuUnitat, double iva) throws Throwable {
-        tpvController.afegeixProducteACatalegAmbPreuUnitat(nomProducte,codiBarres,preuUnitat,iva);
+        tpvController.afegeixProducteACatalegAmbPreuUnitat(nomProducte, codiBarres, preuUnitat, iva);
     }
 
     @Aleshores("^el preu Base del producte \"([^\"]*)\" serà (.+)$")
@@ -218,26 +218,26 @@ public class StepDefinitions {
     @I("^la linia (\\d+) del tiquet sera \"([^\"]*)\"$")
     public void laLiniaDelTiquetSera(int num, String linia) {
         try {
-            assertEquals(linia,tpvController.getLiniaTiquetVendaActual(num));
+            assertEquals(linia, tpvController.getLiniaTiquetVendaActual(num));
         } catch (NoHiHaTiquetException e) {
             this.exception = e;
         }
     }
 
     @I("^es va fer una venda amb id (\\d+) dels següens productes i seguents unitats$")
-    public void esVaFerUnaVendaAmbIdDelsSegüensProductesISeguentsUnitats(int idVenda, Map<String,Integer> productesVenda) throws VendaJaIniciadaException, ProducteNoExisteixException, VendaJaFinalitzadaException, ParseException, VendaNoIniciadaException {
+    public void esVaFerUnaVendaAmbIdDelsSegüensProductesISeguentsUnitats(int idVenda, Map<String, Integer> productesVenda) throws VendaJaIniciadaException, ProducteNoExisteixException, VendaJaFinalitzadaException, ParseException, VendaNoIniciadaException {
 
         tpvController.iniciarVendaAmbID(idVenda);
 
         Set<String> prods = productesVenda.keySet();
-        for(String p: prods) {
+        for (String p : prods) {
             tpvController.afegirLiniaVendaPerCodi(productesVenda.get(p), p);
         }
     }
 
     @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+) sense motiu")
     public void esVolIndicarUnaDevolucioDeUnitatSDelProducteDeLaVendaPelMotiu(int unitats, String codiProd, int idVenda) throws ProducteNoExisteixException, Exception {
-        tpvController.afegirDevolucioAVenda(idVenda,codiProd,unitats,"");
+        tpvController.afegirDevolucioAVenda(idVenda, codiProd, unitats, "");
     }
 
     @I("^el preu total es la suma dels productes a vendre menys el de la devolució, es a dir, (.+)$")
@@ -295,7 +295,7 @@ public class StepDefinitions {
 
     @Aleshores("^el TPV està sent usat pel \"([^\"]*)\"$")
     public void elTPVEstàSentUsatPel(String nomEmpleat) throws Throwable {
-        assertEquals(nomEmpleat,tpvController.getTornActual().getNomEmpleat());
+        assertEquals(nomEmpleat, tpvController.getTornActual().getNomEmpleat());
     }
 
     @I("^el \"([^\"]*)\" ha iniciat un torn")
@@ -315,7 +315,7 @@ public class StepDefinitions {
 
     @Aleshores("^el torn segueix actiu$")
     public void tornNoFinalitzat() throws Throwable {
-        assertEquals(true,tpvController.getTornActual() != null);
+        assertEquals(true, tpvController.getTornActual() != null);
     }
 
     @I("^cancel·lo la finalitzacio del torn$")
@@ -344,13 +344,13 @@ public class StepDefinitions {
 
     @I("^es vol indicar una devolucio de (\\d+) unitats del producte \"([^\"]*)\" de la venda (\\d+) pel motiu \"([^\"]*)\"$")
     public void esVolIndicarUnaDevolucioDeUnitatsDelProducteDeLaVendaPelMotiu(int unitats, String codiBarres, int idVenda, String motiu) throws ProducteNoExisteixException, Exception {
-        tpvController.afegirDevolucioAVenda(idVenda,codiBarres,unitats,motiu);
+        tpvController.afegirDevolucioAVenda(idVenda, codiBarres, unitats, motiu);
     }
 
 
     @Aleshores("^\"([^\"]*)\" es el motiu de l'ultima devolucio$")
     public void esElMotiuDeLaUltimaDevolucio(String motiu) {
-        assertEquals(tpvController.getUltimaDevolucio().getMotiu(),motiu);
+        assertEquals(tpvController.getUltimaDevolucio().getMotiu(), motiu);
 
     }
 
@@ -360,7 +360,7 @@ public class StepDefinitions {
     }
 
     @I("^la linia (\\d+) sera \"([^\"]*)\"$")
-    public void laLiniaSera(int numLinia, String linia)  {
+    public void laLiniaSera(int numLinia, String linia) {
         assertEquals(tpvController.getLiniaQuadrament(numLinia), linia);
     }
 
@@ -391,19 +391,19 @@ public class StepDefinitions {
         tpvController.acceptoDesquadrament();
     }
 
-    @Aleshores ("^el torn està finalitzat")
+    @Aleshores("^el torn està finalitzat")
     public void elTornEstaFinalitzat() throws Throwable {
         assertEquals(true, tpvController.getTornActual() == null);
     }
 
     @Aleshores("^el tiquet mostra les següents devolucions$")
     public void elTiquetMostraLesSegüentsDevolucions(List<String> list) {
-        assertEquals(true,tpvController.existsLiniaTiquet(list));
+        assertEquals(true, tpvController.existsLiniaTiquet(list));
     }
 
     @Aleshores("^el tpv m'indica \"([^\"]*)\"$")
     public void elTpvMIndica(String missatge) throws Throwable {
-        assertEquals(tpvController.getScreen(),missatge);
+        assertEquals(tpvController.getScreen(), missatge);
     }
 
     @Quan("^inicio una nova venda amb id (\\d+)$")
@@ -413,7 +413,7 @@ public class StepDefinitions {
 
 
     @I("^la venda (\\d+) no te assignada cap devolucio$")
-    public void laVendaNoTeAssignadaCapDevolucio(int idVenda)  {
+    public void laVendaNoTeAssignadaCapDevolucio(int idVenda) {
         assertEquals(0, tpvController.getNumDevolucionsVenda(idVenda));
     }
 
@@ -423,11 +423,15 @@ public class StepDefinitions {
 
     }
 
-    @Quan("^creo els vals de descompte:$")
-    public void creoElsValsDeDescompte(Map<Double, Calendar> descomptes) {
+    @Quan("^creo els vals de descompte per \"([^\"]*)\":$")
+    public void creoElsValsDeDescompte(String tipus, Map<Double, Calendar> descomptes) {
         Set<Double> keys = descomptes.keySet();
         for (Double key : keys) {
-            FactoriaDescomptes.nouDescomptePerPercentatge(key, descomptes.get(key));
+            if (tipus.equals("percentatge")) {
+                FactoriaDescomptes.nouDescomptePerPercentatge(key, descomptes.get(key));
+            } else if (tipus.equals("import")) {
+                FactoriaDescomptes.nouDescomptePerImport(key, descomptes.get(key));
+            }
         }
     }
 
@@ -442,7 +446,7 @@ public class StepDefinitions {
     }
 
     @Aleshores("^la linia (\\d+) de la llista de Descomptes sera \"([^\"]*)\"$")
-    public void laLiniaDeLaLlistaDeDescomptesSera(int numLinia, String linia)  {
+    public void laLiniaDeLaLlistaDeDescomptesSera(int numLinia, String linia) {
         assertEquals(linia, tpvController.imprimirLListaDescomptes().get(numLinia));
     }
 }

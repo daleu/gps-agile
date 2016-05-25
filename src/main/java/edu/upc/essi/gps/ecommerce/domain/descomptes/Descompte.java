@@ -8,10 +8,9 @@ import java.util.Calendar;
 public abstract class Descompte {
     private int id;
     private Calendar dataCaducitat;
-    private boolean usat;
     private double descompte;
 
-    protected Descompte (int id, double descompte, Calendar dataCaducitat) {
+    protected Descompte(int id, double descompte, Calendar dataCaducitat) {
         this.id = id;
         this.descompte = descompte;
         this.dataCaducitat = dataCaducitat;
@@ -29,19 +28,7 @@ public abstract class Descompte {
         return dataCaducitat;
     }
 
-    public boolean isUsat() {
-        return usat;
-    }
-
-    public void setUsat(boolean usat) {
-        this.usat = usat;
-    }
-
     public double getDescompte() {
         return descompte;
-    }
-
-    public void setDescompte(double descompte) {
-        this.descompte = descompte;
     }
 }
