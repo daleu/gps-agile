@@ -402,4 +402,8 @@ public class TPVController {
     public List<String> imprimirLListaDescomptes() {
         return FactoriaDescomptes.getLlistaDescomptes();
     }
+
+    public Descompte getDescompteByImport(double euros) {
+        return FactoriaDescomptes.getDescompteByImport(euros);
+    }
 }

@@ -17,7 +17,7 @@ public class FactoriaDescomptes {
 
     public static void startFactory() {
         if (descomptesPercentatge == null) descomptesPercentatge = new HashMap<>();
-        if (descomptesImport == null) descomptesPercentatge = new HashMap<>();
+        if (descomptesImport == null) descomptesImport = new HashMap<>();
     }
 
     public static void nouDescomptePerPercentatge(double descompte, Calendar dataCaducitat) {
@@ -41,6 +41,15 @@ public class FactoriaDescomptes {
             llistaDescomptes.add(new String("Descompte de " + key
                     + "% | Caduca el " + dF.format(descomptesPercentatge.get(key).getDataCaducitat().getTime())));
         }
+        keys = descomptesImport.keySet();
+        for (Double key : keys) {
+            llistaDescomptes.add(new String("Descompte de " + key
+                    + "€ | Caduca el " + dF.format(descomptesImport.get(key).getDataCaducitat().getTime())));
+        }
         return llistaDescomptes;
+    }
+
+    public static Descompte getDescompteByImport(double euros) {
+        return descomptesImport.get(euros);
     }
 }

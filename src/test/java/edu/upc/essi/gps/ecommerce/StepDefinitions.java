@@ -423,7 +423,7 @@ public class StepDefinitions {
 
     }
 
-    @Quan("^creo els vals de descompte per \"([^\"]*)\":$")
+    @Quan("^s'introdueix al sistema els vals de descompte per \"([^\"]*)\":$")
     public void creoElsValsDeDescompte(String tipus, Map<Double, Calendar> descomptes) {
         Set<Double> keys = descomptes.keySet();
         for (Double key : keys) {
@@ -448,5 +448,10 @@ public class StepDefinitions {
     @Aleshores("^la linia (\\d+) de la llista de Descomptes sera \"([^\"]*)\"$")
     public void laLiniaDeLaLlistaDeDescomptesSera(int numLinia, String linia) {
         assertEquals(linia, tpvController.imprimirLListaDescomptes().get(numLinia));
+    }
+
+    @Aleshores("^existeix el descompte de (\\d+)€$")
+    public void existeixElDescompteDe€(double euros) {
+        assertNotNull(tpvController.getDescompteByImport(euros));
     }
 }
