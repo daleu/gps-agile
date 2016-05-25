@@ -454,4 +454,19 @@ public class StepDefinitions {
     public void existeixElDescomptePerPercentatgeAmbCodiDeBarres(String codiDeBarres) {
         assertNotNull(tpvController.getDescomptePercentatgeByImport(codiDeBarres));
     }
+
+    @Donat("^existeixen els vals de descompte per percentatge:$")
+    public void existeixenElsValsDeDescomptePerPercentatge(Map<Double, Calendar> descomptes) throws Throwable {
+        Set<Double> keys = descomptes.keySet();
+        for (Double key : keys) {
+            FactoriaDescomptes.nouDescomptePerPercentatge(key, descomptes.get(key));
+        }
+    }
+
+    @I("^existeixen els vals de descompte per import:$")
+    public void existeixenElsValsDeDescomptePerImport(List<List<String>> descomptes) throws Throwable {
+        for (List<String> descompte : descomptes) {
+            FactoriaDescomptes.nouDescomptePerImport(Double.parseDouble(descompte.get(0)), descompte.get(1), Double.parseDouble(descompte.get(2)));
+        }
+    }
 }
