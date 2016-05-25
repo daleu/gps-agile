@@ -88,6 +88,10 @@ public class TPVController {
         if (vendaActual != null)  {
             if(!vendaActual.isFinalitzada()) {
 
+                if(vendaActual.PreuTotalNegatiuTargeta()){
+                    screen = "Error: El resultat de la venda es negatiu, i hauria de ser positiu";
+                }
+
                 vendesServei.guardarVenda(vendaActual);
 
                 if (tornActual != null && (vendaActual.getTipusPagament() != "amb tarjeta") ) {

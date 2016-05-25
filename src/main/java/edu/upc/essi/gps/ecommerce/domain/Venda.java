@@ -322,4 +322,10 @@ public class Venda implements Entity {
         }
         return preuFinal;
     }
+
+    public boolean PreuTotalNegatiuTargeta() {
+        if(tipusPagament == TARJETA && preuPagament<0) return true;
+        else return true;
+    }
+
 }
