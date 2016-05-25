@@ -8,7 +8,7 @@ import java.util.*;
  * Created by edu on 19/05/16.
  */
 public class FactoriaDescomptes {
-    private static HashMap<String, DescomptePercentatge> descomptesPercentatge;
+   /* private static HashMap<String, DescomptePercentatge> descomptesPercentatge;
     private static HashMap<String, DescompteImport> descomptesImport;
     private static int codiDeBarres = 100;
 
@@ -18,7 +18,7 @@ public class FactoriaDescomptes {
     }
 
     public static void nouDescomptePerPercentatge(double descompte, Calendar dataCaducitat) {
-        String aux = Integer.toString(++codiDeBarres);
+        int aux = ++codiDeBarres;
         descomptesPercentatge.put(aux, new DescomptePercentatge(aux, descompte, dataCaducitat));
     }
 
@@ -28,7 +28,7 @@ public class FactoriaDescomptes {
             Date date = dF.parse(dataCaducitat);
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
-            String aux = Integer.toString(++codiDeBarres);
+            int aux = ++codiDeBarres;
         descomptesImport.put(aux, new DescompteImport(aux, descompte, calendar, importMinim));
         } catch (ParseException e) {
             System.out.println(e.getMessage());
@@ -62,4 +62,5 @@ public class FactoriaDescomptes {
     public static Descompte getDescomptePercentatgeByCodi(String codiDeBarres) {
         return descomptesPercentatge.get(codiDeBarres);
     }
+    */
 }

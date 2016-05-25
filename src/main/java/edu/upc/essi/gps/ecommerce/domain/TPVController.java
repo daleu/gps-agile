@@ -36,7 +36,6 @@ public class TPVController {
     private Cataleg cataleg = new Cataleg();
 
     public TPVController(){
-        FactoriaDescomptes.startFactory();
     }
 
     public String getScreen() {
@@ -398,14 +397,11 @@ public class TPVController {
     }
 
     public List<String> imprimirLListaDescomptes() {
-        return FactoriaDescomptes.getLlistaDescomptes();
+        return descomptesServei.imprimirLlistaDescomptes();
     }
 
-    public Descompte getDescompteImportByCodi(String codiDeBarres) {
-        return FactoriaDescomptes.getDescompteImportByCodi(codiDeBarres);
+    public Descompte getDescompteByCodi(int codiDeBarres) {
+        return descomptesServei.trobaPerCodi(codiDeBarres);
     }
 
-    public Descompte getDescomptePercentatgeByImport(String codiDeBarres) {
-        return FactoriaDescomptes.getDescomptePercentatgeByCodi(codiDeBarres);
-    }
 }

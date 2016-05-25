@@ -7,7 +7,12 @@ import java.util.Calendar;
  */
 public class DescomptePercentatge extends Descompte {
 
-    public DescomptePercentatge(String codiDeBarres, double descompte, Calendar dataCaducitat) {
-        super(codiDeBarres, descompte, dataCaducitat);
+    public DescomptePercentatge(int id, double descompte, Calendar dataCaducitat) {
+        super(id, descompte, dataCaducitat);
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 }

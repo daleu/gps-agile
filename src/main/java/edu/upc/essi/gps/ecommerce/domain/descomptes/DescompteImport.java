@@ -17,4 +17,9 @@ public class DescompteImport extends Descompte {
     public double getImportMinim() {
         return importMinim;
     }
+
+    @Override
+    public int getId() {
+        return id;
+    }
 }
