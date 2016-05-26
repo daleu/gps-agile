@@ -8,7 +8,9 @@ Característica: Escollir pagar amb targeta una venda.
     Donat el TPV esta a la botiga "May The Force Be With You"
     I existeix el producte "Rasca i pica", amb codi de barres "222", preu Unitat 15,2 i iva 0,21
     I existeix el producte "Patins en linia", amb codi de barres "333", preu Unitat 30,5 i iva 0,21
-    I que hi ha una venda iniciada amb dues linies linies de venda amb 2 productes 222 i un 333
+    I inicio una nova venda
+    I s'afegeix a la linia de venda 2 unitats del producte amb codi de barres "222"
+    I s'afegeix a la linia de venda 1 unitats del producte amb codi de barres "333"
     I l'empleat que ha iniciat la venda es diu "Johnny Depp"
 
   Escenari: El client paga la venda amb tarjeta i s'imprimeix el tiquet
