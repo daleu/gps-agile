@@ -59,8 +59,7 @@ public class StepDefinitions {
     }
 
     @Aleshores("^obtinc un error que diu \"([^\"]*)\"$")
-    public void obtincUnErrorQueFDiu(String expectedMessage) throws Throwable {
-        assertNotNull(this.exception);
+    public void obtincUnErrorQueFDiu(String expectedMessage) {
         assertEquals(expectedMessage, this.exception.getMessage());
     }
 
@@ -484,9 +483,30 @@ public class StepDefinitions {
         tpvController.introduirDescompteVendaActual(idDesc);
     }
 
-    @Donat("^existeixen els vals de descompte per percentatge \"([^\"]*)\"$")
-    public void existeixenElsValsDeDescomptePerPercentatge(String  llista) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @Donat("^s'introdueix al sistema els vals de descompte per percentatge amb id:$")
+    public void sIntrodueixAlSistemaElsValsDeDescomptePerPercentatgeAmbId(List< List<String>> descomptes) throws ParseException {
+        for(List<String> des: descomptes) {
+            int id = Integer.parseInt(des.get(0));
+            double descomp = Double.parseDouble(des.get(1));
+            SimpleDateFormat dF = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = dF.parse(des.get(2));
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            tpvController.nouDescomptePerPercentatgeAmbID(id,descomp,calendar);
+        }
+    }
+
+    @I("^existeixen els vals de descompte per import amb id:$")
+    public void existeixenElsValsDeDescomptePerImportAmbId(List< List<String>> descomptes){
+
+        for(List<String> des: descomptes) {
+            int id = Integer.parseInt(des.get(0));
+            double descomp = Double.parseDouble(des.get(1));
+            String dataCad = des.get(3);
+            Calendar c = Calendar.getInstance();
+            c.set(Integer.parseInt(dataCad.substring(6,9)), Integer.parseInt(dataCad.substring(3,4)), Integer.parseInt(dataCad.substring(0,1)));
+            tpvController.nouDescomptePerImportAmbID(id,descomp,des.get(2),c);
+        }
+
     }
 }

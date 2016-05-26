@@ -262,7 +262,7 @@ public class TPVController {
     }
 
     public double getTotalVenda() {
-        return vendaActual.getPreuTotal();
+        return vendaActual.getPreuTotalDiferencia();
     }
 
     public int getIdVenda() {
@@ -444,6 +444,11 @@ public class TPVController {
             screen = "Descompte no existeix";return;
         }
 
+        if(vendaActual.getPreuTotalDiferencia() <= 0) {
+            screen = "El val no es pot usar en una venda buida";
+            return;
+        }
+
         String tipus="";
         if (desc instanceof DescompteImport) tipus = "Import";
         else if (desc instanceof DescomptePercentatge) tipus = "Percentatge";
@@ -476,5 +481,19 @@ public class TPVController {
         }
         screen = "Descompte caducat";
         return false;
+    }
+
+    public void nouDescomptePerPercentatgeAmbID(int id,double descompte, Calendar dataCad) {
+
+
+        descomptesServei.nouDescompte(id,descompte,dataCad,"Percentatge",null);
+
+
+    }
+
+    public void nouDescomptePerImportAmbID(int id, double descompte, String impM, Calendar dataCad) {
+        List<String> s = new ArrayList<>();
+        s.add(impM);
+        descomptesServei.nouDescompte(id,descompte,dataCad,"Percentatge",null);
     }
 }
