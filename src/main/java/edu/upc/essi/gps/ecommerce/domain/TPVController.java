@@ -3,6 +3,7 @@ package edu.upc.essi.gps.ecommerce.domain;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.Descompte;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.DescompteImport;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.DescomptePercentatge;
+import edu.upc.essi.gps.ecommerce.domain.ofertes.Oferta;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
 import edu.upc.essi.gps.ecommerce.repositoris.DescomptesServei;
 import edu.upc.essi.gps.ecommerce.repositoris.TornServei;
@@ -509,4 +510,19 @@ public class TPVController {
     }
 
     public double getRetornDevolucioVenda() { return vendaActual.getRetornDevolucio(); }
+
+    //-----------------------------------
+    // Ofertes
+    //-----------------------------------
+
+    public void afegirOfertaAProducte(int id, int N, int M, Calendar calendarInici, Calendar calendarFinal, String idProducte) throws ProducteNoExisteixException {
+        String[] productes = idProducte.split(",");
+        for (int i = 0; i < productes.length; i++) {
+                cataleg.getProductePerCodi(productes[i]).afegirOferta(id, N, M, calendarInici, calendarFinal);
+        }
+    }
+
+    public boolean existeixOfertaAlProducte(int id, String idProducte) throws ProducteNoExisteixException {
+        return (cataleg.getProductePerCodi(idProducte).existeixOferta(id));
+    }
 }

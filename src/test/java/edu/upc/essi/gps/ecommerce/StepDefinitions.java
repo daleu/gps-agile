@@ -504,4 +504,26 @@ public class StepDefinitions {
     public void elsDinersQueEsRetornenPerLaDevolucioSon(int cash) throws Throwable {
         assertEquals(cash,tpvController.getRetornDevolucioVenda(),0.01);
     }
+
+    @Quan("^s'introdueix al sistema les ofertes NxM:$")
+    public void sIntrodueixAlSistemaLesOfertesNxM(List< List<String>> ofertes) throws Throwable {
+        for(List<String> oferta: ofertes) {
+            int id = Integer.parseInt(oferta.get(0));
+            int N = Integer.parseInt(oferta.get(1));
+            int M = Integer.parseInt(oferta.get(2));
+            SimpleDateFormat dF = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = dF.parse(oferta.get(3));
+            Calendar calendarInici = Calendar.getInstance();
+            calendarInici.setTime(date);
+            date = dF.parse(oferta.get(4));
+            Calendar calendarFinal = Calendar.getInstance();
+            calendarFinal.setTime(date);
+            tpvController.afegirOfertaAProducte(id,N,M,calendarInici,calendarFinal,oferta.get(5));
+        }
+    }
+
+    @Aleshores("^existeix la oferta NxM amb id (\\d+) en el producte \"([^\"]*)\"$")
+    public void existeixLaOfertaNxMEnElProducte(int id, String idProducte) throws Throwable {
+        assertEquals(true,tpvController.existeixOfertaAlProducte(id,idProducte));
+    }
 }

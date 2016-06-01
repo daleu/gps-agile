@@ -1,5 +1,12 @@
 package edu.upc.essi.gps.ecommerce.domain;
 
+import edu.upc.essi.gps.ecommerce.domain.ofertes.Oferta;
+import edu.upc.essi.gps.ecommerce.domain.ofertes.OfertaNxM;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.ListIterator;
+
 /**
  * Created by eduard.maura.i on 29/04/2016.
  */
@@ -8,6 +15,7 @@ public class Producte {
     private double iva;        //iva (eL PREU BASE S'HA DE CALCULAR)
     private String codiBarres;
     private String nom;
+    private ArrayList <Oferta> ofertes = new ArrayList <Oferta>();
 
     public Producte(String nomProducte, String codiBarres, double preuUnitat) {
         this.nom = nomProducte;
@@ -22,7 +30,6 @@ public class Producte {
         this.iva = iva;
         this.preuUnitat = preuUnitat;
     }
-
 
     public double getPreuUnitat() {
 
@@ -46,4 +53,20 @@ public class Producte {
     }
 
     public double getIVA() {return this.iva;}
+
+    public void afegirOferta(int id, int N, int M, Calendar calendarInici, Calendar calendarFinal) {
+        if (!existeixOferta(id)) {
+            OfertaNxM oferta = new OfertaNxM(id, N, M, calendarInici, calendarFinal);
+            ofertes.add(oferta);
+        }
+    }
+
+    public boolean existeixOferta(int id) {
+        ListIterator<Oferta> index = ofertes.listIterator();
+        boolean trobat = false;
+        while (!trobat && index.hasNext()) {
+            trobat = (index.next().getId() == id);
+        }
+        return trobat;
+    }
 }
