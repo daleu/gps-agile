@@ -375,4 +375,12 @@ public class Venda implements Entity {
             }
         }
     }
+
+    public void noAplicarOfertaSobreProducte(String nomP) {
+        for(LiniaVenda lv : liniesVenda){
+            if(lv.getNomProducte().equals(nomP)){
+                lv.noAplicarOferta();
+            }
+        }
+    }
 }

@@ -592,4 +592,9 @@ public class StepDefinitions {
     public void missatgeEs(int arg0, String arg1) throws Throwable {
         assertEquals(arg1,tpvController.getMiisatgeOferta(arg0));
     }
+
+    @Quan("^indico que vull no aplicar l'oferta pel producte \"([^\"]*)\"$")
+    public void indicoQueVullNoAplicarLOfertaPelProducte(String arg0) throws Throwable {
+        tpvController.noAplicarOferta(arg0);
+    }
 }

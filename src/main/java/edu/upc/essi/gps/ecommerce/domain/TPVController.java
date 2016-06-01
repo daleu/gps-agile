@@ -551,4 +551,8 @@ public class TPVController {
     public void aplicarOferta(String nomP) {
         vendaActual.aplicarOfertaSobreProducte(nomP);
     }
+
+    public void noAplicarOferta(String arg0) {
+        vendaActual.noAplicarOfertaSobreProducte(arg0);
+    }
 }
