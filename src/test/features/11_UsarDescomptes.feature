@@ -4,7 +4,7 @@
 Característica: Usar els vals de descomptes en les vendes
 
   Rerefons:
-    Donat s'introdueix al sistema els vals de descompte per percentatge amb id:
+    Donat existeixen els vals de descompte per percentatge amb id:
     |111 | 25 | 07/10/2020 |
     |222 | 50 | 23/04/2020 |
     |333 | 33 | 10/05/2020 |
@@ -21,13 +21,13 @@ Característica: Usar els vals de descomptes en les vendes
   Escenari: No podem usar un val en una venda buida
     Donat que hi ha una venda iniciada
     Quan uso el val de descompte 111
-    Aleshores el tpv m'indica "El val no es pot usar en una venda buida"
+    Aleshores obtinc un missatge que diu "El val no es pot usar en una venda buida"
 
   Escenari: Usar un val de descompte per percentatge en una venda
     Donat que hi ha una venda iniciada
     I s'afegeix a la linia de venda 5 unitats del producte amb codi de barres "5353"
     Quan uso el val de descompte 111
-    Aleshores el preu total de la venda es 33.33
+    Aleshores el preu total de la venda es 18,75
 
   Escenari: Usar un val de descompte per import en una venda
     Donat que hi ha una venda iniciada
@@ -39,14 +39,14 @@ Característica: Usar els vals de descomptes en les vendes
     Donat que hi ha una venda iniciada
     I s'afegeix a la linia de venda 5 unitats del producte amb codi de barres "5353"
     Quan uso el val de descompte 777
-    Aleshores el tpv m'indica "Descompte caducat"
+    Aleshores obtinc un missatge que diu "Descompte caducat"
     I el preu total de la venda es 25
 
     Escenari: Usar un val de descompte i que no l'accepti
       Donat que hi ha una venda iniciada
       I s'afegeix a la linia de venda 1 unitats del producte amb codi de barres "5353"
       Quan uso el val de descompte 555
-      Aleshores el tpv m'indica "Import mínim no vàlid"
+      Aleshores obtinc un missatge que diu "Import mínim no vàlid"
     
   Escenari: Usar més d'un val de descompte (combina percentatges i imports)
     Donat que hi ha una venda iniciada

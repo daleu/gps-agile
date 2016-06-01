@@ -19,20 +19,19 @@ public class DescomptesServei {
         this.descomptesRepositori = new DescomptesRepositori();
     }
 
-    public Descompte nouDescompte(double descompte, Calendar dataCaducitat, String tipus,  String args){ //ID auto
+    public Descompte nouDescompte(double descompte, Calendar dataCaducitat, String tipus,  Double impMinim){ //ID auto
         int id = descomptesRepositori.newId();
 
-        return nouDescompte(id,descompte,dataCaducitat,tipus,args);
+        return nouDescompte(id,descompte,dataCaducitat,tipus,impMinim);
 
     }
 
-    public Descompte nouDescompte(int id,double descompte, Calendar dataCaducitat, String tipus,  String args){ //ID manual
+    public Descompte nouDescompte(int id,double descompte, Calendar dataCaducitat, String tipus,  Double impMinim){ //ID manual
 
         Descompte result = null;
 
         switch(tipus) {
             case "Import":
-                double impMinim = Double.parseDouble(args);
                 result = new DescompteImport(id,descompte,dataCaducitat,impMinim);
                 break;
 

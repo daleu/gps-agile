@@ -396,10 +396,6 @@ public class StepDefinitions {
         assertEquals(true, tpvController.existsLiniaTiquet(list));
     }
 
-    @Aleshores("^el tpv m'indica \"([^\"]*)\"$")
-    public void elTpvMIndica(String missatge) throws Throwable {
-        assertEquals(tpvController.getScreen(), missatge);
-    }
 
     @Quan("^inicio una nova venda amb id (\\d+)$")
     public void inicioUnaNovaVendaAmbId(int idVenda) throws Throwable {
@@ -431,7 +427,7 @@ public class StepDefinitions {
     @Quan("^s'introdueix al sistema els vals de descompte per import:$")
     public void sIntrodueixAlSistemaElValPerImport(List<List<String>> descomptes) {
         for (List<String> descompte : descomptes) {
-            tpvController.nouDescomptePerImport(Double.parseDouble(descompte.get(0)), descompte.get(1), descompte.get(2));
+            tpvController.nouDescomptePerImport(descompte.get(0), descompte.get(1), descompte.get(2));
         }
     }
 
@@ -471,20 +467,24 @@ public class StepDefinitions {
 
 
 
-    @I("^existeixen els vals de descompte per import:$")
-    public void existeixenElsValsDeDescomptePerImport(List<List<String>> descomptes) throws Throwable {
-        for (List<String> descompte : descomptes) {
-            tpvController.nouDescomptePerImport(Double.parseDouble(descompte.get(0)), descompte.get(1), descompte.get(2));
-        }
-    }
 
     @Quan("^uso el val de descompte (\\d+)$")
     public void usoElValDeDescompte(int idDesc)  {
         tpvController.introduirDescompteVendaActual(idDesc);
     }
 
-    @Donat("^s'introdueix al sistema els vals de descompte per percentatge amb id:$")
-    public void sIntrodueixAlSistemaElsValsDeDescomptePerPercentatgeAmbId(List< List<String>> descomptes) throws ParseException {
+
+    @I("^existeixen els vals de descompte per import amb id:$")
+    public void existeixenElsValsDeDescomptePerImportAmbId(List< List<String>> descomptes) throws ParseException {
+
+        for(List<String> des: descomptes) {
+            tpvController.nouDescomptePerImportAmbID(des.get(0),des.get(1),des.get(2),des.get(3));
+        }
+
+    }
+
+    @Donat("^existeixen els vals de descompte per percentatge amb id:$")
+    public void existeixenElsValsDeDescomptePerPercentatgeAmbId(List< List<String>> descomptes) throws Throwable {
         for(List<String> des: descomptes) {
             int id = Integer.parseInt(des.get(0));
             double descomp = Double.parseDouble(des.get(1));
@@ -494,19 +494,5 @@ public class StepDefinitions {
             calendar.setTime(date);
             tpvController.nouDescomptePerPercentatgeAmbID(id,descomp,calendar);
         }
-    }
-
-    @I("^existeixen els vals de descompte per import amb id:$")
-    public void existeixenElsValsDeDescomptePerImportAmbId(List< List<String>> descomptes){
-
-        for(List<String> des: descomptes) {
-            int id = Integer.parseInt(des.get(0));
-            double descomp = Double.parseDouble(des.get(1));
-            String dataCad = des.get(3);
-            Calendar c = Calendar.getInstance();
-            c.set(Integer.parseInt(dataCad.substring(6,9)), Integer.parseInt(dataCad.substring(3,4)), Integer.parseInt(dataCad.substring(0,1)));
-            tpvController.nouDescomptePerImportAmbID(id,descomp,des.get(2),c);
-        }
-
     }
 }

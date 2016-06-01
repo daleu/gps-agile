@@ -408,13 +408,13 @@ public class TPVController {
         llistaDescomptes = descomptesServei.imprimirLlistaDescomptes();
     }
 
-    public void nouDescomptePerImport(double v, String s, String v1) {
+    public void nouDescomptePerImport(String descompte, String dataCaducitat, String impMinim) {
         SimpleDateFormat dF = new SimpleDateFormat("dd/MM/yyyy");
         try {
-            Date date = dF.parse(s);
+            Date date = dF.parse(dataCaducitat);
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
-            descomptesServei.nouDescompte(v,calendar,"Import",v1);
+            descomptesServei.nouDescompte(Double.parseDouble(descompte),calendar,"Import",Double.parseDouble(impMinim));
         } catch (ParseException e) {
             System.out.println(e.getMessage());
         }
@@ -444,7 +444,7 @@ public class TPVController {
             screen = "Descompte no existeix";return;
         }
 
-        if(vendaActual.getPreuTotalDiferencia() <= 0) {
+        if(vendaActual.isEmpty()) {
             screen = "El val no es pot usar en una venda buida";
             return;
         }
@@ -479,11 +479,11 @@ public class TPVController {
             screen = "Possible aplicar descompte";
             return true;
         }
-        screen = "Descompte caducat";
+        else screen = "Descompte caducat";
         return false;
     }
 
-    public void nouDescomptePerPercentatgeAmbID(int id,double descompte, Calendar dataCad) {
+    public void nouDescomptePerPercentatgeAmbID(int id,Double descompte, Calendar dataCad) {
 
 
         descomptesServei.nouDescompte(id,descompte,dataCad,"Percentatge",null);
@@ -491,9 +491,12 @@ public class TPVController {
 
     }
 
-    public void nouDescomptePerImportAmbID(int id, double descompte, String impM, Calendar dataCad) {
-        List<String> s = new ArrayList<>();
-        s.add(impM);
-        descomptesServei.nouDescompte(id,descompte,dataCad,"Percentatge",null);
+    public void nouDescomptePerImportAmbID(String id, String descompte, String importMinim, String dataCad) throws ParseException {
+        SimpleDateFormat dF = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = dF.parse(dataCad);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        descomptesServei.nouDescompte(Integer.parseInt(id),Double.parseDouble(descompte),calendar,"Import",Double.parseDouble(importMinim));
+
     }
 }
