@@ -1,5 +1,6 @@
 package edu.upc.essi.gps.ecommerce;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.ca.*;
 import edu.upc.essi.gps.ecommerce.domain.*;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
@@ -497,5 +498,10 @@ public class StepDefinitions {
     @Quan("^anulo l'us del val de descompte (\\d+)$")
     public void anuloLUsDelValDeDescompte(int idDescompte) throws Throwable {
         tpvController.treureDescompteVendaActual(idDescompte);
+    }
+
+    @Aleshores("^els diners que es retornen per la devolucio son (.+)$")
+    public void elsDinersQueEsRetornenPerLaDevolucioSon(int cash) throws Throwable {
+        assertEquals(cash,tpvController.getRetornDevolucioVenda(),0.01);
     }
 }

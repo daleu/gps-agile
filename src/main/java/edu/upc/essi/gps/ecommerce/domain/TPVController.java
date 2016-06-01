@@ -139,7 +139,9 @@ public class TPVController {
 
     public boolean possibilitatDeRetorn(int idVenda, String codiBarres, int unitatsProd) {
         Venda ven_anterior = vendesServei.trobaPerCodi(idVenda);
-
+        if (ven_anterior == null) {
+            if (vendaActual.getId() == idVenda) {ven_anterior = vendaActual; }
+        }
         if(ven_anterior != null) {
 
             if(ven_anterior.conteLiniaVenda(codiBarres,unitatsProd)) return true;
@@ -505,4 +507,6 @@ public class TPVController {
         }
         else screen = "Descompte no existeix";
     }
+
+    public double getRetornDevolucioVenda() { return vendaActual.getRetornDevolucio(); }
 }

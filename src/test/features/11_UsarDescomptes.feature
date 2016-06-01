@@ -14,7 +14,7 @@ Característica: Usar els vals de descomptes en les vendes
       | 555 | 20 | 80 | 25/05/2020 |
       | 666 | 30 | 100 | 24/07/2020 |
       | 777 | 5.30 | 20 | 25/06/2000 |
-    I existeix el producte "Pin i Pon" amb codi de barres "5353" i preu per unitat 5
+    I existeix el producte "Pin i Pon" amb codi de barres "5353" i preu per unitat 5 i iva 0,21
     I que estem a dia i hora "25/05/2016 16:04:50"
     # Ultim val caducat
 
@@ -101,3 +101,17 @@ Característica: Usar els vals de descomptes en les vendes
     I anulo l'us del val de descompte 444
     Quan uso el val de descompte 555
     Aleshores el preu total de la venda es 80
+
+  Escenari: Venda completa amb descomptes i devolucions
+    Donat el TPV esta a la botiga "Carroça"
+    I es va fer una venda amb id 111 dels següens productes i seguents unitats
+      |5353|20|
+    I es vol indicar una devolucio de 5 unitats del producte "5353" de la venda 111 sense motiu
+    I uso el val de descompte 444
+    I l'empleat que ha iniciat la venda es diu "Joan"
+    I que estem a dia i hora "21/02/2016 20:24:10"
+    Quan indico que el client paga 100 euros en efectiu
+    I es finalitza la venda
+    Aleshores els diners que es retornen per la devolucio son -25
+    I el preu total de la venda es 65
+    I el valor a retornar al client és de 35

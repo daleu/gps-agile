@@ -27,7 +27,7 @@ public class Venda implements Entity {
     private Calendar dataIHora;
     private Integer idTorn;
     private Tiquet tiquet;
-    private Double preuSubtotal, preuSubtotalSenseDevolucions, preuADividir, preuSubtotalSenseDescomptes;
+    private Double preuTotal, preuSubtotal, preuADividir, preuSubtotalAmbDevolucio;
     private List<Devolucio> devolucions;
     private List<Descompte> descomptes;
 
@@ -41,7 +41,7 @@ public class Venda implements Entity {
         tipusPagament = EFECTIU;
         devolucions = new ArrayList<>();
         descomptes = new ArrayList<>();
-        preuSubtotal = preuSubtotalSenseDevolucions = preuADividir = preuSubtotalSenseDescomptes = 0.0;
+        preuTotal = preuSubtotal = preuADividir = preuSubtotalAmbDevolucio = 0.0;
     }
 
     public int getId() {
@@ -76,28 +76,28 @@ public class Venda implements Entity {
 
     public boolean isFinalitzada() {return finalitzada;}
 
-    public double getPreuTotal() { return preuSubtotal; }
+    public double getPreuTotal() { return preuTotal; }
 
     public double getPreuADividir() {return preuADividir; }
 
     public void aplicarDescompte(Descompte descompte) {
         if (descompte instanceof DescomptePercentatge) {
-            preuSubtotal *= (100.0 - descompte.getDescompte())/100.0;
-            preuADividir = preuSubtotal;
+            preuTotal *= (100.0 - descompte.getDescompte())/100.0;
+            preuADividir = preuTotal;
         }
         else if (descompte instanceof DescompteImport) {
-            preuSubtotal -= descompte.getDescompte();
+            preuTotal -= descompte.getDescompte();
             preuADividir -= ((DescompteImport) descompte).getImportMinim();
         }
     }
 
     public void retirarDescompte(Descompte descompte) {
         if (descompte instanceof DescomptePercentatge) {
-            preuSubtotal /= (100.0 - descompte.getDescompte())/100.0;
-            preuADividir = preuSubtotal;
+            preuTotal /= (100.0 - descompte.getDescompte())/100.0;
+            preuADividir = preuTotal;
         }
         else if (descompte instanceof DescompteImport) {
-            preuSubtotal += descompte.getDescompte();
+            preuTotal += descompte.getDescompte();
             preuADividir += ((DescompteImport) descompte).getImportMinim();
         }
     }
@@ -146,16 +146,16 @@ public class Venda implements Entity {
             else ++i;
         }
         if (jahies) {
-            preuSubtotal -= liniesVenda.get(i).getPreuTotal();
+            preuTotal -= liniesVenda.get(i).getPreuTotal();
             liniesVenda.get(i).incrementaQuantitat(unitats);
-            preuSubtotal += liniesVenda.get(i).getPreuTotal();
+            preuTotal += liniesVenda.get(i).getPreuTotal();
         }
         else {
             LiniaVenda liniaVenda = new LiniaVenda(p,unitats);
             liniesVenda.add(liniaVenda);
-            preuSubtotal += liniaVenda.getPreuTotal();
+            preuTotal += liniaVenda.getPreuTotal();
         }
-        preuADividir = preuSubtotalSenseDevolucions = preuSubtotalSenseDescomptes = preuSubtotal;
+        preuADividir = preuSubtotal = preuSubtotalAmbDevolucio = preuTotal;
     }
 
     public int getNombreLiniesVenda() {
@@ -179,8 +179,8 @@ public class Venda implements Entity {
     }
 
     public void afegeixDevolucio(Devolucio dev) {
-        preuSubtotal -= dev.getProducteRetornat().getPreuUnitat()*dev.getUnitatsProducte();
-        preuADividir = preuSubtotal;
+        preuTotal -= dev.getProducteRetornat().getPreuUnitat()*dev.getUnitatsProducte();
+        preuADividir = preuSubtotalAmbDevolucio = preuTotal;
         devolucions.add(dev);
     }
 
@@ -242,8 +242,9 @@ public class Venda implements Entity {
 
         if(devolucions.size() > 0) {
 
-            tiquet.addLinia(sep + "Total a pagar: "+ new DecimalFormat("##.##").format(preuSubtotalSenseDevolucions) + sep);
-            tiquet.addLinia(sep + "Total en retorn: "+ new DecimalFormat("##.##").format(preuSubtotal - preuSubtotalSenseDescomptes) + sep);
+            tiquet.addLinia(sep + "Total a pagar: "+ new DecimalFormat("##.##").format(preuSubtotal) + sep);
+            tiquet.addLinia(sep + "Total en retorn: "+ new DecimalFormat("##.##").format(preuSubtotalAmbDevolucio - preuSubtotal)
+                    + sep);
 
         }
 
@@ -336,5 +337,9 @@ public class Venda implements Entity {
     public void treureDescompte(Descompte d) {
         boolean aplicat = descomptes.remove(d);
         if (aplicat) retirarDescompte(d);
+    }
+
+    public double getRetornDevolucio() {
+        return Double.parseDouble(new DecimalFormat("##.##").format(preuSubtotalAmbDevolucio - preuSubtotal));
     }
 }
