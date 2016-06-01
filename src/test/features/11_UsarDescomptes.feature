@@ -54,3 +54,19 @@ Característica: Usar els vals de descomptes en les vendes
     Quan uso el val de descompte 111
     I uso el val de descompte 444
     Aleshores el preu total de la venda es 177,5
+
+  Escenari: Anular un descompte ja introduït
+    Donat que hi ha una venda iniciada
+    I s'afegeix a la linia de venda 2 unitats del producte amb codi de barres "5353"
+    I uso el val de descompte 111
+    I uso el val de descompte 222
+    Quan anulo l'us del val de descompte 111
+    Aleshores el preu total de la venda es 5
+
+  Escenari: Anular un descompte no introduït
+    Donat que hi ha una venda iniciada
+    I s'afegeix a la linia de venda 2 unitats del producte amb codi de barres "5353"
+    I uso el val de descompte 111
+    I uso el val de descompte 222
+    Quan anulo l'us del val de descompte 333
+    Aleshores el preu total de la venda es 3,75

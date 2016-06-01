@@ -499,4 +499,12 @@ public class TPVController {
         descomptesServei.nouDescompte(Integer.parseInt(id),Double.parseDouble(descompte),calendar,"Import",Double.parseDouble(importMinim));
 
     }
+
+    public void anularDescompteVendaActual(int idDescompte) {
+        Descompte descompte = descomptesServei.trobaPerCodi(idDescompte);
+        if (descompte != null) {
+            vendaActual.treureDescompte(descompte);
+        }
+        else screen = "Descompte no existeix";
+    }
 }

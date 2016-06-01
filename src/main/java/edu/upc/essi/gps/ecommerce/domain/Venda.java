@@ -328,4 +328,7 @@ public class Venda implements Entity {
         else return true;
     }
 
+    public void treureDescompte(Descompte d) {
+        descomptes.remove(d);
+    }
 }

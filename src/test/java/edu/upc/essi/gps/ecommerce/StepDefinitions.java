@@ -495,4 +495,9 @@ public class StepDefinitions {
             tpvController.nouDescomptePerPercentatgeAmbID(id,descomp,calendar);
         }
     }
+
+    @Quan("^anulo l'us del val de descompte (\\d+)$")
+    public void anuloLUsDelValDeDescompte(int idDescompte) throws Throwable {
+        tpvController.anularDescompteVendaActual(idDescompte);
+    }
 }
