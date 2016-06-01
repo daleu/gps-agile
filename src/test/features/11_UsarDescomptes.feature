@@ -33,7 +33,7 @@ Característica: Usar els vals de descomptes en les vendes
     Donat que hi ha una venda iniciada
     I s'afegeix a la linia de venda 10 unitats del producte amb codi de barres "5353"
     Quan uso el val de descompte 444
-    Aleshores el preu total de la venda es 50
+    Aleshores el preu total de la venda es 40
 
   Escenari: Usar un val de descompte i que aquest estigui caducat
     Donat que hi ha una venda iniciada
@@ -53,4 +53,4 @@ Característica: Usar els vals de descomptes en les vendes
     I s'afegeix a la linia de venda 50 unitats del producte amb codi de barres "5353"
     Quan uso el val de descompte 111
     I uso el val de descompte 444
-    Aleshores el preu total de la venda es 65
+    Aleshores el preu total de la venda es 177,5
