@@ -34,13 +34,13 @@ public class LiniaVenda {
                 N = ((OfertaNxM) llistaOfertes.get(i)).getN();
                 M = ((OfertaNxM) llistaOfertes.get(i)).getM();
             }
-            if(dataIHora.before(datafi) && dataIHora.after(dataIni) && quantitat==N){
+            if(dataIHora.before(datafi) && dataIHora.after(dataIni) && quantitat>=N){
                 ofertaNxMUtilitzada = true;
+                ofertaM = (quantitat/N)*M+quantitat%N;
             }
         }
         if(ofertaNxMUtilitzada){
-            ofertaM = M;
-            return producte.getPreuUnitat()*M;
+            return producte.getPreuUnitat()*ofertaM;
         }
         else{
             return producte.getPreuUnitat()*quantitat;
