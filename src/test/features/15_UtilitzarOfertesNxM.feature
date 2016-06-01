@@ -55,3 +55,20 @@ Característica: Utilitzar Ofertes de NxM
     I la linia 5 del tiquet sera " | Total: 10 | Canvi: 10 | Pagat en efectiu | "
     I la linia 6 del tiquet sera " | 03/06/2016 20:24:10 | "
     I la linia 7 del tiquet sera " | Atès per: Joan | "
+
+  Escenari: Si hem falta un producte per aplicar l'oferta, opto per no aplicar el producte
+    Donat que estem a dia i hora "03/06/2016 20:24:10"
+    I s'afegeix a la linia de venda 1 unitats del producte amb codi de barres "333"
+    I es finalitza la venda
+    I obtinc 1 missatge
+    I missatge 1 es "Es pot aplicar una oferta 2x1 pel producte Raqueta. Vols aplicar-la?"
+    Quan indico que vull no aplicar l'oferta pel producte "Raqueta"
+    Aleshores indico que el client paga 20 euros en efectiu
+    I es finalitza la venda
+    I la linia 1 del tiquet sera " | Nom botiga: Girona | "
+    I la linia 2 del tiquet sera " | Num. Venda: 1 | Codi Tiquet: C1"
+    I la linia 3 del tiquet sera " | 1 | Raqueta | P.u. 10 | P.l. 10 | "
+    I la linia 4 del tiquet sera " | 21.0% | P.B: 8,26 | P.T: 10 | "
+    I la linia 5 del tiquet sera " | Total: 10 | Canvi: 10 | Pagat en efectiu | "
+    I la linia 6 del tiquet sera " | 03/06/2016 20:24:10 | "
+    I la linia 7 del tiquet sera " | Atès per: Joan | "

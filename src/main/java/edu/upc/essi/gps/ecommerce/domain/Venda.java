@@ -360,8 +360,8 @@ public class Venda implements Entity {
         return existeixenOfertesPerProductes;
     }
 
-    public String getMissatgeOferta(int arg0) {
-        return ofertesDisponibles.get(arg0-1);
+    public String getMissatgeOferta(int posicioMissatge) {
+        return ofertesDisponibles.get(posicioMissatge-1);
     }
 
     public int getNumMissatgesOferta() {
@@ -372,6 +372,14 @@ public class Venda implements Entity {
         for(LiniaVenda lv : liniesVenda){
             if(lv.getNomProducte().equals(nomP)){
                 lv.setQuantitatOferta();
+            }
+        }
+    }
+
+    public void noAplicarOfertaSobreProducte(String nomP) {
+        for(LiniaVenda lv : liniesVenda){
+            if(lv.getNomProducte().equals(nomP)){
+                lv.noAplicarOferta();
             }
         }
     }

@@ -16,6 +16,7 @@ public class LiniaVenda {
     private Producte producte;
     private int quantitat;
     private int ofertaM = 0;
+    private boolean ofertaAplicada = true;
 
     public LiniaVenda(Producte p,Integer q){
         this.producte = p;
@@ -99,17 +100,21 @@ public class LiniaVenda {
     }
 
     public boolean comprovarOfertaMxN(Calendar dataIHora) {
-        ArrayList<Oferta> llistaOfertes = producte.getOfertes();
         boolean existeix = false;
-        for(int i = 0; i<llistaOfertes.size(); ++i){
-            Calendar dataIni = llistaOfertes.get(i).getDataInici();
-            Calendar datafi = llistaOfertes.get(i).getDataFinal();
-            int N = 0;
-            if(llistaOfertes.get(i) instanceof OfertaNxM){
-                N = ((OfertaNxM) llistaOfertes.get(i)).getN();
-            }
-            if(dataIHora.before(datafi) && dataIHora.after(dataIni) && quantitat==N-1){
-                existeix = true;
+        if(ofertaAplicada==true) {
+            ArrayList<Oferta> llistaOfertes = producte.getOfertes();
+            for (int i = 0; i < llistaOfertes.size(); ++i) {
+                Calendar dataIni = llistaOfertes.get(i).getDataInici();
+                Calendar datafi = llistaOfertes.get(i).getDataFinal();
+                int N = 0;
+                int M = 0;
+                if (llistaOfertes.get(i) instanceof OfertaNxM) {
+                    N = ((OfertaNxM) llistaOfertes.get(i)).getN();
+                    M = ((OfertaNxM) llistaOfertes.get(i)).getM();
+                }
+                if (dataIHora.before(datafi) && dataIHora.after(dataIni) && (quantitat == N - 1 || quantitat==M)){
+                    existeix = true;
+                }
             }
         }
         return existeix;
@@ -135,5 +140,9 @@ public class LiniaVenda {
             }
         }
         quantitat = aux.getN();
+    }
+
+    public void noAplicarOferta() {
+        ofertaAplicada = false;
     }
 }

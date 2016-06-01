@@ -583,8 +583,8 @@ public class StepDefinitions {
     }
 
     @Quan("^indico que vull aplicar l'oferta pel producte \"([^\"]*)\"$")
-    public void indicoQueVullAplicarLOfertaPelProducte(String arg0) throws Throwable {
-        tpvController.aplicarOferta(arg0);
+    public void indicoQueVullAplicarLOfertaPelProducte(String nomP) throws Throwable {
+        tpvController.aplicarOferta(nomP);
     }
 
     @I("^obtinc (\\d+) missatge$")
@@ -593,7 +593,12 @@ public class StepDefinitions {
     }
 
     @I("^missatge (\\d+) es \"([^\"]*)\"$")
-    public void missatgeEs(int arg0, String arg1) throws Throwable {
-        assertEquals(arg1,tpvController.getMiisatgeOferta(arg0));
+    public void missatgeEs(int numMissatge, String missatge) throws Throwable {
+        assertEquals(missatge,tpvController.getMiisatgeOferta(numMissatge));
+    }
+
+    @Quan("^indico que vull no aplicar l'oferta pel producte \"([^\"]*)\"$")
+    public void indicoQueVullNoAplicarLOfertaPelProducte(String nomP) throws Throwable {
+        tpvController.noAplicarOferta(nomP);
     }
 }
