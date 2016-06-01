@@ -515,14 +515,21 @@ public class TPVController {
     // Ofertes
     //-----------------------------------
 
-    public void afegirOfertaAProducte(int id, int N, int M, Calendar calendarInici, Calendar calendarFinal, String idProducte) throws ProducteNoExisteixException {
+    public void afegirOfertaNxMAProducte(int id, int N, int M, Calendar calendarInici, Calendar calendarFinal, String idProducte) throws ProducteNoExisteixException {
         String[] productes = idProducte.split(",");
         for (int i = 0; i < productes.length; i++) {
-                cataleg.getProductePerCodi(productes[i]).afegirOferta(id, N, M, calendarInici, calendarFinal);
+                cataleg.getProductePerCodi(productes[i]).afegirOfertaNxM(id, N, M, calendarInici, calendarFinal);
         }
     }
 
     public boolean existeixOfertaAlProducte(int id, String idProducte) throws ProducteNoExisteixException {
         return (cataleg.getProductePerCodi(idProducte).existeixOferta(id));
+    }
+
+    public void afegirOfertaPercentatgeAProducte(int id, int percentatge, Calendar calendarInici, Calendar calendarFinal, String idProducte) throws ProducteNoExisteixException {
+        String[] productes = idProducte.split(",");
+        for (int i = 0; i < productes.length; i++) {
+            cataleg.getProductePerCodi(productes[i]).afegirOfertaPercentatge(id, percentatge, calendarInici, calendarFinal);
+        }
     }
 }

@@ -518,12 +518,28 @@ public class StepDefinitions {
             date = dF.parse(oferta.get(4));
             Calendar calendarFinal = Calendar.getInstance();
             calendarFinal.setTime(date);
-            tpvController.afegirOfertaAProducte(id,N,M,calendarInici,calendarFinal,oferta.get(5));
+            tpvController.afegirOfertaNxMAProducte(id,N,M,calendarInici,calendarFinal,oferta.get(5));
         }
     }
 
-    @Aleshores("^existeix la oferta NxM amb id (\\d+) en el producte \"([^\"]*)\"$")
+    @Aleshores("^existeix la oferta amb id (\\d+) en el producte \"([^\"]*)\"$")
     public void existeixLaOfertaNxMEnElProducte(int id, String idProducte) throws Throwable {
         assertEquals(true,tpvController.existeixOfertaAlProducte(id,idProducte));
+    }
+
+    @Quan("^s'introdueix al sistema les ofertes per percentatge:$")
+    public void sIntrodueixAlSistemaLesOfertesPerPercentatge(List< List<String>> ofertes) throws Throwable {
+        for(List<String> oferta: ofertes) {
+            int id = Integer.parseInt(oferta.get(0));
+            int percentatge = Integer.parseInt(oferta.get(1));
+            SimpleDateFormat dF = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = dF.parse(oferta.get(2));
+            Calendar calendarInici = Calendar.getInstance();
+            calendarInici.setTime(date);
+            date = dF.parse(oferta.get(3));
+            Calendar calendarFinal = Calendar.getInstance();
+            calendarFinal.setTime(date);
+            tpvController.afegirOfertaPercentatgeAProducte(id,percentatge,calendarInici,calendarFinal,oferta.get(4));
+        }
     }
 }
