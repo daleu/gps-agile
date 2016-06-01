@@ -543,6 +543,24 @@ public class StepDefinitions {
         }
     }
 
+
+    @I("^existeixen al sistema les ofertes NxM:$")
+    public void existeixenAlSistemaLesOfertesNxM(List< List<String>> ofertes) throws Throwable {
+        for(List<String> oferta: ofertes) {
+            int id = Integer.parseInt(oferta.get(0));
+            int N = Integer.parseInt(oferta.get(1));
+            int M = Integer.parseInt(oferta.get(2));
+            SimpleDateFormat dF = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = dF.parse(oferta.get(3));
+            Calendar calendarInici = Calendar.getInstance();
+            calendarInici.setTime(date);
+            date = dF.parse(oferta.get(4));
+            Calendar calendarFinal = Calendar.getInstance();
+            calendarFinal.setTime(date);
+            tpvController.afegirOfertaNxMAProducte(id, N, M, calendarInici, calendarFinal, oferta.get(5));
+        }
+    }
+
     @Quan("^s'introdueix al sistema les ofertes de regal:$")
     public void sIntrodueixAlSistemaLesOfertesDeRegal(List< List<String>> ofertes) throws Throwable {
         for(List<String> oferta: ofertes) {
@@ -562,5 +580,20 @@ public class StepDefinitions {
     @Quan("^demano la llista d'ofertes per producte$")
     public void demanoLaLlistaDOfertesPerProducte() throws Throwable {
         tpvController.llistarOfertesPerProducte();
+    }
+
+    @Quan("^indico que vull aplicar l'oferta pel producte \"([^\"]*)\"$")
+    public void indicoQueVullAplicarLOfertaPelProducte(String arg0) throws Throwable {
+        tpvController.aplicarOferta(arg0);
+    }
+
+    @I("^obtinc (\\d+) missatge$")
+    public void obtincMissatge(int arg0) throws Throwable {
+        assertEquals(arg0,tpvController.getNumMissatgesOferta());
+    }
+
+    @I("^missatge (\\d+) es \"([^\"]*)\"$")
+    public void missatgeEs(int arg0, String arg1) throws Throwable {
+        assertEquals(arg1,tpvController.getMiisatgeOferta(arg0));
     }
 }

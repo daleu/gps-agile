@@ -94,15 +94,15 @@ public class TPVController {
                     screen = "Error: El resultat de la venda es negatiu, i hauria de ser positiu";
                 }
 
-                vendesServei.guardarVenda(vendaActual);
-
                 if (tornActual != null && (vendaActual.getTipusPagament() != "amb tarjeta") ) {
                     tornActual.incrementDinersEnCaixa(vendaActual.getPreuTotal());
                 }
 
                 vendaActual.gestionarDevolucions(devolucionsServei);
-
-                vendaActual.finalitzar(tornActual);
+                if(!vendaActual.existeixenOfertes()){
+                    vendaActual.finalitzar(tornActual);
+                    vendesServei.guardarVenda(vendaActual);
+                }
             }
             else throw new VendaJaFinalitzadaException();
         }
@@ -549,6 +549,7 @@ public class TPVController {
         }
     }
 
+
     public void llistarOfertesPerProducte() throws ProducteNoExisteixException {
         ArrayList<Producte> productesPerNom = cataleg.getAllProductesPerNom();
         ListIterator<Producte> index = productesPerNom.listIterator();
@@ -562,4 +563,15 @@ public class TPVController {
         screen = llista.toString();
     }
 
+    public String getMiisatgeOferta(int arg0) {
+        return vendaActual.getMissatgeOferta(arg0);
+    }
+
+    public int getNumMissatgesOferta() {
+        return vendaActual.getNumMissatgesOferta();
+    }
+
+    public void aplicarOferta(String nomP) {
+        vendaActual.aplicarOfertaSobreProducte(nomP);
+    }
 }

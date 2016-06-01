@@ -115,4 +115,6 @@ public class Producte {
         }
         return llista.toString();
     }
+
+    public ArrayList <Oferta> getOfertes() { return this.ofertes; }
 }

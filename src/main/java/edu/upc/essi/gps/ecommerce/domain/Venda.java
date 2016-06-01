@@ -4,6 +4,8 @@ import edu.upc.essi.gps.domain.Entity;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.Descompte;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.DescompteImport;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.DescomptePercentatge;
+import edu.upc.essi.gps.ecommerce.domain.ofertes.Oferta;
+import edu.upc.essi.gps.ecommerce.domain.ofertes.OfertaNxM;
 import edu.upc.essi.gps.ecommerce.exceptions.DevolucioNoPossibleException;
 import edu.upc.essi.gps.ecommerce.exceptions.ModeDePagamentIncorrecteException;
 import edu.upc.essi.gps.ecommerce.exceptions.NoHiHaTiquetException;
@@ -30,6 +32,7 @@ public class Venda implements Entity {
     private Double preuTotal, preuSubtotal, preuADividir, preuSubtotalAmbDevolucio;
     private List<Devolucio> devolucions;
     private List<Descompte> descomptes;
+    private ArrayList<String> ofertesDisponibles = new ArrayList<String>();
 
     public Venda(int numVenda) {
         this.id = numVenda;
@@ -146,14 +149,14 @@ public class Venda implements Entity {
             else ++i;
         }
         if (jahies) {
-            preuTotal -= liniesVenda.get(i).getPreuTotal();
+            preuTotal -= liniesVenda.get(i).getPreuTotal(dataIHora);
             liniesVenda.get(i).incrementaQuantitat(unitats);
-            preuTotal += liniesVenda.get(i).getPreuTotal();
+            preuTotal += liniesVenda.get(i).getPreuTotal(dataIHora);
         }
         else {
             LiniaVenda liniaVenda = new LiniaVenda(p,unitats);
             liniesVenda.add(liniaVenda);
-            preuTotal += liniaVenda.getPreuTotal();
+            preuTotal += liniaVenda.getPreuTotal(dataIHora);
         }
         preuADividir = preuSubtotal = preuSubtotalAmbDevolucio = preuTotal;
     }
@@ -226,7 +229,7 @@ public class Venda implements Entity {
         tiquet.addLinia(sep + "Num. Venda: " + id + sep + "Codi Tiquet: C" + tiquet.getNum());
         for (LiniaVenda lv : liniesVenda) {
             tiquet.addLinia(sep + lv.getQuantitat() + sep + lv.getNomProducte() + sep + "P.u. " + new DecimalFormat("##.##").format(lv.getPreuUnitat()) + sep
-                    + "P.l. " + new DecimalFormat("##.##").format(lv.getPreuTotal()) + sep);
+                    + "P.l. " + new DecimalFormat("##.##").format(lv.getPreuTotal(dataIHora)) + sep);
         }
 
         if (devolucions.size() > 0) liniesTiquetDevolucio();
@@ -341,5 +344,35 @@ public class Venda implements Entity {
 
     public double getRetornDevolucio() {
         return Double.parseDouble(new DecimalFormat("##.##").format(preuSubtotalAmbDevolucio - preuSubtotal));
+    }
+
+    public boolean existeixenOfertes() {
+        boolean existeixenOfertesPerProductes = false;
+        for (LiniaVenda lv : liniesVenda) {
+            boolean existeixOferta = lv.comprovarOfertaMxN(dataIHora);
+            if(existeixOferta){
+                existeixenOfertesPerProductes = true;
+                OfertaNxM ofertaActualProducte = lv.getOfertaNxM();
+                String nomP = lv.getNomProducte();
+                ofertesDisponibles.add("Es pot aplicar una oferta "+ofertaActualProducte.getN()+"x"+ofertaActualProducte.getM()+" pel producte "+nomP+". Vols aplicar-la?");
+            }
+        }
+        return existeixenOfertesPerProductes;
+    }
+
+    public String getMissatgeOferta(int arg0) {
+        return ofertesDisponibles.get(arg0-1);
+    }
+
+    public int getNumMissatgesOferta() {
+        return ofertesDisponibles.size();
+    }
+
+    public void aplicarOfertaSobreProducte(String nomP) {
+        for(LiniaVenda lv : liniesVenda){
+            if(lv.getNomProducte().equals(nomP)){
+                lv.setQuantitatOferta();
+            }
+        }
     }
 }
