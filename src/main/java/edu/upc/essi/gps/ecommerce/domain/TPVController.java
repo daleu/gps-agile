@@ -4,6 +4,9 @@ import edu.upc.essi.gps.ecommerce.domain.descomptes.Descompte;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.DescompteImport;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.DescomptePercentatge;
 import edu.upc.essi.gps.ecommerce.domain.ofertes.Oferta;
+import edu.upc.essi.gps.ecommerce.domain.ofertes.OfertaNxM;
+import edu.upc.essi.gps.ecommerce.domain.ofertes.OfertaPercentatge;
+import edu.upc.essi.gps.ecommerce.domain.ofertes.OfertaRegal;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
 import edu.upc.essi.gps.ecommerce.repositoris.DescomptesServei;
 import edu.upc.essi.gps.ecommerce.repositoris.TornServei;
@@ -533,10 +536,30 @@ public class TPVController {
         }
     }
 
-    public void afegirOfertaRegalAProducte(int id, int quantitat, String idRegal, Calendar calendarInici, Calendar calendarFinal, String idProducte) throws ProducteNoExisteixException {
+    public void afegirOfertaRegalAProducte(int id, String quantitat, String idRegal, Calendar calendarInici, Calendar calendarFinal, String idProducte) throws ProducteNoExisteixException {
         String[] productes = idProducte.split(",");
+        String[] regals = idRegal.split(",");
+        StringBuilder nomRegals = new StringBuilder();
+        for (int j = 0; j < regals.length; j++) {
+            nomRegals.append(cataleg.getProductePerCodi(regals[j]).getNom());
+            if (j+1 < regals.length) nomRegals.append(",");
+        }
         for (int i = 0; i < productes.length; i++) {
-            cataleg.getProductePerCodi(productes[i]).afegirOfertaRegal(id, quantitat, idRegal, calendarInici, calendarFinal);
+            cataleg.getProductePerCodi(productes[i]).afegirOfertaRegal(id, quantitat, nomRegals.toString(), calendarInici, calendarFinal);
         }
     }
+
+    public void llistarOfertesPerProducte() throws ProducteNoExisteixException {
+        ArrayList<Producte> productesPerNom = cataleg.getAllProductesPerNom();
+        ListIterator<Producte> index = productesPerNom.listIterator();
+        StringBuilder llista = new StringBuilder();
+        Producte prod;
+        while (index.hasNext()) {
+            prod = index.next();
+            llista.append(prod.getOfertesProducte());
+            if (index.hasNext()) llista.append("| ");
+        }
+        screen = llista.toString();
+    }
+
 }

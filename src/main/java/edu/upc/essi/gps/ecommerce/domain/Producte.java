@@ -5,6 +5,7 @@ import edu.upc.essi.gps.ecommerce.domain.ofertes.OfertaNxM;
 import edu.upc.essi.gps.ecommerce.domain.ofertes.OfertaPercentatge;
 import edu.upc.essi.gps.ecommerce.domain.ofertes.OfertaRegal;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ListIterator;
@@ -79,10 +80,39 @@ public class Producte {
         }
     }
 
-    public void afegirOfertaRegal (int id, int quantitat, String idRegal, Calendar calendarInici, Calendar calendarFinal) {
+    public void afegirOfertaRegal (int id, String quantitat, String idRegal, Calendar calendarInici, Calendar calendarFinal) {
         if (!existeixOferta(id)) {
-            OfertaRegal oferta = new OfertaRegal(id, quantitat, idRegal, calendarInici, calendarFinal);
+            OfertaRegal oferta = null;
+            oferta = new OfertaRegal(id, quantitat, idRegal, calendarInici, calendarFinal);
             ofertes.add(oferta);
         }
+    }
+
+    public String getOfertesProducte() {
+        StringBuilder llista = new StringBuilder();
+        Oferta ofert;
+        if (ofertes.size() > 0) {
+            llista.append(nom + " | ");
+            ListIterator<Oferta> index_ofertes = ofertes.listIterator();
+            while (index_ofertes.hasNext()) {
+                ofert = index_ofertes.next();
+                if (ofert instanceof OfertaNxM) {
+                    llista.append(String.valueOf(((OfertaNxM) ofert).getN()) + "x" +
+                            String.valueOf(((OfertaNxM) ofert).getM()) + " | ");
+                } else if (ofert instanceof OfertaPercentatge) {
+                    llista.append(String.valueOf(((OfertaPercentatge) ofert).getPercentatge()) + "% | ");
+                } else if (ofert instanceof OfertaRegal) {
+                    llista.append("Regalem: " + ((OfertaRegal) ofert).getIdRegal() +
+                            " | Quantitat: " + ((OfertaRegal) ofert).getQuantitat() +
+                            " | ");
+                }
+                SimpleDateFormat dF = new SimpleDateFormat("dd/MM/yyyy");
+                String dataI = dF.format(ofert.getDataInici().getTime());
+                String dataF = dF.format(ofert.getDataFinal().getTime());
+                llista.append(dataI + " | " + dataF + " |");
+                if (index_ofertes.hasNext()) { llista.append(" - "); }
+            }
+        }
+        return llista.toString();
     }
 }

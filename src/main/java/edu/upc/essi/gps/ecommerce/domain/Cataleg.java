@@ -2,6 +2,7 @@ package edu.upc.essi.gps.ecommerce.domain;
 
 import edu.upc.essi.gps.ecommerce.exceptions.ProducteNoExisteixException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,5 +50,13 @@ public class Cataleg {
     public double getPreuUnitatProducte(String nomProducte) {
         Producte p = productesPerNom.get(nomProducte);
         return p.getPreuUnitat();
+    }
+
+    public ArrayList<Producte> getAllProductesPerNom() {
+        ArrayList<Producte> productes = new ArrayList<>();
+        for (String key: productesPerNom.keySet()) {
+            productes.add(productesPerNom.get(key));
+        }
+        return productes;
     }
 }

@@ -1,5 +1,6 @@
 package edu.upc.essi.gps.ecommerce.domain.ofertes;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -9,9 +10,9 @@ import java.util.Calendar;
 public class OfertaRegal extends Oferta {
 
     private String idRegal;
-    private int quantitat;
+    private String quantitat;
 
-    public OfertaRegal(int id, int quantitat, String idRegal, Calendar dataInici, Calendar dataFinal) {
+    public OfertaRegal(int id, String quantitat, String idRegal, Calendar dataInici, Calendar dataFinal) {
         super(id, dataInici, dataFinal);
         this.idRegal = idRegal;
         this.quantitat = quantitat;
@@ -19,5 +20,5 @@ public class OfertaRegal extends Oferta {
 
     public String getIdRegal() { return this.idRegal; }
 
-    public int getQuantitat() { return this.quantitat; }
+    public String getQuantitat() { return this.quantitat; }
 }
