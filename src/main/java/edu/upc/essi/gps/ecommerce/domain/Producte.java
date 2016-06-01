@@ -3,6 +3,7 @@ package edu.upc.essi.gps.ecommerce.domain;
 import edu.upc.essi.gps.ecommerce.domain.ofertes.Oferta;
 import edu.upc.essi.gps.ecommerce.domain.ofertes.OfertaNxM;
 import edu.upc.essi.gps.ecommerce.domain.ofertes.OfertaPercentatge;
+import edu.upc.essi.gps.ecommerce.domain.ofertes.OfertaRegal;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -78,7 +79,15 @@ public class Producte {
         }
     }
 
+
     public ArrayList<Oferta> getOfertes() {
         return ofertes;
+    }
+
+    public void afegirOfertaRegal (int id, int quantitat, String idRegal, Calendar calendarInici, Calendar calendarFinal) {
+        if (!existeixOferta(id)) {
+            OfertaRegal oferta = new OfertaRegal(id, quantitat, idRegal, calendarInici, calendarFinal);
+            ofertes.add(oferta);
+        }
     }
 }

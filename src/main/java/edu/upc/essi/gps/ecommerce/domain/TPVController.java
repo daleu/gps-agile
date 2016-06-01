@@ -532,4 +532,11 @@ public class TPVController {
             cataleg.getProductePerCodi(productes[i]).afegirOfertaPercentatge(id, percentatge, calendarInici, calendarFinal);
         }
     }
+
+    public void afegirOfertaRegalAProducte(int id, int quantitat, String idRegal, Calendar calendarInici, Calendar calendarFinal, String idProducte) throws ProducteNoExisteixException {
+        String[] productes = idProducte.split(",");
+        for (int i = 0; i < productes.length; i++) {
+            cataleg.getProductePerCodi(productes[i]).afegirOfertaRegal(id, quantitat, idRegal, calendarInici, calendarFinal);
+        }
+    }
 }
