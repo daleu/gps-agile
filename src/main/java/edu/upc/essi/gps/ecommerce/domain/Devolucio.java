@@ -16,15 +16,6 @@ public class Devolucio implements Entity {
     public Devolucio() {
     }
 
-    public Devolucio(int idVendaCompra, int idVendaRetorn,  Producte prodRetornat, int unitatsProducte, String motiu) {
-        DevolucionsServei devolucionsServei = new DevolucionsServei();
-        this.idVendaCompra = idVendaCompra;
-        this.idVendaRetorn = idVendaRetorn;
-        this.prodRetornat = prodRetornat;
-        this.unitatsProducte = unitatsProducte;
-        this.motiu = motiu;
-    }
-
     public String getMotiu() {
         return motiu;
     }

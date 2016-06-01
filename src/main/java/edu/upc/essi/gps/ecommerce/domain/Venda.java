@@ -2,6 +2,8 @@ package edu.upc.essi.gps.ecommerce.domain;
 
 import edu.upc.essi.gps.domain.Entity;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.Descompte;
+import edu.upc.essi.gps.ecommerce.domain.descomptes.DescompteImport;
+import edu.upc.essi.gps.ecommerce.domain.descomptes.DescomptePercentatge;
 import edu.upc.essi.gps.ecommerce.exceptions.DevolucioNoPossibleException;
 import edu.upc.essi.gps.ecommerce.exceptions.ModeDePagamentIncorrecteException;
 import edu.upc.essi.gps.ecommerce.exceptions.NoHiHaTiquetException;
@@ -25,6 +27,7 @@ public class Venda implements Entity {
     private Calendar dataIHora;
     private Integer idTorn;
     private Tiquet tiquet;
+    private Double preuSubtotal, preuSubtotalSenseDevolucions, preuADividir;
     private List<Devolucio> devolucions;
     private List<Descompte> descomptes;
 
@@ -38,6 +41,7 @@ public class Venda implements Entity {
         tipusPagament = EFECTIU;
         devolucions = new ArrayList<>();
         descomptes = new ArrayList<>();
+        preuSubtotal = preuSubtotalSenseDevolucions = preuADividir = 0.0;
     }
 
     public int getId() {
@@ -72,17 +76,34 @@ public class Venda implements Entity {
 
     public boolean isFinalitzada() {return finalitzada;}
 
-    public double getPreuTotal() {
+    public double getPreuTotal() { return preuSubtotal; }
 
-        double total = 0.0;
+    public double getPreuADividir() {return preuADividir; }
 
-        for (LiniaVenda lv : liniesVenda) {
-            total += lv.getPreuTotal();
+    public void aplicarDescompte(Descompte descompte) {
+        if (descompte instanceof DescomptePercentatge) {
+            preuSubtotal *= (100.0 - descompte.getDescompte())/100.0;
+            preuADividir = preuSubtotal;
         }
-        return total;
+        else if (descompte instanceof DescompteImport) {
+            preuSubtotal -= descompte.getDescompte();
+            preuADividir -= ((DescompteImport) descompte).getImportMinim();
+        }
     }
+
+    public void retirarDescompte(Descompte descompte) {
+        if (descompte instanceof DescomptePercentatge) {
+            preuSubtotal /= (100.0 - descompte.getDescompte())/100.0;
+            preuADividir = preuSubtotal;
+        }
+        else if (descompte instanceof DescompteImport) {
+            preuSubtotal += descompte.getDescompte();
+            preuADividir += ((DescompteImport) descompte).getImportMinim();
+        }
+    }
+
     public double getCanvi() {
-        return preuPagament-getPreuTotal()-getPreuDevolucions();
+        return preuPagament-getPreuTotal();
     }
 
     public String getEmpleat() {
@@ -100,23 +121,6 @@ public class Venda implements Entity {
     //Una venda tindrà la mateixa botiga que el TPV que l'ha iniciada.
     public void setNomBotiga(String nomBotiga) { //NO CRIDAR DIRECTAMENT. Cridar tpvController.setNomBotigaVendaDefinitATPV();
         this.nomBotiga = nomBotiga;
-    }
-
-    public double getPreuDevolucions() {
-        double preuDev = 0;
-        if( devolucions != null) {
-            for (Devolucio dev : devolucions) {
-                preuDev -= dev.getProducteRetornat().getPreuUnitat()*dev.getUnitatsProducte();
-            }
-        }
-
-        return preuDev;
-    }
-
-    public double getPreuTotalDiferencia() {
-        double preu = 0;
-        preu = calculDescompte(getPreuTotal() + getPreuDevolucions());
-        return  preu;
     }
 
     public void setDataIHora(Calendar dataIHora) {
@@ -141,11 +145,17 @@ public class Venda implements Entity {
             if (liniesVenda.get(i).getNomProducte().equals(p.getNom())) jahies = true;
             else ++i;
         }
-        if (jahies) liniesVenda.get(i).incrementaQuantitat(unitats);
+        if (jahies) {
+            preuSubtotal -= liniesVenda.get(i).getPreuTotal();
+            liniesVenda.get(i).incrementaQuantitat(unitats);
+            preuSubtotal += liniesVenda.get(i).getPreuTotal();
+        }
         else {
             LiniaVenda liniaVenda = new LiniaVenda(p,unitats);
             liniesVenda.add(liniaVenda);
+            preuSubtotal += liniaVenda.getPreuTotal();
         }
+        preuADividir = preuSubtotalSenseDevolucions = preuSubtotal;
     }
 
     public int getNombreLiniesVenda() {
@@ -169,7 +179,9 @@ public class Venda implements Entity {
     }
 
     public void afegeixDevolucio(Devolucio dev) {
-       devolucions.add(dev);
+        preuSubtotal -= dev.getProducteRetornat().getPreuUnitat()*dev.getUnitatsProducte();
+        preuADividir = preuSubtotal;
+        devolucions.add(dev);
     }
 
     public void modificarLinia(String codiBarres, int unitatsProd) throws DevolucioNoPossibleException {
@@ -230,13 +242,13 @@ public class Venda implements Entity {
 
         if(devolucions.size() > 0) {
 
-            tiquet.addLinia(sep + "Total a pagar: "+ new DecimalFormat("##.##").format(getPreuTotal()) + sep);
-            tiquet.addLinia(sep + "Total en retorn: "+ new DecimalFormat("##.##").format(getPreuDevolucions()) + sep);
+            tiquet.addLinia(sep + "Total a pagar: "+ new DecimalFormat("##.##").format(preuSubtotalSenseDevolucions) + sep);
+            tiquet.addLinia(sep + "Total en retorn: "+ new DecimalFormat("##.##").format(preuSubtotal - preuSubtotalSenseDevolucions) + sep);
 
         }
 
-            tiquet.addLinia(sep + "Total: " + new DecimalFormat("##.##").format(getPreuTotalDiferencia()) + sep + "Canvi: " +
-                    new DecimalFormat("##.##").format(getCanvi()) + sep + "Pagat " + tipusPagament + sep);
+        tiquet.addLinia(sep + "Total: " + new DecimalFormat("##.##").format(getPreuTotal()) + sep + "Canvi: " +
+            new DecimalFormat("##.##").format(getCanvi()) + sep + "Pagat " + tipusPagament + sep);
 
 
 
@@ -311,16 +323,9 @@ public class Venda implements Entity {
 
     public String getTipusPagament() { return tipusPagament; }
 
-    public void aplicarDescompte(Descompte desc) {
+    public void afegirDescompte(Descompte desc) {
         descomptes.add(desc);
-    }
-
-    public double calculDescompte(double preuFinal){
-
-        for(Descompte dv: descomptes){
-            preuFinal = dv.calcularPreu(preuFinal);
-        }
-        return preuFinal;
+        aplicarDescompte(desc);
     }
 
     public boolean PreuTotalNegatiuTargeta() {
@@ -329,6 +334,7 @@ public class Venda implements Entity {
     }
 
     public void treureDescompte(Descompte d) {
-        descomptes.remove(d);
+        boolean aplicat = descomptes.remove(d);
+        if (aplicat) retirarDescompte(d);
     }
 }

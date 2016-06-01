@@ -2,9 +2,7 @@ package edu.upc.essi.gps.ecommerce.domain;
 
 import edu.upc.essi.gps.ecommerce.domain.descomptes.Descompte;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.DescompteImport;
-import edu.upc.essi.gps.ecommerce.domain.descomptes.DescompteImport;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.DescomptePercentatge;
-import edu.upc.essi.gps.ecommerce.domain.descomptes.FactoriaDescomptes;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
 import edu.upc.essi.gps.ecommerce.repositoris.DescomptesServei;
 import edu.upc.essi.gps.ecommerce.repositoris.TornServei;
@@ -262,7 +260,7 @@ public class TPVController {
     }
 
     public double getTotalVenda() {
-        return vendaActual.getPreuTotalDiferencia();
+        return vendaActual.getPreuTotal();
     }
 
     public int getIdVenda() {
@@ -454,7 +452,7 @@ public class TPVController {
         else if (desc instanceof DescomptePercentatge) tipus = "Percentatge";
 
         if (possibilitatDeDescompte(idDesc,desc,tipus)){
-            vendaActual.aplicarDescompte(desc);
+            vendaActual.afegirDescompte(desc);
         }
     }
 
@@ -467,7 +465,7 @@ public class TPVController {
             switch (tipus) {
                 case "Import":
                     DescompteImport dAux = (DescompteImport) desc;
-                    if (vendaActual.getPreuTotalDiferencia() >= dAux.getImportMinim()) {
+                    if (vendaActual.getPreuADividir() >= dAux.getImportMinim()) {
                         screen = "Possible aplicar descompte";
                         return true;
                     }
@@ -500,7 +498,7 @@ public class TPVController {
 
     }
 
-    public void anularDescompteVendaActual(int idDescompte) {
+    public void treureDescompteVendaActual(int idDescompte) {
         Descompte descompte = descomptesServei.trobaPerCodi(idDescompte);
         if (descompte != null) {
             vendaActual.treureDescompte(descompte);

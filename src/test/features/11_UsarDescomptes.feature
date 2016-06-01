@@ -48,7 +48,7 @@ Característica: Usar els vals de descomptes en les vendes
       Quan uso el val de descompte 555
       Aleshores obtinc un missatge que diu "Import mínim no vàlid"
     
-  Escenari: Usar més d'un val de descompte (combina percentatges i imports)
+  Escenari: Usar més d'un val de descompte (combinar percentatges i imports)
     Donat que hi ha una venda iniciada
     I s'afegeix a la linia de venda 50 unitats del producte amb codi de barres "5353"
     Quan uso el val de descompte 111
@@ -70,3 +70,34 @@ Característica: Usar els vals de descomptes en les vendes
     I uso el val de descompte 222
     Quan anulo l'us del val de descompte 333
     Aleshores el preu total de la venda es 3,75
+
+  Escenari: Usar més d'un val de descompte (combinar percentatges)
+    Donat que hi ha una venda iniciada
+    I s'afegeix a la linia de venda 50 unitats del producte amb codi de barres "5353"
+    Quan uso el val de descompte 111
+    I uso el val de descompte 222
+    Aleshores el preu total de la venda es 93,75
+
+  Escenari: Usar més d'un val de descompte (combinar imports i es pot)
+    Donat que hi ha una venda iniciada
+    I s'afegeix a la linia de venda 50 unitats del producte amb codi de barres "5353"
+    Quan uso el val de descompte 555
+    I uso el val de descompte 444
+    Aleshores el preu total de la venda es 220
+
+  Escenari: Usar més d'un val de descompte (combinar imports i no es pot)
+    #el descompte 555 no es pot aplicar
+    Donat que hi ha una venda iniciada
+    I s'afegeix a la linia de venda 12 unitats del producte amb codi de barres "5353"
+    Quan uso el val de descompte 444
+    I uso el val de descompte 555
+    Aleshores el preu total de la venda es 50
+
+  Escenari: Usar més d'un val de descompte, anular l'ordre i tornar-los a introduir
+    Donat que hi ha una venda iniciada
+    I s'afegeix a la linia de venda 20 unitats del producte amb codi de barres "5353"
+    I uso el val de descompte 444
+    I uso el val de descompte 555
+    I anulo l'us del val de descompte 444
+    Quan uso el val de descompte 555
+    Aleshores el preu total de la venda es 80

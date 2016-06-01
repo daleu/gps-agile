@@ -1,9 +1,7 @@
 package edu.upc.essi.gps.ecommerce;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.ca.*;
 import edu.upc.essi.gps.ecommerce.domain.*;
-import edu.upc.essi.gps.ecommerce.domain.descomptes.FactoriaDescomptes;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
 
 import static org.junit.Assert.assertEquals;
@@ -498,6 +496,6 @@ public class StepDefinitions {
 
     @Quan("^anulo l'us del val de descompte (\\d+)$")
     public void anuloLUsDelValDeDescompte(int idDescompte) throws Throwable {
-        tpvController.anularDescompteVendaActual(idDescompte);
+        tpvController.treureDescompteVendaActual(idDescompte);
     }
 }
