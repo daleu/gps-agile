@@ -542,4 +542,20 @@ public class StepDefinitions {
             tpvController.afegirOfertaPercentatgeAProducte(id,percentatge,calendarInici,calendarFinal,oferta.get(4));
         }
     }
+
+    @Quan("^s'introdueix al sistema les ofertes de regal:$")
+    public void sIntrodueixAlSistemaLesOfertesDeRegal(List< List<String>> ofertes) throws Throwable {
+        for(List<String> oferta: ofertes) {
+            int id = Integer.parseInt(oferta.get(0));
+            int quantitat = Integer.parseInt(oferta.get(1));
+            SimpleDateFormat dF = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = dF.parse(oferta.get(3));
+            Calendar calendarInici = Calendar.getInstance();
+            calendarInici.setTime(date);
+            date = dF.parse(oferta.get(4));
+            Calendar calendarFinal = Calendar.getInstance();
+            calendarFinal.setTime(date);
+            tpvController.afegirOfertaRegalAProducte(id,quantitat,oferta.get(2),calendarInici,calendarFinal,oferta.get(5));
+        }
+    }
 }
