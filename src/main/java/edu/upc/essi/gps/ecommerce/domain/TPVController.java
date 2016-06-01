@@ -540,8 +540,8 @@ public class TPVController {
         }
     }
 
-    public String getMiisatgeOferta(int arg0) {
-        return vendaActual.getMissatgeOferta(arg0);
+    public String getMiisatgeOferta(int numMissatges) {
+        return vendaActual.getMissatgeOferta(numMissatges);
     }
 
     public int getNumMissatgesOferta() {
@@ -552,7 +552,7 @@ public class TPVController {
         vendaActual.aplicarOfertaSobreProducte(nomP);
     }
 
-    public void noAplicarOferta(String arg0) {
-        vendaActual.noAplicarOfertaSobreProducte(arg0);
+    public void noAplicarOferta(String nomP) {
+        vendaActual.noAplicarOfertaSobreProducte(nomP);
     }
 }
