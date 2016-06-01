@@ -25,11 +25,11 @@ public class LiniaVenda {
     public double getPreuTotal(Calendar dataIHora) {
         ArrayList<Oferta> llistaOfertes = producte.getOfertes();
         boolean ofertaNxMUtilitzada = false;
-        int M = 0;
         for(int i = 0; i<llistaOfertes.size(); ++i){
             Calendar dataIni = llistaOfertes.get(i).getDataInici();
             Calendar datafi = llistaOfertes.get(i).getDataFinal();
             int N = 0;
+            int M = 0;
             if(llistaOfertes.get(i) instanceof OfertaNxM){
                 N = ((OfertaNxM) llistaOfertes.get(i)).getN();
                 M = ((OfertaNxM) llistaOfertes.get(i)).getM();
@@ -96,5 +96,44 @@ public class LiniaVenda {
             }
         }
         else return 0.0;
+    }
+
+    public boolean comprovarOfertaMxN(Calendar dataIHora) {
+        ArrayList<Oferta> llistaOfertes = producte.getOfertes();
+        boolean existeix = false;
+        for(int i = 0; i<llistaOfertes.size(); ++i){
+            Calendar dataIni = llistaOfertes.get(i).getDataInici();
+            Calendar datafi = llistaOfertes.get(i).getDataFinal();
+            int N = 0;
+            if(llistaOfertes.get(i) instanceof OfertaNxM){
+                N = ((OfertaNxM) llistaOfertes.get(i)).getN();
+            }
+            if(dataIHora.before(datafi) && dataIHora.after(dataIni) && quantitat==N-1){
+                existeix = true;
+            }
+        }
+        return existeix;
+    }
+
+    public OfertaNxM getOfertaNxM() {
+        OfertaNxM aux = null;
+        ArrayList<Oferta> llistaOfertes = producte.getOfertes();
+        for(int i = 0; i<llistaOfertes.size(); ++i){
+            if(llistaOfertes.get(i) instanceof OfertaNxM){
+                aux = ((OfertaNxM) llistaOfertes.get(i));
+            }
+        }
+        return aux;
+    }
+
+    public void setQuantitatOferta() {
+        OfertaNxM aux = null;
+        ArrayList<Oferta> llistaOfertes = producte.getOfertes();
+        for(int i = 0; i<llistaOfertes.size(); ++i){
+            if(llistaOfertes.get(i) instanceof OfertaNxM){
+                aux = ((OfertaNxM) llistaOfertes.get(i));
+            }
+        }
+        quantitat = aux.getN();
     }
 }

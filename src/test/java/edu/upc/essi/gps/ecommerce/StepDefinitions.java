@@ -576,4 +576,20 @@ public class StepDefinitions {
             tpvController.afegirOfertaRegalAProducte(id,quantitat,oferta.get(2),calendarInici,calendarFinal,oferta.get(5));
         }
     }
+
+    @Quan("^indico que vull aplicar l'oferta pel producte \"([^\"]*)\"$")
+    public void indicoQueVullAplicarLOfertaPelProducte(String arg0) throws Throwable {
+        tpvController.aplicarOferta(arg0);
+    }
+
+    @I("^obtinc (\\d+) missatge$")
+    public void obtincMissatge(int arg0) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        assertEquals(arg0,tpvController.getNumMissatgesOferta());
+    }
+
+    @I("^missatge (\\d+) es \"([^\"]*)\"$")
+    public void missatgeEs(int arg0, String arg1) throws Throwable {
+        assertEquals(arg1,tpvController.getMiisatgeOferta(arg0));
+    }
 }
