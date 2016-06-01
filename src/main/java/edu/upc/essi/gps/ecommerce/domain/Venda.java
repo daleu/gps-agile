@@ -146,14 +146,14 @@ public class Venda implements Entity {
             else ++i;
         }
         if (jahies) {
-            preuTotal -= liniesVenda.get(i).getPreuTotal();
+            preuTotal -= liniesVenda.get(i).getPreuTotal(dataIHora);
             liniesVenda.get(i).incrementaQuantitat(unitats);
-            preuTotal += liniesVenda.get(i).getPreuTotal();
+            preuTotal += liniesVenda.get(i).getPreuTotal(dataIHora);
         }
         else {
             LiniaVenda liniaVenda = new LiniaVenda(p,unitats);
             liniesVenda.add(liniaVenda);
-            preuTotal += liniaVenda.getPreuTotal();
+            preuTotal += liniaVenda.getPreuTotal(dataIHora);
         }
         preuADividir = preuSubtotal = preuSubtotalAmbDevolucio = preuTotal;
     }
@@ -226,7 +226,7 @@ public class Venda implements Entity {
         tiquet.addLinia(sep + "Num. Venda: " + id + sep + "Codi Tiquet: C" + tiquet.getNum());
         for (LiniaVenda lv : liniesVenda) {
             tiquet.addLinia(sep + lv.getQuantitat() + sep + lv.getNomProducte() + sep + "P.u. " + new DecimalFormat("##.##").format(lv.getPreuUnitat()) + sep
-                    + "P.l. " + new DecimalFormat("##.##").format(lv.getPreuTotal()) + sep);
+                    + "P.l. " + new DecimalFormat("##.##").format(lv.getPreuTotal(dataIHora)) + sep);
         }
 
         if (devolucions.size() > 0) liniesTiquetDevolucio();

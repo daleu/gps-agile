@@ -77,4 +77,8 @@ public class Producte {
             ofertes.add(oferta);
         }
     }
+
+    public ArrayList<Oferta> getOfertes() {
+        return ofertes;
+    }
 }

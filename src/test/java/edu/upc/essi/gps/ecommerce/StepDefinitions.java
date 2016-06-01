@@ -542,4 +542,21 @@ public class StepDefinitions {
             tpvController.afegirOfertaPercentatgeAProducte(id,percentatge,calendarInici,calendarFinal,oferta.get(4));
         }
     }
+
+    @I("^existeixen al sistema les ofertes NxM:$")
+    public void existeixenAlSistemaLesOfertesNxM(List< List<String>> ofertes) throws Throwable {
+        for(List<String> oferta: ofertes) {
+            int id = Integer.parseInt(oferta.get(0));
+            int N = Integer.parseInt(oferta.get(1));
+            int M = Integer.parseInt(oferta.get(2));
+            SimpleDateFormat dF = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = dF.parse(oferta.get(3));
+            Calendar calendarInici = Calendar.getInstance();
+            calendarInici.setTime(date);
+            date = dF.parse(oferta.get(4));
+            Calendar calendarFinal = Calendar.getInstance();
+            calendarFinal.setTime(date);
+            tpvController.afegirOfertaNxMAProducte(id,N,M,calendarInici,calendarFinal,oferta.get(5));
+        }
+    }
 }
