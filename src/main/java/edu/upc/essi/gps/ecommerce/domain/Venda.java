@@ -27,7 +27,7 @@ public class Venda implements Entity {
     private Calendar dataIHora;
     private Integer idTorn;
     private Tiquet tiquet;
-    private Double preuSubtotal, preuSubtotalSenseDevolucions, preuADividir;
+    private Double preuSubtotal, preuSubtotalSenseDevolucions, preuADividir, preuSubtotalSenseDescomptes;
     private List<Devolucio> devolucions;
     private List<Descompte> descomptes;
 
@@ -41,7 +41,7 @@ public class Venda implements Entity {
         tipusPagament = EFECTIU;
         devolucions = new ArrayList<>();
         descomptes = new ArrayList<>();
-        preuSubtotal = preuSubtotalSenseDevolucions = preuADividir = 0.0;
+        preuSubtotal = preuSubtotalSenseDevolucions = preuADividir = preuSubtotalSenseDescomptes = 0.0;
     }
 
     public int getId() {
@@ -155,7 +155,7 @@ public class Venda implements Entity {
             liniesVenda.add(liniaVenda);
             preuSubtotal += liniaVenda.getPreuTotal();
         }
-        preuADividir = preuSubtotalSenseDevolucions = preuSubtotal;
+        preuADividir = preuSubtotalSenseDevolucions = preuSubtotalSenseDescomptes = preuSubtotal;
     }
 
     public int getNombreLiniesVenda() {
@@ -243,7 +243,7 @@ public class Venda implements Entity {
         if(devolucions.size() > 0) {
 
             tiquet.addLinia(sep + "Total a pagar: "+ new DecimalFormat("##.##").format(preuSubtotalSenseDevolucions) + sep);
-            tiquet.addLinia(sep + "Total en retorn: "+ new DecimalFormat("##.##").format(preuSubtotal - preuSubtotalSenseDevolucions) + sep);
+            tiquet.addLinia(sep + "Total en retorn: "+ new DecimalFormat("##.##").format(preuSubtotal - preuSubtotalSenseDescomptes) + sep);
 
         }
 
