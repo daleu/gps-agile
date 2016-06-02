@@ -39,7 +39,6 @@ public class TPVController {
 
     private ArrayList<String> liniesDesquadrament;
     private List<String> llistaDescomptes = null;
-    private int numVendesQuadrament;
 
     private Cataleg cataleg = new Cataleg();
 
@@ -379,10 +378,7 @@ public class TPVController {
             }
         }
     }
-
-    public int getNumVendesQUadrament() {
-        return numVendesQuadrament;
-    }
+    
     public Devolucio getUltimaDevolucio() {
         return devolucionsServei.getUltimaDevolucio();
     }
