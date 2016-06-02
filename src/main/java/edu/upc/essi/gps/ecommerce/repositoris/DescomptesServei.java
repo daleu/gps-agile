@@ -133,4 +133,13 @@ public class DescomptesServei {
         }
         return aux;
     }
+
+    public boolean existeixenDesc() {
+        boolean v = false;
+        if(descomptesRepositori.list().size() > 0) {
+            v = true;
+        }
+
+        return v;
+    }
 }

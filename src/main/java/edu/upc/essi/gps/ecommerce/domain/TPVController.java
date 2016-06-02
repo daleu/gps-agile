@@ -101,8 +101,10 @@ public class TPVController {
                 }
 
                 vendaActual.gestionarDevolucions(devolucionsServei);
-                ctrlCalculDescomptes.calcularPreuDescomptes(descomptesServei.llistarDescomptesImportNoCaducats(dataIHora), vendaActual);
-                if(!vendaActual.existeixenOfertes()){
+                if (descomptesServei.existeixenDesc()) {
+                    ctrlCalculDescomptes.calcularPreuDescomptes(descomptesServei.llistarDescomptesImportNoCaducats(dataIHora), vendaActual);
+                }
+                 if(!vendaActual.existeixenOfertes()){
                     vendaActual.finalitzar(tornActual);
                     vendesServei.guardarVenda(vendaActual);
                 }

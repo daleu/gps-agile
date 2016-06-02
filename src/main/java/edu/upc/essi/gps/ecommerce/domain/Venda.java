@@ -31,7 +31,7 @@ public class Venda implements Entity {
     private Tiquet tiquet;
     private Double preuTotal, preuSubtotal, preuADividir, preuSubtotalAmbDevolucio;
     private List<Devolucio> devolucions;
-    private List<Descompte> descomptes;
+    private List<Descompte> descomptes = new ArrayList<>();
     private ArrayList<String> ofertesDisponibles = new ArrayList<String>();
 
     public Venda(int numVenda) {
@@ -251,6 +251,8 @@ public class Venda implements Entity {
 
         }
 
+
+
         tiquet.addLinia(sep + "Total: " + new DecimalFormat("##.##").format(getPreuTotal()) + sep + "Canvi: " +
             new DecimalFormat("##.##").format(getCanvi()) + sep + "Pagat " + tipusPagament + sep);
 
@@ -262,10 +264,15 @@ public class Venda implements Entity {
         tiquet.addLinia(sep + "Atès per: " + nomEmpleat + sep);
     }
 
-    private Double calculaPrecuDev() {
-        Double preuDeDesctompte = 0.0;
-        for(Descompte d: descomptes) {
-            preuDeDesctompte -=  d.getDescompte();
+    private double calculaPrecuDev() {
+
+        double preuDeDesctompte = 0.0;
+        if( descomptes.size() > 0) {
+            for (Descompte d : descomptes) {
+                if ( d != null) {
+                    preuDeDesctompte -= d.getDescompte();
+                }
+            }
         }
         return preuDeDesctompte;
     }

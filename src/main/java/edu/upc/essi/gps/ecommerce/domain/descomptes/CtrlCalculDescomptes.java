@@ -18,7 +18,7 @@ public class CtrlCalculDescomptes {
     public void calcularPreuDescomptes(List<DescompteImport> descomptes, Venda vendaActual) {
 
         if  (vendaActual.getNumDescomptes() == 0) {
-            DescompteImport dEscollit = descomptes.get(0);
+            DescompteImport dEscollit = null;
             double impMinim = 0;
             for (DescompteImport dAux : descomptes) {
 
