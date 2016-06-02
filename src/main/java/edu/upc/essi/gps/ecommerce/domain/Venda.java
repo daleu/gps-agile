@@ -243,10 +243,10 @@ public class Venda implements Entity {
         }
 
 
-        if(devolucions.size() > 0) {
+        if(devolucions.size() > 0 || descomptes.size() > 0) {
 
             tiquet.addLinia(sep + "Total a pagar: "+ new DecimalFormat("##.##").format(preuSubtotal) + sep);
-            tiquet.addLinia(sep + "Total en retorn: "+ new DecimalFormat("##.##").format(preuSubtotalAmbDevolucio - preuSubtotal)
+            tiquet.addLinia(sep + "Total en retorn: "+ new DecimalFormat("##.##").format(preuSubtotalAmbDevolucio - calculaPrecuDev() - preuSubtotal)
                     + sep);
 
         }
@@ -261,6 +261,15 @@ public class Venda implements Entity {
         tiquet.addLinia(sep + dataIH + sep);
         tiquet.addLinia(sep + "Atès per: " + nomEmpleat + sep);
     }
+
+    private Double calculaPrecuDev() {
+        Double preuDeDesctompte = 0.0;
+        for(Descompte d: descomptes) {
+            preuDeDesctompte -=  d.getDescompte();
+        }
+        return preuDeDesctompte;
+    }
+
 
     public String getLiniaTiquet(int num) throws NoHiHaTiquetException {
         if (tiquet != null) {

@@ -121,4 +121,16 @@ public class DescomptesServei {
 
         return listPerc;
     }
+
+    public List<DescompteImport> llistarDescomptesImportNoCaducats(Calendar dataIHora) {
+
+        List<DescompteImport> l = llistarDescomptesImport();
+        List<DescompteImport> aux = new ArrayList<>();
+        for (DescompteImport d: l) {
+            if( dataIHora.before(d.getDataCaducitat())) {
+                aux.add(d);
+            }
+        }
+        return aux;
+    }
 }
