@@ -108,4 +108,17 @@ public class DescomptesServei {
         return linia;
 
     }
+
+    public List<DescompteImport> llistarDescomptesImport() {
+
+        List<Descompte> list = llistarDescomptes();
+        List<DescompteImport> listPerc = new ArrayList();
+        for (Descompte d: list) {
+            if(d instanceof DescompteImport) {
+                listPerc.add((DescompteImport) d);
+            }
+        }
+
+        return listPerc;
+    }
 }

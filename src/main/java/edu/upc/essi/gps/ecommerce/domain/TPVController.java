@@ -1,5 +1,6 @@
 package edu.upc.essi.gps.ecommerce.domain;
 
+import edu.upc.essi.gps.ecommerce.domain.descomptes.CtrlCalculDescomptes;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.Descompte;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.DescompteImport;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.DescomptePercentatge;
@@ -28,6 +29,7 @@ public class TPVController {
     private final VendesServei vendesServei = new VendesServei();
     private final DescomptesServei descomptesServei = new DescomptesServei();
     private final TornServei tornServei = new TornServei();
+    private final CtrlCalculDescomptes ctrlCalculDescomptes = new CtrlCalculDescomptes();
     private String nomBotiga;
     private String screen;
     private Calendar dataIHora;
@@ -98,7 +100,7 @@ public class TPVController {
                 }
 
                 vendaActual.gestionarDevolucions(devolucionsServei);
-
+                ctrlCalculDescomptes.calcularPreuDescomptes(descomptesServei.llistarDescomptesImport(), vendaActual);
                 vendaActual.finalitzar(tornActual);
             }
             else throw new VendaJaFinalitzadaException();

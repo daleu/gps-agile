@@ -138,6 +138,7 @@ public class Venda implements Entity {
         calculaTiquet(tornActual);
     }
 
+
     public void afegeixLinia(Producte p, Integer unitats) {
         boolean jahies = false;
         int i = 0;
@@ -341,5 +342,10 @@ public class Venda implements Entity {
 
     public double getRetornDevolucio() {
         return Double.parseDouble(new DecimalFormat("##.##").format(preuSubtotalAmbDevolucio - preuSubtotal));
+    }
+
+
+    public int getNumDescomptes() {
+        return descomptes.size();
     }
 }
