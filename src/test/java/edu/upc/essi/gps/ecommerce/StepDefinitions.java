@@ -543,11 +543,13 @@ public class StepDefinitions {
         }
     }
 
-    @Quan("^s'introdueix al sistema les ofertes de regal:$")
-    public void sIntrodueixAlSistemaLesOfertesDeRegal(List< List<String>> ofertes) throws Throwable {
+
+    @I("^existeixen al sistema les ofertes NxM:$")
+    public void existeixenAlSistemaLesOfertesNxM(List< List<String>> ofertes) throws Throwable {
         for(List<String> oferta: ofertes) {
             int id = Integer.parseInt(oferta.get(0));
-            int quantitat = Integer.parseInt(oferta.get(1));
+            int N = Integer.parseInt(oferta.get(1));
+            int M = Integer.parseInt(oferta.get(2));
             SimpleDateFormat dF = new SimpleDateFormat("dd/MM/yyyy");
             Date date = dF.parse(oferta.get(3));
             Calendar calendarInici = Calendar.getInstance();
@@ -555,7 +557,48 @@ public class StepDefinitions {
             date = dF.parse(oferta.get(4));
             Calendar calendarFinal = Calendar.getInstance();
             calendarFinal.setTime(date);
-            tpvController.afegirOfertaRegalAProducte(id,quantitat,oferta.get(2),calendarInici,calendarFinal,oferta.get(5));
+            tpvController.afegirOfertaNxMAProducte(id, N, M, calendarInici, calendarFinal, oferta.get(5));
         }
+    }
+
+    @Quan("^s'introdueix al sistema les ofertes de regal:$")
+    public void sIntrodueixAlSistemaLesOfertesDeRegal(List< List<String>> ofertes) throws Throwable {
+        for(List<String> oferta: ofertes) {
+            int id = Integer.parseInt(oferta.get(0));
+            String quantitat = oferta.get(2);
+            SimpleDateFormat dF = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = dF.parse(oferta.get(3));
+            Calendar calendarInici = Calendar.getInstance();
+            calendarInici.setTime(date);
+            date = dF.parse(oferta.get(4));
+            Calendar calendarFinal = Calendar.getInstance();
+            calendarFinal.setTime(date);
+            tpvController.afegirOfertaRegalAProducte(id,quantitat,oferta.get(1),calendarInici,calendarFinal,oferta.get(5));
+        }
+    }
+
+    @Quan("^demano la llista d'ofertes per producte$")
+    public void demanoLaLlistaDOfertesPerProducte() throws Throwable {
+        tpvController.llistarOfertesPerProducte();
+    }
+
+    @Quan("^indico que vull aplicar l'oferta pel producte \"([^\"]*)\"$")
+    public void indicoQueVullAplicarLOfertaPelProducte(String nomP) throws Throwable {
+        tpvController.aplicarOferta(nomP);
+    }
+
+    @I("^obtinc (\\d+) missatge$")
+    public void obtincMissatge(int arg0) throws Throwable {
+        assertEquals(arg0,tpvController.getNumMissatgesOferta());
+    }
+
+    @I("^missatge (\\d+) es \"([^\"]*)\"$")
+    public void missatgeEs(int numMissatge, String missatge) throws Throwable {
+        assertEquals(missatge,tpvController.getMiisatgeOferta(numMissatge));
+    }
+
+    @Quan("^indico que vull no aplicar l'oferta pel producte \"([^\"]*)\"$")
+    public void indicoQueVullNoAplicarLOfertaPelProducte(String nomP) throws Throwable {
+        tpvController.noAplicarOferta(nomP);
     }
 }

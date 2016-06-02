@@ -5,6 +5,9 @@ import edu.upc.essi.gps.ecommerce.domain.descomptes.Descompte;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.DescompteImport;
 import edu.upc.essi.gps.ecommerce.domain.descomptes.DescomptePercentatge;
 import edu.upc.essi.gps.ecommerce.domain.ofertes.Oferta;
+import edu.upc.essi.gps.ecommerce.domain.ofertes.OfertaNxM;
+import edu.upc.essi.gps.ecommerce.domain.ofertes.OfertaPercentatge;
+import edu.upc.essi.gps.ecommerce.domain.ofertes.OfertaRegal;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
 import edu.upc.essi.gps.ecommerce.repositoris.DescomptesServei;
 import edu.upc.essi.gps.ecommerce.repositoris.TornServei;
@@ -93,15 +96,16 @@ public class TPVController {
                     screen = "Error: El resultat de la venda es negatiu, i hauria de ser positiu";
                 }
 
-                vendesServei.guardarVenda(vendaActual);
-
                 if (tornActual != null && (vendaActual.getTipusPagament() != "amb tarjeta") ) {
                     tornActual.incrementDinersEnCaixa(vendaActual.getPreuTotal());
                 }
 
                 vendaActual.gestionarDevolucions(devolucionsServei);
                 ctrlCalculDescomptes.calcularPreuDescomptes(descomptesServei.llistarDescomptesImport(), vendaActual);
-                vendaActual.finalitzar(tornActual);
+                if(!vendaActual.existeixenOfertes()){
+                    vendaActual.finalitzar(tornActual);
+                    vendesServei.guardarVenda(vendaActual);
+                }
             }
             else throw new VendaJaFinalitzadaException();
         }
@@ -535,10 +539,46 @@ public class TPVController {
         }
     }
 
-    public void afegirOfertaRegalAProducte(int id, int quantitat, String idRegal, Calendar calendarInici, Calendar calendarFinal, String idProducte) throws ProducteNoExisteixException {
+    public void afegirOfertaRegalAProducte(int id, String quantitat, String idRegal, Calendar calendarInici, Calendar calendarFinal, String idProducte) throws ProducteNoExisteixException {
         String[] productes = idProducte.split(",");
-        for (int i = 0; i < productes.length; i++) {
-            cataleg.getProductePerCodi(productes[i]).afegirOfertaRegal(id, quantitat, idRegal, calendarInici, calendarFinal);
+        String[] regals = idRegal.split(",");
+        StringBuilder nomRegals = new StringBuilder();
+        for (int j = 0; j < regals.length; j++) {
+            nomRegals.append(cataleg.getProductePerCodi(regals[j]).getNom());
+            if (j+1 < regals.length) nomRegals.append(",");
         }
+        for (int i = 0; i < productes.length; i++) {
+            cataleg.getProductePerCodi(productes[i]).afegirOfertaRegal(id, quantitat, nomRegals.toString(), calendarInici, calendarFinal);
+        }
+    }
+
+
+    public void llistarOfertesPerProducte() throws ProducteNoExisteixException {
+        ArrayList<Producte> productesPerNom = cataleg.getAllProductesPerNom();
+        ListIterator<Producte> index = productesPerNom.listIterator();
+        StringBuilder llista = new StringBuilder();
+        Producte prod;
+        while (index.hasNext()) {
+            prod = index.next();
+            llista.append(prod.getOfertesProducte());
+            if (index.hasNext()) llista.append("| ");
+        }
+        screen = llista.toString();
+    }
+
+    public String getMiisatgeOferta(int numMissatges) {
+        return vendaActual.getMissatgeOferta(numMissatges);
+    }
+
+    public int getNumMissatgesOferta() {
+        return vendaActual.getNumMissatgesOferta();
+    }
+
+    public void aplicarOferta(String nomP) {
+        vendaActual.aplicarOfertaSobreProducte(nomP);
+    }
+
+    public void noAplicarOferta(String nomP) {
+        vendaActual.noAplicarOfertaSobreProducte(nomP);
     }
 }
