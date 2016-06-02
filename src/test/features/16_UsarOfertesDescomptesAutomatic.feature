@@ -11,10 +11,10 @@ Característica: Usar vals descompte
       | 10 | 07/10/2020 | 50  |
       | 20 | 23/04/2006 | 100 |
       | 30 | 10/05/2020 | 150 |
-    I que estem a dia i hora "08/06/2016 15:00"
+    I que estem a dia i hora "08/06/2016 15:00:00"
 
   Escenari: S'introdueix el descompte automaticament de 50
-    Quan que estem a dia i hora "08/06/2016 15:00"
+    Quan que estem a dia i hora "08/06/2016 15:00:00"
     I inicio una nova venda
     I s'afegeix a la linia de venda 3 unitats del producte amb codi de barres "4214"
     I indico que el client paga 70 euros en efectiu
