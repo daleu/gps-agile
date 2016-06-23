@@ -33,6 +33,7 @@ Característica: Crear vals de descompte
     I existeix la oferta amb id 123 en el producte "333"
 
   Escenari: Crear oferta de regal a productes
+    # Els regals són més complexes que això
     Quan s'introdueix al sistema les ofertes de regal:
       | 123 | 111 | 5 | 01/06/2016 | 01/07/2016 | 333|
     Aleshores existeix la oferta amb id 123 en el producte "333"

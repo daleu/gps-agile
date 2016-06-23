@@ -31,6 +31,7 @@ Característica: Retornar un producte mentres es fa una venda
     I existeix una devolucio del producte "777" de la venda 111
 
   Escenari: Retorno un producte en una venda amb una lina de venda i el resultat de la venda es negatiu
+    # S'han de poder retornar diners a la targeta
     Quan inicio una nova venda
     I s'afegeix a la linia de venda 3 unitats del producte amb codi de barres "333"
     I es vol indicar una devolucio de 1 unitats del producte "777" de la venda 111 sense motiu

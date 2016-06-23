@@ -15,6 +15,8 @@ Característica: Escollir pagar amb targeta una venda.
 
   Escenari: El client paga la venda amb tarjeta i s'imprimeix el tiquet
     Quan indico que el client vol pagar amb tarjeta
+    # No s'hauria d'haver d'indicar quant paga: Paga el total
+    # A menys que s'hagin implementat pagaments amb diversos mètodes per a una mateixa venda
     I indico que el client paga 60,9 euros amb tarjeta
     I que estem a dia i hora "21/02/2016 20:24:10"
     I es finalitza la venda
@@ -28,6 +30,7 @@ Característica: Escollir pagar amb targeta una venda.
     I la linia 7 del tiquet sera " | 21/02/2016 20:24:10 | "
     I la linia 8 del tiquet sera " | Atès per: Johnny Depp | "
 
+  # El títol i l'escenari no coincideixen
   Escenari: El client demana pagar amb tarjeta inicialment però després vol pagar amb efecteu
     Quan indico que el client vol pagar amb tarjeta
     I indico que el client vol pagar en efectiu

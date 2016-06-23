@@ -1,17 +1,19 @@
 package edu.upc.essi.gps.ecommerce;
 
-import cucumber.api.PendingException;
-import cucumber.api.java.ca.*;
-import edu.upc.essi.gps.ecommerce.domain.*;
+import cucumber.api.java.ca.Aleshores;
+import cucumber.api.java.ca.Donat;
+import cucumber.api.java.ca.I;
+import cucumber.api.java.ca.Quan;
+import edu.upc.essi.gps.ecommerce.domain.TPVController;
 import edu.upc.essi.gps.ecommerce.exceptions.*;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class StepDefinitions {
     /*
@@ -259,6 +261,7 @@ public class StepDefinitions {
 
     @I("^l'empleat que ha iniciat la venda es diu \"([^\"]*)\"$")
     public void lEmpleatQueHaIniciatLaVendaEsDiu(String nom) {
+        // No s'hauria de poder canviar l'empleat un cop iniciada la venda, en el codi de producció
         tpvController.getVendaActual().setNomEmpleat(nom);
     }
 
